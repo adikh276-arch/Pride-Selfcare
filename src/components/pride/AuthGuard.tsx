@@ -15,15 +15,36 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
       // 2. Check URL for token
       const url = new URL(window.location.href);
-      const token = url.searchParams.get('token');
+      let token = url.searchParams.get('token');
+
+      // 3. If no token, store path and attempt silent auth
+      if (!token) {
+        const currentPath = window.location.pathname + window.location.search;
+        sessionStorage.setItem('auth_redirect_path', currentPath);
+        
+        try {
+          // Attempt silent authentication via MantraCare API
+          const authRes = await fetch('https://api.mantracare.com/user/get-token', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          
+          if (authRes.ok) {
+            const authData = await authRes.json();
+            token = authData.token;
+          }
+        } catch (err) {
+          console.error('Silent auth failed:', err);
+        }
+      }
 
       if (!token) {
-        window.location.href = '/pride/token'; // Hard redirect
+        window.location.href = '/pride/token'; // Hard redirect if silent auth fails
         return;
       }
 
       try {
-        // 3. Validation
+        // 4. Validation
         const res = await fetch('https://api.mantracare.com/user/user-info', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -41,17 +62,24 @@ export function AuthGuard({ children }: { children: ReactNode }) {
           throw new Error('No user_id in response');
         }
 
-        // 4. Store in sessionStorage
+        // 5. Store in sessionStorage
         sessionStorage.setItem('user_id', userId);
 
-        // 5. Database Upsert
+        // 6. Database Upsert
         await sql`
           INSERT INTO users (id) 
           VALUES (${userId}) 
           ON CONFLICT (id) DO NOTHING
         `;
 
-        // 6. Clean URL
+        // 7. Clean URL and redirect to stored path if exists
+        const storedPath = sessionStorage.getItem('auth_redirect_path');
+        if (storedPath) {
+          sessionStorage.removeItem('auth_redirect_path');
+          window.location.href = storedPath;
+          return;
+        }
+
         url.searchParams.delete('token');
         window.history.replaceState({}, document.title, url.toString());
 
