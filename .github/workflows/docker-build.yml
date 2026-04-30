@@ -31,5 +31,7 @@ jobs:
           build-args: |
             VITE_NEON_DATABASE_URL=${{ secrets.VITE_NEON_DATABASE_URL }}
           platforms: linux/amd64
+          provenance: false
+          sbom: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
