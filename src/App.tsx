@@ -13,13 +13,13 @@ import PrideSpectrum from "./features/pride/dynamic/pride-spectrum";
 
 // Static Minis
 import BiIdentityAffirmations from "./features/pride/static/bi-identity-affirmations";
-import BisexualConversations from "./features/pride/static/bisexual-conversations";
+import BisexualConversations from "./features/pride/static/bi-family-friends-convo";
 import BisexualStories from "./features/pride/static/bisexual-stories";
-import BisexualWellbeingCompass from "./features/pride/static/bisexual-wellbeing-compass";
-import ComingOutBisexual from "./features/pride/static/coming-out-bisexual";
+import BisexualWellbeingCompass from "./features/pride/static/bi-mental-health";
+import ComingOutBisexual from "./features/pride/static/bi-coming-out";
 import DealingWithDysphoria from "./features/pride/static/dealing-with-dysphoria";
 import JoyPrideTrans from "./features/pride/static/joy-pride-trans";
-import NavigatingMedicalTransition from "./features/pride/static/navigating-medical-transition";
+import NavigatingMedicalTransition from "./features/pride/static/medical-transition";
 import TransAndMentalHealth from "./features/pride/static/trans-and-mental-health";
 import TransComingOut from "./features/pride/static/trans-coming-out";
 
