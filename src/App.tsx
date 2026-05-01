@@ -95,11 +95,42 @@ function Index() {
 }
 
 function TokenFallback() {
+  const handleLogin = () => {
+    // Construct the redirect URL back to the current pride path if possible
+    const storedPath = sessionStorage.getItem('auth_redirect_path') || '/pride';
+    const redirectUrl = encodeURIComponent(`https://platform.mantracare.com${storedPath}`);
+    window.location.href = `https://platform.mantracare.com/login?redirect_url=${redirectUrl}`;
+  };
+
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="text-center space-y-4">
-        <h1 className="text-2xl font-bold">Unauthorized</h1>
-        <p>A valid session token is required to access PrideMantra.</p>
+    <div className="flex min-h-screen items-center justify-center bg-[#F9F6FE] px-4">
+      <div className="max-w-md w-full bg-white rounded-3xl p-8 shadow-xl border border-gray-100 text-center space-y-6">
+        <div className="w-20 h-20 bg-red-50 rounded-2xl flex items-center justify-center mx-auto">
+          <svg className="w-10 h-10 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m0 0v2m0-2h2m-2 0H10m11 3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold text-[#020817]">Unauthorized</h1>
+          <p className="text-[#64748B]">
+            A valid session token is required to access PrideMantra. Please log in to your MantraCare account to continue.
+          </p>
+        </div>
+
+        <button
+          onClick={handleLogin}
+          className="w-full bg-gradient-to-r from-[#3B82F6] to-[#2563EB] text-white font-bold py-4 rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 active:scale-95"
+        >
+          Log In to MantraCare
+        </button>
+
+        <button 
+          onClick={() => window.location.href = '/pride'}
+          className="text-sm text-[#64748B] hover:text-[#3B82F6] transition-colors"
+        >
+          Retry Authentication
+        </button>
       </div>
     </div>
   );

@@ -19,14 +19,18 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
       // 3. If no token, store path and attempt silent auth
       if (!token) {
-        const currentPath = window.location.pathname + window.location.search;
-        sessionStorage.setItem('auth_redirect_path', currentPath);
+        // Only store if we're not already on the token page to avoid loops
+        if (!window.location.pathname.includes('/token')) {
+          const currentPath = window.location.pathname + window.location.search;
+          sessionStorage.setItem('auth_redirect_path', currentPath);
+        }
         
         try {
-          // Attempt silent authentication via MantraCare API
+          // Attempt silent authentication via MantraCare API with credentials
           const authRes = await fetch('https://api.mantracare.com/user/get-token', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
           });
           
           if (authRes.ok) {
@@ -39,7 +43,10 @@ export function AuthGuard({ children }: { children: ReactNode }) {
       }
 
       if (!token) {
-        window.location.href = '/pride/token'; // Hard redirect if silent auth fails
+        // If we are already on token page, don't redirect again
+        if (!window.location.pathname.includes('/token')) {
+          window.location.href = '/pride/token';
+        }
         return;
       }
 
@@ -48,6 +55,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
         const res = await fetch('https://api.mantracare.com/user/user-info', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify({ token })
         });
 
@@ -74,7 +82,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
         // 7. Clean URL and redirect to stored path if exists
         const storedPath = sessionStorage.getItem('auth_redirect_path');
-        if (storedPath) {
+        if (storedPath && !storedPath.includes('/token')) {
           sessionStorage.removeItem('auth_redirect_path');
           window.location.href = storedPath;
           return;
@@ -86,7 +94,9 @@ export function AuthGuard({ children }: { children: ReactNode }) {
         setIsAuthenticated(true);
       } catch (err) {
         console.error('AuthGuard Error:', err);
-        window.location.href = '/pride/token';
+        if (!window.location.pathname.includes('/token')) {
+          window.location.href = '/pride/token';
+        }
       }
     }
 
