@@ -763,24 +763,33 @@ const stories = [
 ];
 
 function showHero() {
-  document.getElementById('hero').style.display = 'flex';
-  document.getElementById('stories-list').style.display = 'none';
-  document.getElementById('story-detail').style.display = 'none';
-  document.getElementById('navLogo').classList.remove('visible');
+  const hero = document.getElementById('hero');
+  const list = document.getElementById('stories-list');
+  const detail = document.getElementById('story-detail');
+  const navLogo = document.getElementById('navLogo');
+  if (hero) hero.style.display = 'flex';
+  if (list) list.style.display = 'none';
+  if (detail) detail.style.display = 'none';
+  if (navLogo) navLogo.classList.remove('visible');
   window.scrollTo({ top: 0 });
 }
 
 function showStories() {
-  document.getElementById('hero').style.display = 'none';
-  document.getElementById('stories-list').style.display = 'block';
-  document.getElementById('story-detail').style.display = 'none';
-  document.getElementById('navLogo').classList.add('visible');
+  const hero = document.getElementById('hero');
+  const list = document.getElementById('stories-list');
+  const detail = document.getElementById('story-detail');
+  const navLogo = document.getElementById('navLogo');
+  if (hero) hero.style.display = 'none';
+  if (list) list.style.display = 'block';
+  if (detail) detail.style.display = 'none';
+  if (navLogo) navLogo.classList.add('visible');
   renderCards();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function renderCards() {
   const container = document.getElementById('cardsContainer');
+  if (!container) return;
   container.innerHTML = '';
   stories.forEach((s, i) => {
     const card = document.createElement('div');
@@ -789,7 +798,7 @@ function renderCards() {
       <div class="card-stripe" style="background:${s.color.stripe}"></div>
       <div class="card-body">
         <div class="card-top">
-          <div class="card-avatar" style="border-color:${s.color.stripe}"><img src="${PHOTO_AVATARS[i]}" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%;" alt="${s.name}"/></div>
+          <div class="card-avatar" style="border-color:${s.color.stripe}">${s.avatar}</div>
           <div class="card-name-wrap">
             <div class="card-name">
               ${s.name}, ${s.age}
@@ -807,33 +816,40 @@ function renderCards() {
 
 function showStory(index) {
   const s = stories[index];
-  document.getElementById('hero').style.display = 'none';
-  document.getElementById('stories-list').style.display = 'none';
-  document.getElementById('story-detail').style.display = 'block';
-  document.getElementById('navLogo').classList.add('visible');
+  const hero = document.getElementById('hero');
+  const list = document.getElementById('stories-list');
+  const detail = document.getElementById('story-detail');
+  const navLogo = document.getElementById('navLogo');
+  const content = document.getElementById('detailContent');
+  if (hero) hero.style.display = 'none';
+  if (list) list.style.display = 'none';
+  if (detail) detail.style.display = 'block';
+  if (navLogo) navLogo.classList.add('visible');
 
-  const storyParas = s.story.map(p => `<p>${p}</p>`).join('');
+  if (content) {
+    const storyParas = s.story.map(p => `<p>${p}</p>`).join('');
 
-  document.getElementById('detailContent').innerHTML = `
-    <div class="story-hero-band"></div>
-    <h1 class="story-name-large">${s.name}, ${s.age}</h1>
-    <span class="story-identity-badge" style="background:${s.color.tagBg};color:${s.color.tagText};border-color:${s.color.border}">${s.identity}</span>
+    content.innerHTML = `
+      <div class="story-hero-band" style="background:${s.color.stripe}"></div>
+      <h1 class="story-name-large">${s.name}, ${s.age}</h1>
+      <span class="story-identity-badge" style="background:${s.color.tagBg};color:${s.color.tagText};border-color:${s.color.border}">${s.identity}</span>
 
-    <div class="portrait-wrap"><img src="${PHOTO_PORTRAITS[index]}" alt="${s.name}"/></div>
+      <div class="portrait-wrap">${s.portrait}</div>
 
-    <div class="story-body">${storyParas}</div>
+      <div class="story-body">${storyParas}</div>
 
-    <div class="story-highlight" style="border-color:${s.color.border};background:${s.color.hlBg};color:${s.color.tagText}">
-      "${s.highlight}"
-    </div>
+      <div class="story-highlight" style="border-color:${s.color.border};background:${s.color.hlBg};color:${s.color.tagText}">
+        "${s.highlight}"
+      </div>
 
-    <div class="story-takeaway" style="border-color:${s.color.border};background:${s.color.takeBg}">
-      <span class="takeaway-label" style="color:${s.color.tagText}">💭 Something to sit with</span>
-      ${s.takeaway}
-    </div>
+      <div class="story-takeaway" style="border-color:${s.color.border};background:${s.color.takeBg}">
+        <span class="takeaway-label" style="color:${s.color.tagText}">💭 Something to sit with</span>
+        ${s.takeaway}
+      </div>
 
-    <button class="back-to-stories-btn" onclick="showStories()">← Back to All Stories</button>
-  `;
+      <button class="back-to-stories-btn" onclick="showStories()">← Back to All Stories</button>
+    `;
+  }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }

@@ -4,6 +4,9 @@ import { ArrowLeft, History, Loader2, ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { sql } from "@/lib/db";
 import { toast } from "sonner";
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
+import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
+import { cn } from "@/lib/utils";
 
 /* ─── Shared Animation Config ─── */
 const ease = [0.32, 0.72, 0, 1] as [number, number, number, number];
@@ -92,11 +95,6 @@ const Opt = ({ label, selected, onClick, delay = 0, multi }: {
 interface Answers { [k: string]: string | string[] | number }
 interface ScreenProps { answers: Answers; setAnswer: (k: string, v: string | number) => void; revealStep: number; onNext: () => void }
 interface MultiProps extends ScreenProps { toggleMulti: (k: string, v: string) => void }
-
-/* ─── Main Component ─── */
-import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
-import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
-import { cn } from "@/lib/utils";
 
 const ExploreIdentity = () => {
   const navigate = useNavigate();
@@ -246,22 +244,29 @@ const HistoryScreen = ({ onBack }: { onBack: () => void }) => {
         </div>
       ) : (
         history.map((entry, idx) => (
-          <div key={idx} className="space-y-3">
-            <p className="text-sm font-bold text-primary">{new Date(entry.date).toLocaleDateString()}</p>
-            {fields.filter(f => entry.answers[f.key] !== undefined).map((f) => {
-              const raw = entry.answers[f.key];
-              const display = f.format
-                ? (f.format as (v: any) => string)(raw)
-                : Array.isArray(raw) ? raw.join(", ") : String(raw);
-              return (
-                <motion.div key={f.key} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                  className="cloud-shadow rounded-2xl bg-card/80 px-5 py-4">
-                  <p className="text-xs text-muted-foreground mb-1">{f.label}</p>
-                  <p className="text-foreground text-[0.95rem]">{display}</p>
-                </motion.div>
-              );
-            })}
-            <hr className="opacity-10" />
+          <div key={idx} className="space-y-4">
+            <div className="flex items-center justify-between px-1">
+              <p className="text-sm font-bold text-primary">{new Date(entry.date).toLocaleDateString()}</p>
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-black">Entry #{history.length - idx}</p>
+            </div>
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }} 
+              animate={{ opacity: 1, y: 0 }}
+              className="premium-card p-6 space-y-5"
+            >
+              {fields.filter(f => entry.answers[f.key] !== undefined).map((f) => {
+                const raw = entry.answers[f.key];
+                const display = f.format
+                  ? (f.format as (v: any) => string)(raw)
+                  : Array.isArray(raw) ? raw.join(", ") : String(raw);
+                return (
+                  <div key={f.key} className="space-y-1">
+                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">{f.label}</p>
+                    <p className="text-foreground text-base font-medium leading-tight">{display}</p>
+                  </div>
+                );
+              })}
+            </motion.div>
           </div>
         ))
       )}
@@ -508,12 +513,12 @@ const S8 = ({ onNext }: { onNext: () => void }) => {
       <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 px-5 no-scrollbar">
         {cards.map((c, i) => (
           <motion.div key={c.title} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ ...t, delay: 0.1 + i * 0.08 }}
-            className="premium-card min-w-[85vw] max-w-[340px] snap-center p-8 flex-shrink-0 flex flex-col items-center text-center">
-            <div className="w-16 h-16 bg-accent/50 rounded-full flex items-center justify-center text-3xl mb-4">
+            className="premium-card w-[280px] sm:w-[320px] snap-center p-8 flex-shrink-0 flex flex-col items-center text-center">
+            <div className="w-16 h-16 bg-pride-purple/10 rounded-full flex items-center justify-center text-3xl mb-4">
               {c.icon}
             </div>
             <h3 className="text-xl font-bold text-foreground mb-3">{c.title}</h3>
-            <p className="justified-text text-foreground/80 text-base leading-relaxed">{c.text}</p>
+            <p className="text-foreground/80 text-sm leading-relaxed">{c.text}</p>
           </motion.div>
         ))}
       </div>

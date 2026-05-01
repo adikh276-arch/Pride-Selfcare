@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SparkleEffect from "./SparkleEffect";
 import StickerPicker from "./StickerPicker";
+import { cn } from "@/lib/utils";
 
 const BG_CLASSES = [
   "bg-pride-red",
