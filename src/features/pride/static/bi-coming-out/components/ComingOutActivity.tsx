@@ -289,25 +289,44 @@ export default function ComingOutActivity() {
 
   if (finished) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: "#fdf8ff" }}>
+      <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: "#fdf8ff" }}>
         {/* Orbs */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-bi-pink/20 blur-3xl animate-float-orb" />
           <div className="absolute top-1/2 right-1/4 w-72 h-72 rounded-full bg-bi-purple/20 blur-3xl animate-float-orb-2" />
           <div className="absolute bottom-1/4 left-1/3 w-56 h-56 rounded-full bg-bi-blue/20 blur-3xl animate-float-orb-3" />
         </div>
+
+        <div className="absolute top-6 left-6 z-50">
+          <button
+            onClick={() => navigate('/lgbtq-hub')}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
+          >
+            <ChevronLeft size={18} strokeWidth={2.5} />
+            Back to Hub
+          </button>
+        </div>
+
         <div className="relative z-10 text-center space-y-6 max-w-sm">
           <p className="text-5xl">🎉</p>
           <h2 className="font-display text-2xl text-foreground">You did it.</h2>
           <p className="font-body text-sm text-muted-foreground leading-relaxed">
             You showed up for yourself today. Whatever comes next, remember: you are bisexual, you are real, and you belong.
           </p>
-          <button
-            onClick={() => { setFinished(false); setCurrentCard(0); }}
-            className="font-body text-sm text-bi-purple underline underline-offset-4 hover:opacity-70 transition-opacity"
-          >
-            Start again
-          </button>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => { setFinished(false); setCurrentCard(0); }}
+              className="font-body text-sm text-foreground bg-secondary px-6 py-2.5 rounded-full hover:opacity-70 transition-opacity"
+            >
+              Start again
+            </button>
+            <button
+              onClick={() => navigate('/lgbtq-hub')}
+              className="font-body text-sm text-white bg-bi-purple px-6 py-2.5 rounded-full hover:opacity-70 transition-opacity"
+            >
+              Back to Hub
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -322,6 +341,16 @@ export default function ComingOutActivity() {
         <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-bi-pink/20 blur-3xl animate-float-orb" />
         <div className="absolute top-1/2 right-1/4 w-72 h-72 rounded-full bg-bi-purple/20 blur-3xl animate-float-orb-2" />
         <div className="absolute bottom-1/4 left-1/3 w-56 h-56 rounded-full bg-bi-blue/20 blur-3xl animate-float-orb-3" />
+      </div>
+
+      <div className="w-full max-w-[440px] px-4 pt-4 mb-6 relative z-50">
+        <button
+          onClick={() => navigate('/lgbtq-hub')}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          Back to Hub
+        </button>
       </div>
 
       {/* Progress bar */}

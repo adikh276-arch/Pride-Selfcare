@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import IntroScreen from "../components/mirror-notes/IntroScreen";
 import MirrorScreen from "../components/mirror-notes/MirrorScreen";
@@ -11,6 +12,7 @@ import { sql } from "@/lib/db";
 type Screen = "intro" | "mirror" | "reflection" | "completion" | "saved";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>("intro");
   const [notes, setNotes] = useState<string[]>([]);
   const [dbNotes, setDbNotes] = useState<string[]>([]);
@@ -88,7 +90,7 @@ const Index = () => {
       <div className="relative z-10">
       <AnimatePresence mode="wait">
         {screen === "intro" && (
-          <IntroScreen key="intro" onStart={() => setScreen("mirror")} onBack={handleBack} />
+          <IntroScreen key="intro" onStart={() => setScreen("mirror")} onBack={() => navigate('/lgbtq-hub')} />
         )}
         {screen === "mirror" && (
           <MirrorScreen
@@ -112,6 +114,7 @@ const Index = () => {
             onSave={handleSave}
             onAddMore={handleAddMore}
             onViewSaved={handleViewSaved}
+            onBackToHub={() => navigate('/lgbtq-hub')}
           />
         )}
         {screen === "saved" && (

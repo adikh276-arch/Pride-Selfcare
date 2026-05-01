@@ -1,4 +1,6 @@
 import { useState, useCallback, useRef, ReactNode } from "react";
+import { ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
 import ActivityCard from "./ActivityCard";
 import TapBubble from "./TapBubble";
@@ -14,6 +16,7 @@ interface BubbleSet {
 }
 
 const CardDeck = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [finished, setFinished] = useState(false);
@@ -57,6 +60,16 @@ const CardDeck = () => {
 
   return (
     <div className="flex flex-col items-center w-full max-w-[440px] mx-auto px-4 py-6 gap-5 min-h-screen">
+      <div className="w-full flex justify-start mb-2">
+        <button
+          onClick={() => navigate('/lgbtq-hub')}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          Back to Hub
+        </button>
+      </div>
+
       {/* Progress bar */}
       <div className="w-full h-1 rounded-full bg-muted overflow-hidden">
         <div
@@ -306,9 +319,26 @@ function renderCard(index: number, next: () => void, handleFinish: () => void, f
           <Affirmation text="I do not need perfect acceptance to have a valid identity." />
           <Affirmation text="I am bisexual, I am loved, and I belong." />
           {finished && (
-            <p className="text-center text-sm text-bi-purple font-semibold mt-2 animate-pulse">
-              🎉 You did it. We're proud of you.
-            </p>
+            <div className="space-y-4 pt-4">
+              <p className="text-center text-sm text-bi-purple font-semibold animate-pulse">
+                🎉 You did it. We're proud of you.
+              </p>
+              <div className="flex gap-3 justify-center">
+                <button
+                  onClick={() => { setFinished(false); setCurrent(0); }}
+                  className="px-6 py-2.5 rounded-full text-sm font-semibold text-foreground bg-secondary transition-opacity hover:opacity-80"
+                >
+                  Start Over 🔄
+                </button>
+                <button
+                  onClick={() => navigate('/lgbtq-hub')}
+                  className="px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-80"
+                  style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
+                >
+                  Back to Hub
+                </button>
+              </div>
+            </div>
           )}
         </ActivityCard>
       );

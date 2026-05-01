@@ -122,7 +122,7 @@ export function TransGuide() {
             animate={{ opacity: 1, x: 0 }}
             whileHover={{ x: -4, scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/lgbtq-hub')}
             className="flex items-center justify-center w-11 h-11 rounded-xl bg-white backdrop-blur-sm text-[#64748B] hover:text-[#10B981] hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100 mb-8"
           >
             <ChevronLeft size={22} strokeWidth={2.5} />

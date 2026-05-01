@@ -1,4 +1,6 @@
 import { useState, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 import confetti from "canvas-confetti";
 
 interface CardData {
@@ -141,6 +143,7 @@ const cards: CardData[] = [
 ];
 
 const TransitionCards = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
   const [finished, setFinished] = useState(false);
@@ -218,6 +221,17 @@ const TransitionCards = () => {
             style={{ top: "50%", right: "-10%", animation: "drift2 22s ease-in-out infinite" }}
           />
         </div>
+
+        <div className="absolute top-6 left-6 z-50">
+          <button
+            onClick={() => navigate('/lgbtq-hub')}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+          >
+            <ChevronLeft size={18} strokeWidth={2.5} />
+            Back to Hub
+          </button>
+        </div>
+
         <div className="z-10 max-w-[440px] w-full text-center animate-slide-in">
           <div
             className="rounded-[28px] shadow-lg overflow-hidden p-8"
@@ -243,16 +257,24 @@ const TransitionCards = () => {
             <p className="text-foreground font-display italic text-lg mb-6">
               "The world is better with you in it, exactly as you are." 💛
             </p>
-            <button
-              onClick={handleStartOver}
-              className="px-6 py-2.5 rounded-full text-sm font-sans font-medium transition-opacity hover:opacity-80"
-              style={{
-                background: "linear-gradient(135deg, #55cdfc, #f7a8b8)",
-                color: "#fff",
-              }}
-            >
-              Start Over 🔄
-            </button>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={handleStartOver}
+                className="px-6 py-2.5 rounded-full text-sm font-sans font-medium text-foreground bg-secondary transition-opacity hover:opacity-80"
+              >
+                Start Over 🔄
+              </button>
+              <button
+                onClick={() => navigate('/lgbtq-hub')}
+                className="px-6 py-2.5 rounded-full text-sm font-sans font-medium transition-opacity hover:opacity-80"
+                style={{
+                  background: "linear-gradient(135deg, #55cdfc, #f7a8b8)",
+                  color: "#fff",
+                }}
+              >
+                Back to Hub
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -275,6 +297,16 @@ const TransitionCards = () => {
           className="absolute w-48 h-48 rounded-full opacity-15 blur-3xl bg-trans-blue"
           style={{ bottom: "5%", left: "30%", animation: "drift3 20s ease-in-out infinite" }}
         />
+      </div>
+
+      <div className="absolute top-6 left-6 z-50">
+        <button
+          onClick={() => navigate('/lgbtq-hub')}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          Back to Hub
+        </button>
       </div>
 
       {/* Progress bar */}

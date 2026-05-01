@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import ProgressBar from "./ProgressBar";
 import OptionButton from "./OptionButton";
 import HistoryScreen from "./HistoryScreen";
@@ -27,6 +28,7 @@ export interface HistoryEntry {
 const TOTAL_SCREENS = 13;
 
 const ExplorerFlow = () => {
+  const navigate = useNavigate();
   const [screen, setScreen] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [showHistory, setShowHistory] = useState(false);
@@ -52,7 +54,7 @@ const ExplorerFlow = () => {
   const next = () => goTo(screen + 1);
   const prev = () => {
     if (screen === 0) {
-      window.history.back();
+      navigate('/lgbtq-hub');
       return;
     }
     goTo(Math.max(0, screen - 1));
@@ -355,6 +357,9 @@ const ExplorerFlow = () => {
                   </PrimaryButton>
                   <SecondaryButton onClick={() => setShowHistory(true)}>
                     View Past History
+                  </SecondaryButton>
+                  <SecondaryButton onClick={() => navigate('/lgbtq-hub')}>
+                    Back to Hub
                   </SecondaryButton>
                 </div>
               </div>

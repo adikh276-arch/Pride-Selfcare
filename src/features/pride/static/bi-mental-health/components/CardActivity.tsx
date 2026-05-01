@@ -1,4 +1,6 @@
 import { useState, useCallback, useRef } from "react";
+import { ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
 import TapToReveal from "./TapToReveal";
 import BreathingOrb from "./BreathingOrb";
@@ -222,6 +224,7 @@ const cards: CardData[] = [
 ];
 
 const CardActivity = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [swiping, setSwiping] = useState(false);
   const [swipeDir, setSwipeDir] = useState<"left" | "right" | null>(null);
@@ -276,18 +279,37 @@ const CardActivity = () => {
         <div className="orb orb-pink" style={{ width: 260, height: 260, top: "10%", left: "-8%" }} />
         <div className="orb orb-purple" style={{ width: 300, height: 300, top: "40%", right: "-10%" }} />
         <div className="orb orb-blue" style={{ width: 240, height: 240, bottom: "5%", left: "15%" }} />
+        
+        <div className="absolute top-6 left-6 z-50">
+          <button
+            onClick={() => navigate('/lgbtq-hub')}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
+          >
+            <ChevronLeft size={18} strokeWidth={2.5} />
+            Back to Hub
+          </button>
+        </div>
+
         <div className="relative z-10 text-center space-y-6 max-w-md">
           <h2 className="text-3xl font-display text-foreground">You Did It 💜</h2>
           <p className="text-sm font-body text-muted-foreground leading-relaxed">
             You showed up for yourself today. That matters more than you know.
           </p>
-          <button
-            onClick={() => { setCurrent(0); setFinished(false); }}
-            className="py-3 px-8 rounded-full font-body font-semibold text-sm text-primary-foreground transition-opacity duration-200 hover:opacity-80"
-            style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
-          >
-            Start Again
-          </button>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => { setCurrent(0); setFinished(false); }}
+              className="py-3 px-8 rounded-full font-body font-semibold text-sm text-foreground bg-secondary transition-opacity duration-200 hover:opacity-80"
+            >
+              Start Again
+            </button>
+            <button
+              onClick={() => navigate('/lgbtq-hub')}
+              className="py-3 px-8 rounded-full font-body font-semibold text-sm text-primary-foreground transition-opacity duration-200 hover:opacity-80"
+              style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
+            >
+              Back to Hub
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -303,6 +325,16 @@ const CardActivity = () => {
       <div className="orb orb-pink" style={{ width: 260, height: 260, top: "10%", left: "-8%" }} />
       <div className="orb orb-purple" style={{ width: 300, height: 300, top: "40%", right: "-10%" }} />
       <div className="orb orb-blue" style={{ width: 240, height: 240, bottom: "5%", left: "15%" }} />
+
+      <div className="absolute top-6 left-6 z-50">
+        <button
+          onClick={() => navigate('/lgbtq-hub')}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          Back to Hub
+        </button>
+      </div>
 
       {/* Progress bar */}
       <div className="w-full max-w-[440px] mb-6 relative z-10">

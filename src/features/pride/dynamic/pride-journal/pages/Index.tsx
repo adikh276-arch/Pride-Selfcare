@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import IntroScreen from "../components/journal/IntroScreen";
 import PromptScreen from "../components/journal/PromptScreen";
@@ -47,6 +48,7 @@ interface SavedJournal {
 type Screen = "intro" | "prompt" | "reflection" | "completion" | "history";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>("intro");
   const [promptIndex, setPromptIndex] = useState(0);
   const [entries, setEntries] = useState<Entry[]>([]);
@@ -146,7 +148,7 @@ const Index = () => {
 
   switch (screen) {
     case "intro":
-      return <IntroScreen onStart={handleStart} onViewHistory={handleViewHistory} hasHistory={history.length > 0} onBack={() => window.history.back()} />;
+      return <IntroScreen onStart={handleStart} onViewHistory={handleViewHistory} hasHistory={history.length > 0} onBack={() => navigate('/lgbtq-hub')} />;
     case "prompt":
       return (
         <PromptScreen
@@ -163,7 +165,7 @@ const Index = () => {
     case "reflection":
       return <ReflectionScreen entries={entries} onComplete={handleReflectionComplete} onBack={handleBack} />;
     case "completion":
-      return <CompletionScreen entries={entries} onSave={handleSave} onRestart={handleRestart} onViewHistory={handleViewHistory} />;
+      return <CompletionScreen entries={entries} onSave={handleSave} onRestart={handleRestart} onViewHistory={handleViewHistory} onBackToHub={() => navigate('/lgbtq-hub')} />;
     case "history":
       return <HistoryScreen journals={history} onBack={handleBackFromHistory} />;
   }

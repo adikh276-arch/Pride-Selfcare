@@ -272,19 +272,38 @@ const Index = () => {
 
   if (finished) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#f8fff8' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#f8fff8' }}>
         <FloatingOrbs />
+        
+        <div className="absolute top-6 left-6 z-50">
+          <button
+            onClick={() => navigate('/lgbtq-hub')}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+          >
+            <ChevronLeft size={18} strokeWidth={2.5} />
+            Back to Hub
+          </button>
+        </div>
+
         <div className="text-center z-10" style={{ animation: 'bubble-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}>
           <h1 className="font-display text-3xl text-foreground mb-3">You did it. ✨</h1>
           <p className="font-body text-muted-foreground text-sm max-w-xs mx-auto mb-6">
             You are trans. You are allowed to be known. Come back to this whenever you need it.
           </p>
-          <button
-            onClick={() => { setFinished(false); setCurrentCard(0); setRevealedCounts({}); setHasEverTapped(false); }}
-            className="py-3 px-8 rounded-full font-body font-medium text-sm bg-foreground text-background hover:opacity-80 transition-opacity duration-200"
-          >
-            Start again
-          </button>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => { setFinished(false); setCurrentCard(0); setRevealedCounts({}); setHasEverTapped(false); }}
+              className="py-3 px-8 rounded-full font-body font-medium text-sm bg-secondary text-foreground hover:opacity-80 transition-opacity duration-200"
+            >
+              Start again
+            </button>
+            <button
+              onClick={() => navigate('/lgbtq-hub')}
+              className="py-3 px-8 rounded-full font-body font-medium text-sm bg-foreground text-background hover:opacity-80 transition-opacity duration-200"
+            >
+              Back to Hub
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -293,6 +312,17 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col items-center" style={{ backgroundColor: '#f8fff8' }}>
       <FloatingOrbs />
+
+      <div className="w-full max-w-[440px] px-4 pt-6 relative z-50">
+        <button
+          onClick={() => navigate('/lgbtq-hub')}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          Back to Hub
+        </button>
+      </div>
+
       <div className="relative z-10 w-full max-w-[440px] flex flex-col min-h-screen">
         <ProgressBar current={currentCard} total={TOTAL_CARDS} />
         <div className="flex-1 px-4 pb-6">

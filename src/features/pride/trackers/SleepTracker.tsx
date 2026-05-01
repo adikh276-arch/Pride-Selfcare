@@ -72,7 +72,7 @@ export default function SleepTracker() {
         {/* Header */}
         <div className="flex items-center gap-4 mb-10">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/lgbtq-hub')}
             className="p-2 rounded-xl bg-white shadow-sm border border-gray-100 text-gray-500 hover:text-blue-600 transition-colors"
           >
             <ChevronLeft size={20} />

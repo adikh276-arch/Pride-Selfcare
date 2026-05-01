@@ -60,7 +60,7 @@ export default function DailyCareTracker() {
         {/* Header */}
         <div className="flex items-center gap-4 mb-10">
           <button
-            onClick={() => step > 1 && step < 4 ? setStep(step - 1) : navigate(-1)}
+            onClick={() => step > 1 && step < 4 ? setStep(step - 1) : navigate('/lgbtq-hub')}
             className="p-2 rounded-xl bg-white shadow-sm border border-gray-100 text-gray-500 hover:text-purple-600 transition-colors"
           >
             <ChevronLeft size={20} />

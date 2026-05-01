@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Save, History, Home } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const ClosingScreen = ({ onSave, onViewHistory, onGoHome }: Props) => {
+  const navigate = useNavigate();
   const [saved, setSaved] = useState(false);
 
   const handleSave = () => {
@@ -53,11 +55,11 @@ const ClosingScreen = ({ onSave, onViewHistory, onGoHome }: Props) => {
 
         <motion.button
           whileTap={{ scale: 0.97 }}
-          onClick={onGoHome}
+          onClick={() => navigate('/lgbtq-hub')}
           className="w-full py-4 px-6 rounded-2xl bg-mint text-foreground font-semibold text-base shadow-card transition-all duration-200 flex items-center justify-center gap-2"
         >
           <Home size={18} />
-          Go Home
+          Back to Hub
         </motion.button>
       </div>
     </div>

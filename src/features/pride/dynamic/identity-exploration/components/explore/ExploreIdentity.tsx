@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, History, Loader2 } from "lucide-react";
+import { ArrowLeft, History, Loader2, ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { sql } from "@/lib/db";
 
 /* ─── Shared Animation Config ─── */
@@ -73,6 +74,7 @@ interface MultiProps extends ScreenProps { toggleMulti: (k: string, v: string) =
 
 /* ─── Main Component ─── */
 const ExploreIdentity = () => {
+  const navigate = useNavigate();
   const [screen, setScreen] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [revealStep, setRevealStep] = useState(0);
@@ -119,7 +121,7 @@ const ExploreIdentity = () => {
   }
 
   const screens = [
-    <S0 key={0} onNext={next} onHistory={() => setShowHistory(true)} />,
+    <S0 key={0} onNext={next} onHistory={() => setShowHistory(true)} onBack={() => navigate('/lgbtq-hub')} />,
     <S1 key={1} onNext={next} />,
     <S2 key={2} {...{ answers, setAnswer, revealStep, onNext: next }} />,
     <S3 key={3} {...{ answers, setAnswer, revealStep, onNext: next, toggleMulti }} />,
@@ -129,7 +131,7 @@ const ExploreIdentity = () => {
     <S7 key={7} onNext={next} />,
     <S8 key={8} onNext={next} />,
     <S9 key={9} {...{ answers, setAnswer, revealStep, onNext: next }} />,
-    <S10 key={10} onHistory={() => setShowHistory(true)} onSave={saveProfile} isSaving={isSaving} />,
+    <S10 key={10} onHistory={() => setShowHistory(true)} onSave={saveProfile} isSaving={isSaving} onBackToHub={() => navigate('/lgbtq-hub')} />,
   ];
 
   const prideGradientBg = "radial-gradient(circle at 15% 10%, hsl(0 75% 65% / 0.1), transparent 40%), radial-gradient(circle at 85% 15%, hsl(30 85% 60% / 0.1), transparent 40%), radial-gradient(circle at 10% 50%, hsl(50 90% 65% / 0.08), transparent 40%), radial-gradient(circle at 90% 50%, hsl(140 55% 50% / 0.1), transparent 40%), radial-gradient(circle at 20% 85%, hsl(210 70% 55% / 0.1), transparent 40%), radial-gradient(circle at 80% 90%, hsl(275 60% 60% / 0.1), transparent 40%), hsl(30 20% 98%)";
@@ -232,11 +234,13 @@ const HistoryScreen = ({ onBack }: { onBack: () => void }) => {
 };
 
 /* ─── SCREEN 0: Welcome ─── */
-const S0 = ({ onNext, onHistory }: { onNext: () => void; onHistory: () => void }) => (
+const S0 = ({ onNext, onHistory, onBack }: { onNext: () => void; onHistory: () => void; onBack: () => void }) => (
   <div className="flex flex-1 flex-col px-6 py-12"
     style={{ background: "radial-gradient(circle at 30% 20%, hsl(0 75% 65% / 0.08), transparent 50%), radial-gradient(circle at 70% 30%, hsl(30 85% 60% / 0.08), transparent 50%), radial-gradient(circle at 50% 60%, hsl(210 70% 55% / 0.06), transparent 50%), radial-gradient(circle at 80% 80%, hsl(275 60% 60% / 0.08), transparent 50%), hsl(30 20% 98%)" }}>
     <div className="flex items-center justify-between">
-      <div className="w-10 h-10" />
+      <button onClick={onBack} className="flex h-10 w-10 items-center justify-center rounded-full bg-card/80 cloud-shadow">
+        <ChevronLeft className="h-5 w-5 text-foreground" />
+      </button>
       <button onClick={onHistory} className="flex h-10 w-10 items-center justify-center rounded-full bg-card/80 cloud-shadow">
         <History className="h-5 w-5 text-foreground" />
       </button>
@@ -505,7 +509,7 @@ const S9 = ({ onNext }: { answers: Answers; setAnswer: (k: string, v: string | n
 };
 
 /* ─── SCREEN 10: Closing ─── */
-const S10 = ({ onHistory, onSave, isSaving }: { onHistory: () => void; onSave: () => void; isSaving: boolean }) => (
+const S10 = ({ onHistory, onSave, isSaving, onBackToHub }: { onHistory: () => void; onSave: () => void; isSaving: boolean; onBackToHub: () => void }) => (
   <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={t}
       className="cloud-shadow rounded-3xl bg-card/80 p-8 w-full mb-8">
@@ -516,7 +520,7 @@ const S10 = ({ onHistory, onSave, isSaving }: { onHistory: () => void; onSave: (
     <div className="w-full flex flex-col gap-3">
       <Btn onClick={onSave} disabled={isSaving}>{isSaving ? 'Saving...' : 'Save my profile'}</Btn>
       <Btn onClick={onHistory} variant="secondary">View history</Btn>
-      <Btn onClick={() => window.location.reload()} variant="ghost">Go to home</Btn>
+      <Btn onClick={onBackToHub} variant="ghost">Back to Hub</Btn>
     </div>
   </div>
 );

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import type { StarData } from "../../pages/Index";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 interface ReflectionScreenProps {
   stars: StarData[];
@@ -9,6 +10,7 @@ interface ReflectionScreenProps {
 }
 
 const ReflectionScreen = ({ stars, onSave, onCreateAnother }: ReflectionScreenProps) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const minX = Math.min(...stars.map((s) => s.x));
   const maxX = Math.max(...stars.map((s) => s.x));
@@ -108,6 +110,14 @@ const ReflectionScreen = ({ stars, onSave, onCreateAnother }: ReflectionScreenPr
           className="px-8 py-2.5 rounded-full border border-secondary text-secondary font-semibold text-sm hover:bg-secondary/10 transition-colors"
         >
           {t("create_another")}
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => navigate('/lgbtq-hub')}
+          className="px-8 py-2.5 rounded-full border border-secondary text-secondary font-semibold text-sm hover:bg-secondary/10 transition-colors"
+        >
+          Back to Hub
         </motion.button>
       </motion.div>
     </motion.div>

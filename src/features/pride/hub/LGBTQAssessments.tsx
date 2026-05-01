@@ -57,7 +57,7 @@ export function LGBTQAssessments() {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => navigate(-1)}
+                onClick={() => navigate('/lgbtq-hub')}
                 className="mt-1 text-[#64748B] hover:text-[#020817] transition-colors"
               >
                 <ChevronLeft size={24} strokeWidth={2.5} />

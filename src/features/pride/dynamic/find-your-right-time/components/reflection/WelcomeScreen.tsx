@@ -1,15 +1,21 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, History } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   onStart: () => void;
   onViewHistory: () => void;
 }
 
-const WelcomeScreen = ({ onStart, onViewHistory }: Props) => (
+const WelcomeScreen = ({ onStart, onViewHistory }: Props) => {
+  const navigate = useNavigate();
+  return (
   <div className="flex flex-col items-center justify-center flex-1 w-full space-y-8">
     <div className="w-full flex justify-between items-center">
-      <button className="p-2 rounded-2xl text-muted-foreground hover:bg-secondary transition-colors">
+      <button 
+        onClick={() => navigate('/lgbtq-hub')}
+        className="p-2 rounded-2xl text-muted-foreground hover:bg-secondary transition-colors"
+      >
         <ArrowLeft size={20} />
       </button>
       <button
@@ -47,6 +53,7 @@ const WelcomeScreen = ({ onStart, onViewHistory }: Props) => (
       Start
     </motion.button>
   </div>
-);
+  );
+};
 
 export default WelcomeScreen;

@@ -8,9 +8,10 @@ interface CompletionScreenProps {
   onSave: () => void;
   onAddMore: () => void;
   onViewSaved: () => void;
+  onBackToHub: () => void;
 }
 
-const CompletionScreen = ({ notes, onSave, onAddMore, onViewSaved }: CompletionScreenProps) => {
+const CompletionScreen = ({ notes, onSave, onAddMore, onViewSaved, onBackToHub }: CompletionScreenProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -52,6 +53,14 @@ const CompletionScreen = ({ notes, onSave, onAddMore, onViewSaved }: CompletionS
           className="w-full py-5 rounded-full text-muted-foreground"
         >
           View Saved Notes
+        </Button>
+        <Button
+          variant="ghost"
+          size="lg"
+          onClick={onBackToHub}
+          className="w-full py-5 rounded-full text-muted-foreground font-bold"
+        >
+          Back to Hub
         </Button>
       </div>
     </motion.div>

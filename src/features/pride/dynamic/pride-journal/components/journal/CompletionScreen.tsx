@@ -15,6 +15,7 @@ const CompletionScreen = ({
   onSave: () => void;
   onRestart: () => void;
   onViewHistory: () => void;
+  onBackToHub: () => void;
 }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen rainbow-bg px-6 py-10 animate-fade-in">
@@ -43,6 +44,14 @@ const CompletionScreen = ({
             onClick={onRestart}
           >
             Write Again Later
+          </Button>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="w-full text-muted-foreground font-bold"
+            onClick={onBackToHub}
+          >
+            Back to Hub
           </Button>
         </div>
       </div>

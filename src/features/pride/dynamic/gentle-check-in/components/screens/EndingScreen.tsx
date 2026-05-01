@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   onDone: () => void;
@@ -13,6 +14,7 @@ const messages = [
 ];
 
 const EndingScreen = ({ onDone }: Props) => {
+  const navigate = useNavigate();
   const message = useMemo(() => messages[Math.floor(Math.random() * messages.length)], []);
 
   return (
@@ -22,10 +24,10 @@ const EndingScreen = ({ onDone }: Props) => {
         {message}
       </p>
       <button
-        onClick={onDone}
+        onClick={() => navigate('/lgbtq-hub')}
         className="h-14 w-full rounded-full bg-primary text-primary-foreground font-medium text-base transition-all active:scale-95"
       >
-        Done
+        Back to Hub
       </button>
     </div>
   );

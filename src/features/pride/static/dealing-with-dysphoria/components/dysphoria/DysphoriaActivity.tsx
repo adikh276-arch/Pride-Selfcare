@@ -1,4 +1,6 @@
 import { useState, useCallback } from "react";
+import { ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import confetti from "canvas-confetti";
 import Card1Split from "./Card1Split";
@@ -16,6 +18,7 @@ const cards = [
 ];
 
 const DysphoriaActivity = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [finished, setFinished] = useState(false);
@@ -48,6 +51,17 @@ const DysphoriaActivity = () => {
           <div className="absolute top-[15%] left-[10%] w-48 h-48 rounded-full bg-trans-blue/20 blur-3xl animate-float-orb" />
           <div className="absolute bottom-[20%] right-[5%] w-56 h-56 rounded-full bg-trans-pink/20 blur-3xl animate-float-orb-reverse" />
         </div>
+
+        <div className="absolute top-6 left-6 z-50">
+          <button
+            onClick={() => navigate('/lgbtq-hub')}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+          >
+            <ChevronLeft size={18} strokeWidth={2.5} />
+            Back to Hub
+          </button>
+        </div>
+
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -97,12 +111,20 @@ const DysphoriaActivity = () => {
                 </motion.span>
               ))}
             </div>
-            <button
-              onClick={() => { setFinished(false); setCurrent(0); }}
-              className="font-body text-sm px-5 py-2.5 rounded-full bg-foreground text-background hover:opacity-80 transition-opacity mt-2"
-            >
-              Start Over
-            </button>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => { setFinished(false); setCurrent(0); }}
+                className="font-body text-sm px-5 py-2.5 rounded-full bg-secondary text-foreground hover:opacity-80 transition-opacity mt-2"
+              >
+                Start Over
+              </button>
+              <button
+                onClick={() => navigate('/lgbtq-hub')}
+                className="font-body text-sm px-5 py-2.5 rounded-full bg-foreground text-background hover:opacity-80 transition-opacity mt-2"
+              >
+                Back to Hub
+              </button>
+            </div>
           </motion.div>
         </motion.div>
       </div>
@@ -118,7 +140,15 @@ const DysphoriaActivity = () => {
         <div className="absolute top-[60%] left-[50%] w-40 h-40 rounded-full bg-trans-blue/15 blur-3xl animate-float-orb" style={{ animationDelay: "3s" }} />
       </div>
 
-      <div className="w-full max-w-[440px] relative z-10 space-y-6">
+      <div className="absolute top-6 left-6 z-50">
+        <button
+          onClick={() => navigate('/lgbtq-hub')}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          Back to Hub
+        </button>
+      </div>
         {/* Progress bar */}
         <div className="h-2 rounded-full overflow-hidden bg-muted">
           <motion.div

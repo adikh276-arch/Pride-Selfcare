@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
 import Card1Stats from "./Card1Stats";
 import Card2Causes from "./Card2Causes";
@@ -12,6 +13,7 @@ import { ChevronLeft } from "lucide-react";
 const TOTAL = 5;
 
 const TransMentalHealthActivity = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
 
@@ -56,7 +58,7 @@ const TransMentalHealthActivity = () => {
   ];
 
   if (finished) {
-    return <CardComplete onRestart={() => { setFinished(false); setCurrent(0); }} />;
+    return <CardComplete onRestart={() => { setFinished(false); setCurrent(0); }} onBackToHub={() => navigate('/lgbtq-hub')} />;
   }
 
   return (
@@ -64,6 +66,15 @@ const TransMentalHealthActivity = () => {
       className="min-h-screen flex flex-col items-center justify-start py-8 px-4 relative overflow-hidden"
       style={{ background: "#edf5ed" }}
     >
+      <div className="absolute top-6 left-6 z-50">
+        <button
+          onClick={() => navigate('/lgbtq-hub')}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          Back to Hub
+        </button>
+      </div>
       {/* Floating orbs */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <motion.div

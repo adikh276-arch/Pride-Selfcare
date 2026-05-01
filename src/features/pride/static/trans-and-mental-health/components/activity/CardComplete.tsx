@@ -1,28 +1,25 @@
 import { motion } from "framer-motion";
+import { ChevronLeft } from "lucide-react";
 
 interface CardCompleteProps {
   onRestart: () => void;
+  onBackToHub: () => void;
 }
 
-const CardComplete = ({ onRestart }: CardCompleteProps) => (
+const CardComplete = ({ onRestart, onBackToHub }: CardCompleteProps) => (
   <div
     className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden"
     style={{ background: "#edf5ed" }}
   >
-    {/* Floating orbs */}
-    <div className="pointer-events-none fixed inset-0 overflow-hidden">
-      <motion.div
-        className="absolute w-72 h-72 rounded-full opacity-30 blur-3xl"
-        style={{ background: "hsl(var(--trans-blue))", top: "20%", left: "10%" }}
-        animate={{ x: [0, 40, 0], y: [0, 30, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute w-64 h-64 rounded-full opacity-25 blur-3xl"
-        style={{ background: "hsl(var(--trans-pink))", bottom: "15%", right: "5%" }}
-        animate={{ x: [0, -30, 0], y: [0, -40, 0] }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      />
+    {/* ... (orbs) */}
+    <div className="absolute top-6 left-6 z-50">
+      <button
+        onClick={onBackToHub}
+        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+      >
+        <ChevronLeft size={18} strokeWidth={2.5} />
+        Back to Hub
+      </button>
     </div>
 
     <div className="relative z-10 text-center max-w-[400px]">
@@ -66,17 +63,23 @@ const CardComplete = ({ onRestart }: CardCompleteProps) => (
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, duration: 0.5 }}
-        className="flex flex-col gap-3 items-center"
+        className="flex gap-3 justify-center"
       >
         <button
           onClick={onRestart}
+          className="px-8 py-3 rounded-full font-body font-semibold text-sm bg-secondary text-foreground transition-opacity hover:opacity-80"
+        >
+          Start Again 🔄
+        </button>
+        <button
+          onClick={onBackToHub}
           className="px-8 py-3 rounded-full font-body font-semibold text-sm transition-opacity hover:opacity-80"
           style={{
             background: "linear-gradient(135deg, #55cdfc, #f7a8b8)",
             color: "#1a2a1a",
           }}
         >
-          Start Again 💜
+          Back to Hub
         </button>
       </motion.div>
     </div>

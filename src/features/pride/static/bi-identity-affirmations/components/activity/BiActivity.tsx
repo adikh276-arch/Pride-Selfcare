@@ -1,11 +1,12 @@
-import { useState, useCallback, useRef } from 'react';
-import confetti from 'canvas-confetti';
+import { ChevronLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { cards } from '../../data/cardContent';
 import FloatingOrbs from '../../components/activity/FloatingOrbs';
 import ProgressBar from '../../components/activity/ProgressBar';
 import ActivityCard from '../../components/activity/ActivityCard';
 
 const BiActivity = () => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [finished, setFinished] = useState(false);
   const touchStartX = useRef(0);
@@ -38,8 +39,19 @@ const BiActivity = () => {
 
   if (finished) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#fdf8ff' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-4" style={{ background: '#fdf8ff' }}>
         <FloatingOrbs />
+        
+        <div className="absolute top-6 left-6 z-50">
+          <button
+            onClick={() => navigate('/lgbtq-hub')}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
+          >
+            <ChevronLeft size={18} strokeWidth={2.5} />
+            Back to Hub
+          </button>
+        </div>
+
         <div className="text-center relative z-10 animate-card-enter">
           <h1 className="font-display text-3xl sm:text-4xl text-foreground mb-4" style={{ lineHeight: 1.1 }}>
             You are enough.
@@ -67,6 +79,16 @@ const BiActivity = () => {
       onTouchEnd={handleTouchEnd}
     >
       <FloatingOrbs />
+
+      <div className="absolute top-6 left-6 z-50">
+        <button
+          onClick={() => navigate('/lgbtq-hub')}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          Back to Hub
+        </button>
+      </div>
 
       <div className="relative z-10 w-full max-w-[440px]">
         {/* Progress */}

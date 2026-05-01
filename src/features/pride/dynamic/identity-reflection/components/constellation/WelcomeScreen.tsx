@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { History } from "lucide-react";
+import { History, ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 interface WelcomeScreenProps {
@@ -9,6 +10,7 @@ interface WelcomeScreenProps {
 }
 
 const WelcomeScreen = ({ onStart, onHistory, hasHistory }: WelcomeScreenProps) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   return (
@@ -17,8 +19,19 @@ const WelcomeScreen = ({ onStart, onHistory, hasHistory }: WelcomeScreenProps) =
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8 }}
-      className="flex flex-col items-center justify-center px-6 text-center max-w-sm mx-auto"
+      className="flex flex-col items-center justify-center px-6 text-center max-w-sm mx-auto relative"
     >
+      {/* Back Button */}
+      <motion.button
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => navigate('/lgbtq-hub')}
+        className="absolute -top-12 left-0 p-2 rounded-full border border-secondary/50 text-secondary hover:bg-secondary/10 transition-colors"
+      >
+        <ChevronLeft size={20} />
+      </motion.button>
       {/* Decorative star cluster */}
       <motion.div
         initial={{ scale: 0 }}

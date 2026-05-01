@@ -240,6 +240,7 @@ function RevealBubbles({ bubbles }: { bubbles: RevealBubble[] }) {
 }
 
 export default function TransJoyActivity() {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [finished, setFinished] = useState(false);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
@@ -300,6 +301,16 @@ export default function TransJoyActivity() {
           style={{ width: 220, height: 220, background: "#f7a8b8", top: "50%", right: "-10%", animation: "float-orb 22s ease-in-out infinite 4s" }}
         />
 
+        <div className="absolute top-6 left-6 z-50">
+          <button
+            onClick={() => navigate('/lgbtq-hub')}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+          >
+            <ChevronLeft size={18} strokeWidth={2.5} />
+            Back to Hub
+          </button>
+        </div>
+
         <div className="relative z-10 text-center space-y-6 max-w-[440px] animate-fade-in">
           <div className="text-6xl mb-2">🎉</div>
           <h1 className="font-display text-4xl leading-tight text-foreground">
@@ -317,19 +328,27 @@ export default function TransJoyActivity() {
               "I am trans and I am joyful."
             </p>
           </div>
-          <button
-            onClick={() => {
-              setFinished(false);
-              setCurrent(0);
-            }}
-            className="mt-6 py-3 px-8 rounded-full text-sm font-semibold transition-opacity duration-200 hover:opacity-80"
-            style={{
-              background: "linear-gradient(135deg, #55cdfc, #f7a8b8)",
-              color: "white",
-            }}
-          >
-            Start Again 💜
-          </button>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => {
+                setFinished(false);
+                setCurrent(0);
+              }}
+              className="py-3 px-8 rounded-full text-sm font-semibold text-foreground bg-secondary transition-opacity duration-200 hover:opacity-80"
+            >
+              Start Again
+            </button>
+            <button
+              onClick={() => navigate('/lgbtq-hub')}
+              className="py-3 px-8 rounded-full text-sm font-semibold transition-opacity duration-200 hover:opacity-80"
+              style={{
+                background: "linear-gradient(135deg, #55cdfc, #f7a8b8)",
+                color: "white",
+              }}
+            >
+              Back to Hub
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -340,6 +359,15 @@ export default function TransJoyActivity() {
       className="min-h-screen flex flex-col items-center justify-start px-4 py-6 relative overflow-hidden"
       style={{ backgroundColor: "#f8fff8" }}
     >
+      <div className="absolute top-6 left-6 z-50">
+        <button
+          onClick={() => navigate('/lgbtq-hub')}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
+        >
+          <ChevronLeft size={18} strokeWidth={2.5} />
+          Back to Hub
+        </button>
+      </div>
       {/* Floating orbs */}
       <div
         className="absolute rounded-full blur-3xl opacity-30"
