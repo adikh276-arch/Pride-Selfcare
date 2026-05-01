@@ -15,9 +15,9 @@ const interactiveTools: InteractiveTool[] = [
   { id: "celebrate-identity", icon: Sparkles, label: "Celebrate your Identity", bgColor: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)", link: "/content/gay-and-proud" },
   { id: "confidence-mirror", icon: Smile, label: "Confidence Mirror", bgColor: "linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)", link: "/content/confidence-mirror" },
   { id: "masculinity", icon: User, label: "Masculinity on your own terms", bgColor: "linear-gradient(135deg, #10B981 0%, #059669 100%)", link: "/content/gay-and-proud" },
-  { id: "coming-out", icon: Users, label: "Coming out", bgColor: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)", link: "/content/gay-coming-out-yourself" },
-  { id: "handle-reactions", icon: Heart, label: "Handle Reactions of Others", bgColor: "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)", link: "/content/family-friends-reactions" },
-  { id: "dealing-homophobia", icon: BookOpen, label: "Dealing with Homophobia", bgColor: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)", link: "/content/gay-dealing-homophobia" },
+  { id: "coming-out", icon: Users, label: "Coming out", bgColor: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)", link: "/content/gay-coming-out" },
+  { id: "handle-reactions", icon: Heart, label: "Handle Reactions of Others", bgColor: "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)", link: "/content/when-they-react" },
+  { id: "dealing-homophobia", icon: BookOpen, label: "Dealing with Homophobia", bgColor: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)", link: "/content/dealing-with-homophobia" },
 ];
 
 interface Tip {

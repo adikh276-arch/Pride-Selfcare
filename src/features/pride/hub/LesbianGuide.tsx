@@ -12,12 +12,12 @@ interface InteractiveTool {
 }
 
 const interactiveTools: InteractiveTool[] = [
-  { id: "community-stories", icon: BookOpen, label: "Lesbian community stories", bgColor: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)", link: "/content/lesbian-real-stories" },
+  { id: "community-stories", icon: BookOpen, label: "Lesbian community stories", bgColor: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)", link: "/content/real-stories-of-lesbian-women" },
   { id: "confidence-mirror", icon: Smile, label: "Lesbian confidence mirror", bgColor: "linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)", link: "/content/confidence-mirror" },
-  { id: "your-heritage", icon: User, label: "Your heritage", bgColor: "linear-gradient(135deg, #10B981 0%, #059669 100%)", link: "/content/lesbian-power-boost" },
+  { id: "your-heritage", icon: User, label: "Your heritage", bgColor: "linear-gradient(135deg, #10B981 0%, #059669 100%)", link: "/content/lesbian-power-booster" },
   { id: "practice-coming-out", icon: Users, label: "Practicing coming out", bgColor: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)", link: "/content/coming-out-practice" },
-  { id: "handle-reactions", icon: Heart, label: "Handle Reactions of Others", bgColor: "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)", link: "/content/family-friends-reactions" },
-  { id: "identity-acceptance", icon: Sparkles, label: "Identity Acceptance", bgColor: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)", link: "/content/lesbian-power-boost" },
+  { id: "handle-reactions", icon: Heart, label: "Handle Reactions of Others", bgColor: "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)", link: "/content/when-they-react" },
+  { id: "identity-acceptance", icon: Sparkles, label: "Identity Acceptance", bgColor: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)", link: "/content/lesbian-power-booster" },
 ];
 
 interface Tip {

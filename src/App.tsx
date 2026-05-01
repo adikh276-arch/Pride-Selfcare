@@ -89,12 +89,12 @@ function Index() {
           <Link to="/content/celebrate-wlw" className="text-blue-500 hover:underline">Celebrate WLW</Link>
           <Link to="/content/coming-out-practice" className="text-blue-500 hover:underline">Coming Out Practice</Link>
           <Link to="/content/confidence-mirror" className="text-blue-500 hover:underline">Confidence Mirror</Link>
-          <Link to="/content/family-friends-reactions" className="text-blue-500 hover:underline">Family & Friends Reactions</Link>
+          <Link to="/content/when-they-react" className="text-blue-500 hover:underline">Handle Reactions of Others</Link>
           <Link to="/content/gay-and-proud" className="text-blue-500 hover:underline">Gay And Proud</Link>
-          <Link to="/content/gay-coming-out-yourself" className="text-blue-500 hover:underline">Gay Coming Out Yourself</Link>
-          <Link to="/content/gay-dealing-homophobia" className="text-blue-500 hover:underline">Gay Dealing Homophobia</Link>
-          <Link to="/content/lesbian-power-boost" className="text-blue-500 hover:underline">Lesbian Power Boost</Link>
-          <Link to="/content/lesbian-real-stories" className="text-blue-500 hover:underline">Lesbian Real Stories</Link>
+          <Link to="/content/gay-coming-out" className="text-blue-500 hover:underline">Gay Coming Out</Link>
+          <Link to="/content/dealing-with-homophobia" className="text-blue-500 hover:underline">Dealing with Homophobia</Link>
+          <Link to="/content/lesbian-power-booster" className="text-blue-500 hover:underline">Lesbian Power Booster</Link>
+          <Link to="/content/real-stories-of-lesbian-women" className="text-blue-500 hover:underline">Lesbian Real Stories</Link>
         </div>
       </section>
     </div>
