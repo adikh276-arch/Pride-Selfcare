@@ -142,11 +142,10 @@ export function LGBTQAssessments() {
             </p>
           </motion.div>
         </main>
-      </div>
 
-      {/* Very subtle blobs to match the premium feel without being distracting */}
-      <div className="fixed top-0 right-0 w-96 h-96 bg-purple-50/50 rounded-full blur-[120px] pointer-events-none -z-10"></div>
-      <div className="fixed bottom-0 left-0 w-96 h-96 bg-blue-50/50 rounded-full blur-[120px] pointer-events-none -z-10"></div>
-    </div>
-  );
-}
+        {/* Very subtle blobs to match the premium feel without being distracting */}
+        <div className="fixed top-0 right-0 w-96 h-96 bg-purple-50/50 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+        <div className="fixed bottom-0 left-0 w-96 h-96 bg-blue-50/50 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+      </div>
+    );
+  }
