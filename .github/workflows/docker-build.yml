@@ -21,7 +21,5 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build \
-            --build-arg VITE_NEON_DATABASE_URL=${{ secrets.VITE_NEON_DATABASE_URL }} \
-            -t bunker.mantracare.com/lovable/pride:1.2 .
+          docker build --build-arg VITE_NEON_DATABASE_URL="${{ secrets.VITE_NEON_DATABASE_URL }}" -t bunker.mantracare.com/lovable/pride:1.2 .
           docker push bunker.mantracare.com/lovable/pride:1.2
