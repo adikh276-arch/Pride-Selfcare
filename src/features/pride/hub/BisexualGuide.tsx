@@ -16,7 +16,7 @@ const interactiveTools: InteractiveTool[] = [
   { id: "mental-health", icon: BookOpen, label: "Bisexuality and Mental Health", bgColor: "linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)", link: "/bisexual-wellbeing-compass" },
   { id: "coming-out-practice", icon: Users, label: "Coming Out Practice", bgColor: "linear-gradient(135deg, #10B981 0%, #059669 100%)", link: "/coming-out-bisexual" },
   { id: "talk-to-family", icon: User, label: "Talk to Your Family", bgColor: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)", link: "/bisexual-conversations" },
-  { id: "handle-reactions", icon: Heart, label: "Handle Reactions of Others", bgColor: "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)", link: "/content/family-friends-reactions" },
+  { id: "handle-reactions", icon: Heart, label: "Handle Reactions of Others", bgColor: "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)", link: "/content/when-they-react" },
   { id: "confidence-mirror", icon: Smile, label: "Confidence Mirror", bgColor: "linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)", link: "/content/confidence-mirror" },
 ];
 
