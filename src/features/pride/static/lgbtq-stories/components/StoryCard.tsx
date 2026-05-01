@@ -1,0 +1,80 @@
+import { motion } from "framer-motion";
+
+interface Story {
+  name: string;
+  age: number;
+  color: {
+    stripe: string;
+    tagBg: string;
+    tagText: string;
+    hlBg: string;
+    takeBg: string;
+    border: string;
+  };
+  identity: string;
+  quote: string;
+  avatar: string;
+  portrait: string;
+}
+
+interface StoryCardProps {
+  story: Story;
+  index: number;
+  onClick: () => void;
+}
+
+const StoryCard = ({ story, index, onClick }: StoryCardProps) => {
+  const avatarUrl = story.avatar || story.portrait;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05 }}
+      whileHover={{ y: -8 }}
+      onClick={onClick}
+      className="group relative bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100 cursor-pointer"
+    >
+      <div 
+        className="h-2 w-full transition-transform group-hover:scale-y-150 origin-top" 
+        style={{ background: story.color.stripe }} 
+      />
+      
+      <div className="p-8">
+        <div className="flex items-center gap-4 mb-6">
+          <div 
+            className="w-16 h-16 rounded-2xl overflow-hidden border-2 flex-shrink-0"
+            style={{ borderColor: story.color.stripe }}
+          >
+            <img 
+              src={avatarUrl} 
+              alt={story.name} 
+              className="w-full h-full object-cover transition-transform group-hover:scale-110"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <h3 className="font-bold text-slate-900 text-lg leading-tight">
+              {story.name}, {story.age}
+            </h3>
+            <span 
+              className="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider w-fit"
+              style={{ background: story.color.tagBg, color: story.color.tagText }}
+            >
+              {story.identity}
+            </span>
+          </div>
+        </div>
+        
+        <p className="text-slate-600 text-sm leading-relaxed italic line-clamp-3">
+          "{story.quote}"
+        </p>
+
+        <div className="mt-6 flex items-center text-xs font-bold text-[#8B5CF6] opacity-0 group-hover:opacity-100 transition-opacity">
+          Read Full Story <span className="ml-1">→</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+export default StoryCard;

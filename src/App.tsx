@@ -22,6 +22,7 @@ import JoyPrideTrans from "./features/pride/static/joy-pride-trans";
 import NavigatingMedicalTransition from "./features/pride/static/medical-transition";
 import TransAndMentalHealth from "./features/pride/static/trans-and-mental-health";
 import TransComingOut from "./features/pride/static/trans-coming-out";
+import LGBTQStories from "./features/pride/static/lgbtq-stories";
 
 // Hub Suite
 import { LGBTQSelfCare } from "./features/pride/hub/LGBTQSelfCare";
@@ -180,6 +181,7 @@ function App() {
               <Route path="/trans-coming-out/*" element={<TransComingOut />} />
 
               {/* PrideMantra — Claude HTML Minis */}
+              <Route path="/content/lgbtq-stories/*" element={<LGBTQStories />} />
               <Route path="/content/:slug" element={<PrideStaticViewer />} />
 
               {/* LGBTQ+ Self-Care Hub */}
