@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Check, HeartPulse, Clock, Smile, AlertCircle } from "lucide-react";
+import { Check } from "lucide-react";
 import { sql } from "@/lib/db";
+import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
+import { PrideActivityHeader } from "../components/PrideActivityHeader";
+import { PrideSuccessState } from "../components/PrideSuccessState";
 
 const ACTIVITIES = [
   { id: "meditation", label: "Meditation", icon: "🧘" },
@@ -56,27 +59,14 @@ export default function DailyCareTracker() {
 
   return (
     <div className="activity-root bg-[#FDFCFE] py-8">
-      {/* Floating orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[10%] left-[5%] w-64 h-64 rounded-full bg-purple-200/30 blur-3xl animate-float-orb" />
-        <div className="absolute bottom-[15%] right-[5%] w-80 h-80 rounded-full bg-pink-100/30 blur-3xl animate-float-orb-reverse" />
-        <div className="absolute top-[40%] right-[15%] w-48 h-48 rounded-full bg-blue-100/20 blur-3xl animate-float-orb" style={{ animationDelay: '2s' }} />
-      </div>
+      <PrideFloatingOrbs />
 
       <div className="activity-container-sm">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-10">
-          <button
-            onClick={() => step > 1 && step < 4 ? setStep(step - 1) : navigate('/lgbtq-hub')}
-            className="flex items-center justify-center w-11 h-11 rounded-xl bg-white backdrop-blur-sm text-[#64748B] hover:text-[#A855F7] hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100"
-          >
-            <ChevronLeft size={22} strokeWidth={2.5} />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Daily Care</h1>
-            <p className="text-sm text-gray-500">Track your self-care rituals</p>
-          </div>
-        </div>
+        <PrideActivityHeader 
+          title="Daily Care" 
+          subtitle="Track your self-care rituals"
+          onBack={() => step > 1 && step < 4 ? setStep(step - 1) : navigate('/lgbtq-hub')}
+        />
 
         {/* Progress Bar */}
         <div className="mb-12 flex gap-2">
@@ -221,24 +211,16 @@ export default function DailyCareTracker() {
           )}
 
           {step === 4 && (
-            <motion.div
-              key="success"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-12 space-y-6"
-            >
-              <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Check size={48} strokeWidth={3} />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900">Great Job!</h2>
-              <p className="text-gray-500 text-lg">Your daily care routine has been recorded.</p>
-              <button
-                onClick={() => navigate('/lgbtq-hub')}
-                className="inline-block px-10 py-4 bg-gradient-to-r from-[#EC4899] to-[#3B82F6] text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1 active:scale-95"
-              >
-                Back to Hub
-              </button>
-            </motion.div>
+            <PrideSuccessState 
+              title="Rituals Tracked!"
+              message="Your daily self-care has been saved. Keep nourishing yourself, you deserve it."
+              onRestart={() => {
+                setStep(1);
+                setSelectedActivities([]);
+                setDuration("");
+                setMood("");
+              }}
+            />
           )}
         </AnimatePresence>
       </div>

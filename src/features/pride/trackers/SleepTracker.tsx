@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Moon, Sun, Save, Star } from "lucide-react";
+import { Moon, Sun, Save, Star } from "lucide-react";
 import { sql } from "@/lib/db";
+import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
+import { PrideActivityHeader } from "../components/PrideActivityHeader";
+import { PrideSuccessState } from "../components/PrideSuccessState";
 
 const QUALITY_OPTIONS = [
   { value: 0, label: "Poor", emoji: "😫" },
@@ -13,7 +14,6 @@ const QUALITY_OPTIONS = [
 ];
 
 export default function SleepTracker() {
-  const navigate = useNavigate();
   const [bedtime, setBedtime] = useState("22:00");
   const [wakeTime, setWakeTime] = useState("07:00");
   const [quality, setQuality] = useState<number | null>(null);
@@ -42,53 +42,32 @@ export default function SleepTracker() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-[#FDFCFE] flex items-center justify-center p-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white rounded-[40px] p-10 shadow-2xl border border-gray-100 text-center space-y-6"
-        >
-          <div className="w-24 h-24 bg-gradient-to-tr from-blue-600 to-indigo-700 rounded-3xl flex items-center justify-center mx-auto -rotate-6">
-            <Moon className="text-white" size={48} />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold text-gray-900">Sweet Dreams!</h2>
-            <p className="text-gray-500">Your sleep data has been saved to your wellness profile.</p>
-          </div>
-          <button
-            onClick={() => navigate('/lgbtq-hub')}
-            className="w-full py-4 bg-gradient-to-r from-[#EC4899] via-[#A855F7] to-[#3B82F6] text-white font-bold rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 active:scale-95"
-          >
-            Back to Hub
-          </button>
-        </motion.div>
+      <div className="activity-root bg-[#FDFCFE] flex items-center justify-center p-6">
+        <PrideFloatingOrbs />
+        <div className="activity-container-sm">
+          <PrideSuccessState 
+            title="Sweet Dreams!"
+            message="Your sleep data has been saved to your wellness profile. Consistency is key."
+            emoji="🌙"
+            onRestart={() => {
+              setIsSuccess(false);
+              setQuality(null);
+            }}
+          />
+        </div>
       </div>
     );
   }
 
   return (
     <div className="activity-root bg-[#FDFCFE] py-8">
-      {/* Floating orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[10%] left-[5%] w-64 h-64 rounded-full bg-purple-200/30 blur-3xl animate-float-orb" />
-        <div className="absolute bottom-[15%] right-[5%] w-80 h-80 rounded-full bg-pink-100/30 blur-3xl animate-float-orb-reverse" />
-        <div className="absolute top-[40%] right-[15%] w-48 h-48 rounded-full bg-blue-100/20 blur-3xl animate-float-orb" style={{ animationDelay: '2s' }} />
-      </div>
+      <PrideFloatingOrbs />
 
       <div className="activity-container-sm">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-10">
-          <button
-            onClick={() => navigate('/lgbtq-hub')}
-            className="flex items-center justify-center w-11 h-11 rounded-xl bg-white backdrop-blur-sm text-[#64748B] hover:text-[#A855F7] hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100"
-          >
-            <ChevronLeft size={22} strokeWidth={2.5} />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Sleep Log</h1>
-            <p className="text-sm text-gray-500">Track your rest and recovery</p>
-          </div>
-        </div>
+        <PrideActivityHeader 
+          title="Sleep Log" 
+          subtitle="Track your rest and recovery"
+        />
 
         <div className="bg-white/80 backdrop-blur-md rounded-[32px] p-8 shadow-xl border border-white/50 space-y-10">
           {/* Time Selection */}

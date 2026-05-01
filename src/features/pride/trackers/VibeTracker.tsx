@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Check, Zap, Flame, Cloud, Wind, Activity } from "lucide-react";
+import { Check, Zap, Flame, Cloud, Wind } from "lucide-react";
 import { sql } from "@/lib/db";
+import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
+import { PrideActivityHeader } from "../components/PrideActivityHeader";
+import { PrideSuccessState } from "../components/PrideSuccessState";
 
 const VIBES = [
   { id: "high-energy", label: "High Energy", icon: <Zap />, color: "from-yellow-400 to-orange-500" },
@@ -23,7 +24,6 @@ const REFLECTIONS = [
 ];
 
 export default function VibeTracker() {
-  const navigate = useNavigate();
   const [selectedVibe, setSelectedVibe] = useState("");
   const [selectedReflections, setSelectedReflections] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,53 +56,33 @@ export default function VibeTracker() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-[#FDFCFE] flex items-center justify-center p-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white rounded-[40px] p-10 shadow-2xl border border-gray-100 text-center space-y-6"
-        >
-          <div className="w-24 h-24 bg-gradient-to-tr from-orange-400 to-pink-500 rounded-full flex items-center justify-center mx-auto shadow-xl shadow-pink-100 animate-pulse">
-            <Activity className="text-white" size={48} />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold text-gray-900">Vibe Captured!</h2>
-            <p className="text-gray-500">Your energy levels are being tracked. Keep vibrating high!</p>
-          </div>
-          <button
-            onClick={() => navigate('/lgbtq-hub')}
-            className="w-full py-4 bg-gradient-to-r from-[#EC4899] via-[#A855F7] to-[#3B82F6] text-white font-bold rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 active:scale-95"
-          >
-            Back to Hub
-          </button>
-        </motion.div>
+      <div className="activity-root bg-[#FDFCFE] flex items-center justify-center p-6">
+        <PrideFloatingOrbs />
+        <div className="activity-container-sm">
+          <PrideSuccessState 
+            title="Vibe Captured!"
+            message="Your energy levels are being tracked. Keep vibrating high and stay authentic."
+            emoji="✨"
+            onRestart={() => {
+              setIsSuccess(false);
+              setSelectedVibe("");
+              setSelectedReflections([]);
+            }}
+          />
+        </div>
       </div>
     );
   }
 
   return (
     <div className="activity-root bg-[#FDFCFE] py-8">
-      {/* Floating orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[10%] left-[5%] w-64 h-64 rounded-full bg-purple-200/30 blur-3xl animate-float-orb" />
-        <div className="absolute bottom-[15%] right-[5%] w-80 h-80 rounded-full bg-pink-100/30 blur-3xl animate-float-orb-reverse" />
-        <div className="absolute top-[40%] right-[15%] w-48 h-48 rounded-full bg-blue-100/20 blur-3xl animate-float-orb" style={{ animationDelay: '2s' }} />
-      </div>
+      <PrideFloatingOrbs />
 
       <div className="activity-container-sm">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-10">
-          <button
-            onClick={() => navigate('/lgbtq-hub')}
-            className="flex items-center justify-center w-11 h-11 rounded-xl bg-white backdrop-blur-sm text-[#64748B] hover:text-[#A855F7] hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100"
-          >
-            <ChevronLeft size={22} strokeWidth={2.5} />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Vibe Check</h1>
-            <p className="text-sm text-gray-500">How's your energy today?</p>
-          </div>
-        </div>
+        <PrideActivityHeader 
+          title="Vibe Check" 
+          subtitle="How's your energy today?"
+        />
 
         <div className="space-y-10">
           {/* Vibe Selection */}

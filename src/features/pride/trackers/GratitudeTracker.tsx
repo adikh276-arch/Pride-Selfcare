@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Heart, Sparkles, Send } from "lucide-react";
+import { ChevronRight, Send } from "lucide-react";
 import { sql } from "@/lib/db";
+import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
+import { PrideActivityHeader } from "../components/PrideActivityHeader";
+import { PrideSuccessState } from "../components/PrideSuccessState";
 
 const MOODS = [
   { label: "Radiant", emoji: "✨" },
@@ -12,7 +14,6 @@ const MOODS = [
 ];
 
 export default function GratitudeTracker() {
-  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [gratitude1, setGratitude1] = useState("");
   const [gratitude2, setGratitude2] = useState("");
@@ -41,53 +42,36 @@ export default function GratitudeTracker() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-[#FDFCFE] flex items-center justify-center p-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white rounded-[40px] p-10 shadow-2xl border border-gray-100 text-center space-y-6"
-        >
-          <div className="w-24 h-24 bg-gradient-to-tr from-emerald-400 to-teal-600 rounded-3xl flex items-center justify-center mx-auto scale-110">
-            <Heart className="text-white fill-current" size={48} />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold text-gray-900">Heart Filled!</h2>
-            <p className="text-gray-500">Your gratitude has been recorded. It's the small things that matter.</p>
-          </div>
-          <button
-            onClick={() => navigate('/lgbtq-hub')}
-            className="w-full py-4 bg-gradient-to-r from-[#EC4899] via-[#A855F7] to-[#3B82F6] text-white font-bold rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 active:scale-95"
-          >
-            Back to Hub
-          </button>
-        </motion.div>
+      <div className="activity-root bg-[#FDFCFE] flex items-center justify-center p-6">
+        <PrideFloatingOrbs />
+        <div className="activity-container-sm">
+          <PrideSuccessState 
+            title="Heart Filled!"
+            message="Your gratitude has been recorded. It's the small things that matter most."
+            emoji="💖"
+            onRestart={() => {
+              setIsSuccess(false);
+              setStep(1);
+              setGratitude1("");
+              setGratitude2("");
+              setSelectedMood("");
+            }}
+          />
+        </div>
       </div>
     );
   }
 
   return (
     <div className="activity-root bg-[#FDFCFE] py-8">
-      {/* Floating orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[10%] left-[5%] w-64 h-64 rounded-full bg-purple-200/30 blur-3xl animate-float-orb" />
-        <div className="absolute bottom-[15%] right-[5%] w-80 h-80 rounded-full bg-pink-100/30 blur-3xl animate-float-orb-reverse" />
-        <div className="absolute top-[40%] right-[15%] w-48 h-48 rounded-full bg-blue-100/20 blur-3xl animate-float-orb" style={{ animationDelay: '2s' }} />
-      </div>
+      <PrideFloatingOrbs />
 
       <div className="activity-container-sm">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-10">
-          <button
-            onClick={() => step > 1 ? setStep(step - 1) : navigate('/lgbtq-hub')}
-            className="flex items-center justify-center w-11 h-11 rounded-xl bg-white backdrop-blur-sm text-[#64748B] hover:text-[#A855F7] hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100"
-          >
-            <ChevronLeft size={22} strokeWidth={2.5} />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Gratitude Garden</h1>
-            <p className="text-sm text-gray-500">Cultivate your inner peace</p>
-          </div>
-        </div>
+        <PrideActivityHeader 
+          title="Gratitude Garden" 
+          subtitle="Cultivate your inner peace"
+          onBack={() => step > 1 ? setStep(step - 1) : undefined}
+        />
 
         <AnimatePresence mode="wait">
           {step === 1 && (

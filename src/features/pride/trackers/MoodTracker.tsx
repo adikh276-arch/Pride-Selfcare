@@ -1,19 +1,19 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Send, Sparkles } from "lucide-react";
+import { Send } from "lucide-react";
 import { sql } from "@/lib/db";
+import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
+import { PrideActivityHeader } from "../components/PrideActivityHeader";
+import { PrideSuccessState } from "../components/PrideSuccessState";
 
 const MOOD_OPTIONS = [
-  { value: 1, label: "Awful", emoji: "😫", color: "bg-red-100 text-red-600 border-red-200" },
-  { value: 2, label: "Not Great", emoji: "😔", color: "bg-orange-100 text-orange-600 border-orange-200" },
-  { value: 3, label: "Okay", emoji: "😐", color: "bg-yellow-100 text-yellow-600 border-yellow-200" },
-  { value: 4, label: "Good", emoji: "🙂", color: "bg-emerald-100 text-emerald-600 border-emerald-200" },
-  { value: 5, label: "Amazing", emoji: "✨", color: "bg-cyan-100 text-cyan-600 border-cyan-200" },
+  { value: 1, label: "Awful", emoji: "😫" },
+  { value: 2, label: "Not Great", emoji: "😔" },
+  { value: 3, label: "Okay", emoji: "😐" },
+  { value: 4, label: "Good", emoji: "🙂" },
+  { value: 5, label: "Amazing", emoji: "✨" },
 ];
 
 export default function MoodTracker() {
-  const navigate = useNavigate();
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
   const [note, setNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,53 +41,33 @@ export default function MoodTracker() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-[#FDFCFE] flex items-center justify-center p-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white rounded-[40px] p-10 shadow-2xl border border-gray-100 text-center space-y-6"
-        >
-          <div className="w-24 h-24 bg-gradient-to-tr from-cyan-400 to-blue-500 rounded-3xl flex items-center justify-center mx-auto rotate-12">
-            <Sparkles className="text-white" size={48} />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold text-gray-900">Mood Logged!</h2>
-            <p className="text-gray-500">Your emotional journey is being tracked with care.</p>
-          </div>
-          <button
-            onClick={() => navigate('/lgbtq-hub')}
-            className="w-full py-4 bg-gradient-to-r from-[#EC4899] via-[#A855F7] to-[#3B82F6] text-white font-bold rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-1 active:scale-95"
-          >
-            Return to Hub
-          </button>
-        </motion.div>
+      <div className="activity-root bg-[#FDFCFE] flex items-center justify-center p-6">
+        <PrideFloatingOrbs />
+        <div className="activity-container-sm">
+          <PrideSuccessState 
+            title="Mood Logged!"
+            message="Your emotional journey is being tracked with care. Every feeling is valid."
+            emoji="✨"
+            onRestart={() => {
+              setIsSuccess(false);
+              setSelectedMood(null);
+              setNote("");
+            }}
+          />
+        </div>
       </div>
     );
   }
 
   return (
     <div className="activity-root bg-[#FDFCFE] py-8">
-      {/* Floating orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[10%] left-[5%] w-64 h-64 rounded-full bg-purple-200/30 blur-3xl animate-float-orb" />
-        <div className="absolute bottom-[15%] right-[5%] w-80 h-80 rounded-full bg-pink-100/30 blur-3xl animate-float-orb-reverse" />
-        <div className="absolute top-[40%] right-[15%] w-48 h-48 rounded-full bg-blue-100/20 blur-3xl animate-float-orb" style={{ animationDelay: '2s' }} />
-      </div>
+      <PrideFloatingOrbs />
 
       <div className="activity-container-sm">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-10">
-          <button
-            onClick={() => navigate('/lgbtq-hub')}
-            className="flex items-center justify-center w-11 h-11 rounded-xl bg-white backdrop-blur-sm text-[#64748B] hover:text-[#A855F7] hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100"
-          >
-            <ChevronLeft size={22} strokeWidth={2.5} />
-          </button>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">How are you?</h1>
-            <p className="text-sm text-gray-500">Check in with your emotions</p>
-          </div>
-        </div>
+        <PrideActivityHeader 
+          title="How are you?" 
+          subtitle="Check in with your emotions"
+        />
 
         <div className="space-y-8">
           {/* Mood Grid */}

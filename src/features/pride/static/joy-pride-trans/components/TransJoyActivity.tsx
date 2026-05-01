@@ -1,5 +1,9 @@
 import { useState, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
+import { PrideFloatingOrbs } from "../../components/PrideFloatingOrbs";
+import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+import { PrideSuccessState } from "../../components/PrideSuccessState";
 
 interface RevealBubble {
   icon: string;
@@ -194,7 +198,7 @@ function RevealBubbles({ bubbles }: { bubbles: RevealBubble[] }) {
             <button
               key={i}
               onClick={(e) => handleTap(i, e)}
-              className="relative overflow-hidden rounded-2xl text-left transition-all duration-300"
+              className="relative overflow-hidden rounded-2xl text-left transition-all duration-300 shadow-sm"
               style={{
                 background: isRevealed
                   ? "rgba(255,255,255,0.7)"
@@ -287,246 +291,168 @@ export default function TransJoyActivity() {
 
   if (finished) {
     return (
-      <div className="activity-root" style={{ backgroundColor: "#f8fff8" }}>
-        {/* Floating orbs */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[10%] left-[5%] w-64 h-64 rounded-full bg-[#55cdfc]/20 blur-3xl animate-float-orb" />
-          <div className="absolute bottom-[15%] right-[5%] w-80 h-80 rounded-full bg-[#f7a8b8]/20 blur-3xl animate-float-orb-reverse" />
-        </div>
-
-        <div className="absolute top-6 left-6 z-50">
-          <button
-            onClick={() => navigate('/lgbtq-hub')}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
-          >
-            <ChevronLeft size={18} strokeWidth={2.5} />
-            Back to Hub
-          </button>
-        </div>
-
-        <div className="activity-container-sm text-center space-y-6">
-          <div className="text-6xl mb-2">🎉</div>
-          <h1 className="font-display text-4xl leading-tight text-foreground">
-            You Did It!
-          </h1>
-          <p className="text-lg text-foreground/70 leading-relaxed">
-            You showed up for yourself today. That matters.<br />
-            Your joy is real, valid, and yours to keep.
-          </p>
-          <div className="space-y-3 pt-2">
-            <p
-              className="font-display italic text-xl leading-snug"
-              style={{ color: "#f7a8b8" }}
-            >
-              "I am trans and I am joyful."
-            </p>
-          </div>
-          <div className="flex gap-3 justify-center">
-            <button
-              onClick={() => {
-                setFinished(false);
-                setCurrent(0);
-              }}
-              className="py-3 px-8 rounded-full text-sm font-semibold text-foreground bg-secondary transition-opacity duration-200 hover:opacity-80"
-            >
-              Start Again
-            </button>
-            <button
-              onClick={() => navigate('/lgbtq-hub')}
-              className="py-3 px-8 rounded-full text-sm font-semibold transition-opacity duration-200 hover:opacity-80"
-              style={{
-                background: "linear-gradient(135deg, #55cdfc, #f7a8b8)",
-                color: "white",
-              }}
-            >
-              Back to Hub
-            </button>
-          </div>
+      <div className="activity-root bg-[#f8fff8] flex items-center justify-center p-6">
+        <PrideFloatingOrbs variant="trans" />
+        <div className="activity-container-sm">
+          <PrideSuccessState 
+            variant="trans"
+            title="You Did It!"
+            message="Your joy is real, valid, and yours to keep. You are allowed to flourish."
+            emoji="🏳️‍⚧️"
+            onRestart={() => {
+              setFinished(false);
+              setCurrent(0);
+            }}
+          />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="activity-root" style={{ backgroundColor: "#f8fff8" }}>
-      <div className="absolute top-6 left-6 z-50">
-        <button
-          onClick={() => navigate('/lgbtq-hub')}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
-        >
-          <ChevronLeft size={18} strokeWidth={2.5} />
-          Back to Hub
-        </button>
-      </div>
-      {/* Floating orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[10%] left-[5%] w-64 h-64 rounded-full bg-[#55cdfc]/20 blur-3xl animate-float-orb" />
-        <div className="absolute bottom-[15%] right-[5%] w-80 h-80 rounded-full bg-[#f7a8b8]/20 blur-3xl animate-float-orb-reverse" />
-        <div className="absolute bottom-[15%] left-[20%] w-48 h-48 rounded-full bg-gray-100/10 blur-3xl animate-float-orb" style={{ animationDelay: '8s' }} />
-      </div>
+    <div className="activity-root bg-[#f8fff8] py-8">
+      <PrideFloatingOrbs variant="trans" />
 
-      {/* Progress bar */}
-      <div className="activity-container-sm mb-6">
-        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.06)" }}>
-          <div
-            className="h-full rounded-full transition-all duration-500 ease-out"
-            style={{
-              width: `${progress}%`,
-              background: "linear-gradient(90deg, #55cdfc, #f7a8b8, #f5f5f5, #f7a8b8, #55cdfc)",
-            }}
-          />
-        </div>
-        <p className="text-xs text-muted-foreground text-center mt-2">
-          {current + 1} of {cards.length}
-        </p>
-      </div>
+      <div className="activity-container-sm">
+        <PrideActivityHeader 
+          title="Trans Joy" 
+          subtitle="Celebrating your identity"
+          onBack={() => current > 0 ? goPrev() : navigate("/lgbtq-hub")}
+        />
 
-      {/* Card stack area */}
-      <div
-        className="relative w-full max-w-[440px] flex-1 flex items-start justify-center"
-        style={{ minHeight: 480 }}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Background cards */}
-        {[2, 1].map((offset) =>
-          current + offset < cards.length ? (
+        {/* Progress bar */}
+        <div className="mb-6">
+          <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.06)" }}>
             <div
-              key={offset}
-              className="absolute left-1/2 top-0 w-full"
+              className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
-                transform: `translateX(-50%) scale(${1 - offset * 0.05})`,
-                top: offset * 10,
-                opacity: 1 - offset * 0.2,
-                zIndex: 10 - offset,
+                width: `${progress}%`,
+                background: "linear-gradient(90deg, #55cdfc, #f7a8b8, #f5f5f5, #f7a8b8, #55cdfc)",
               }}
-            >
-              <div
-                className="rounded-card"
-                style={{
-                  background: "rgba(255,255,255,0.6)",
-                  height: 120,
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
-                }}
-              />
-            </div>
-          ) : null
-        )}
+            />
+          </div>
+          <p className="text-xs text-muted-foreground text-center mt-2">
+            {current + 1} of {cards.length}
+          </p>
+        </div>
 
-        {/* Active card */}
+        {/* Card stack area */}
         <div
-          className="relative w-full z-10 transition-all duration-300"
-          style={{
-            transform:
-              direction === "left"
-                ? "translateX(-110%) rotate(-4deg)"
-                : direction === "right"
-                ? "translateX(110%) rotate(4deg)"
-                : "translateX(0)",
-            opacity: direction ? 0 : 1,
-          }}
+          className="relative w-full max-w-[440px] mx-auto flex flex-col items-center"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
+          {/* Active card */}
           <div
-            className="rounded-card overflow-hidden"
+            className="relative w-full z-10 transition-all duration-300"
             style={{
-              background: "rgba(255,255,255,0.88)",
-              boxShadow: "0 8px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)",
+              transform:
+                direction === "left"
+                  ? "translateX(-110%) rotate(-4deg)"
+                  : direction === "right"
+                  ? "translateX(110%) rotate(4deg)"
+                  : "translateX(0)",
+              opacity: direction ? 0 : 1,
             }}
           >
-            {/* Top band */}
             <div
-              className="h-1.5"
-              style={{ background: card.bandColor === "blue" ? "#55cdfc" : "#f7a8b8" }}
-            />
+              className="rounded-[32px] overflow-hidden bg-white/90 backdrop-blur-md shadow-2xl border border-white/50"
+            >
+              {/* Top band */}
+              <div
+                className="h-1.5"
+                style={{ background: card.bandColor === "blue" ? "#55cdfc" : "#f7a8b8" }}
+              />
 
-            <div className="p-6 space-y-4">
-              {/* Eyebrow */}
-              <p
-                className="text-xs font-semibold uppercase tracking-widest"
-                style={{ color: card.bandColor === "blue" ? "#55cdfc" : "#f7a8b8" }}
-              >
-                {card.eyebrow}
-              </p>
-
-              {/* Title */}
-              <h2 className="font-display text-2xl leading-tight text-foreground">
-                {card.title}
-              </h2>
-
-              {/* Body */}
-              {card.body && (
-                <div className="text-sm leading-relaxed text-foreground/80 space-y-3">
-                  {card.body.split("\n\n").map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
-                </div>
-              )}
-
-              {/* Quote */}
-              {card.type === "quote" && card.quote && (
-                <blockquote
-                  className="border-l-4 pl-4 py-2 my-3 text-sm italic leading-relaxed text-foreground/80"
-                  style={{ borderColor: "#f7a8b8" }}
+              <div className="p-8 space-y-5">
+                {/* Eyebrow */}
+                <p
+                  className="text-xs font-semibold uppercase tracking-widest"
+                  style={{ color: card.bandColor === "blue" ? "#55cdfc" : "#f7a8b8" }}
                 >
-                  <p>"{card.quote.text}"</p>
-                  <footer className="mt-2 text-xs not-italic text-muted-foreground">
-                    — {card.quote.attribution}
-                  </footer>
-                </blockquote>
-              )}
+                  {card.eyebrow}
+                </p>
 
-              {/* Bubbles */}
-              {card.type === "bubbles" && card.bubbles && (
-                <RevealBubbles bubbles={card.bubbles} />
-              )}
+                {/* Title */}
+                <h2 className="font-display text-2xl font-bold leading-tight text-foreground">
+                  {card.title}
+                </h2>
 
-              {/* Steps */}
-              {card.type === "steps" && card.steps && (
-                <div className="space-y-2 mt-2">
-                  {card.steps.map((s, i) => (
-                    <div key={i} className="flex gap-3 items-start text-sm">
-                      <span
-                        className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
-                        style={{
-                          background: i % 2 === 0 ? "#55cdfc" : "#f7a8b8",
-                          color: "white",
-                        }}
+                {/* Body */}
+                {card.body && (
+                  <div className="text-sm leading-relaxed text-foreground/80 space-y-3">
+                    {card.body.split("\n\n").map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                )}
+
+                {/* Quote */}
+                {card.type === "quote" && card.quote && (
+                  <blockquote
+                    className="border-l-4 pl-4 py-2 my-3 text-sm italic leading-relaxed text-foreground/80 bg-gray-50/50 rounded-r-xl"
+                    style={{ borderColor: "#f7a8b8" }}
+                  >
+                    <p>"{card.quote.text}"</p>
+                    <footer className="mt-2 text-xs not-italic text-muted-foreground">
+                      — {card.quote.attribution}
+                    </footer>
+                  </blockquote>
+                )}
+
+                {/* Bubbles */}
+                {card.type === "bubbles" && card.bubbles && (
+                  <RevealBubbles bubbles={card.bubbles} />
+                )}
+
+                {/* Steps */}
+                {card.type === "steps" && card.steps && (
+                  <div className="space-y-3 mt-2">
+                    {card.steps.map((s, i) => (
+                      <div key={i} className="flex gap-3 items-start text-sm">
+                        <span
+                          className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+                          style={{
+                            background: i % 2 === 0 ? "#55cdfc" : "#f7a8b8",
+                            color: "white",
+                          }}
+                        >
+                          {i + 1}
+                        </span>
+                        <span className="leading-relaxed text-foreground/80 font-medium">{s}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Affirmations */}
+                {card.affirmations && (
+                  <div className="space-y-4 mt-2">
+                    {card.affirmations.map((a, i) => (
+                      <p
+                        key={i}
+                        className="font-display italic text-lg leading-snug pl-4 border-l-2 text-gray-700"
+                        style={{ borderColor: i % 2 === 0 ? "#55cdfc" : "#f7a8b8" }}
                       >
-                        {i + 1}
-                      </span>
-                      <span className="leading-relaxed text-foreground/80">{s}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+                        {a}
+                      </p>
+                    ))}
+                  </div>
+                )}
 
-              {/* Affirmations */}
-              {card.affirmations && (
-                <div className="space-y-3 mt-2">
-                  {card.affirmations.map((a, i) => (
-                    <p
-                      key={i}
-                      className="font-display italic text-base leading-snug pl-3 border-l-2"
-                      style={{ borderColor: i % 2 === 0 ? "#55cdfc" : "#f7a8b8" }}
-                    >
-                      {a}
-                    </p>
-                  ))}
-                </div>
-              )}
-
-              {/* Button */}
-              <button
-                onClick={goNext}
-                className="w-full mt-4 py-3 px-6 rounded-full text-sm font-semibold transition-opacity duration-200 hover:opacity-80"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #55cdfc, #f7a8b8)",
-                  color: "white",
-                }}
-              >
-                {card.buttonLabel || (isLast ? "Finish ✨" : "Continue →")}
-              </button>
+                {/* Button */}
+                <button
+                  onClick={goNext}
+                  className="w-full mt-6 py-4 px-6 rounded-2xl text-sm font-bold shadow-lg transition-all hover:-translate-y-0.5 active:scale-95"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #55cdfc, #f7a8b8)",
+                    color: "white",
+                  }}
+                >
+                  {card.buttonLabel || (isLast ? "Finish ✨" : "Continue →")}
+                </button>
+              </div>
             </div>
           </div>
         </div>
