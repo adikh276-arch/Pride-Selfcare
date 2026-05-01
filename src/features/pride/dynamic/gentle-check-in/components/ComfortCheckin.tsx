@@ -61,7 +61,7 @@ const saveEntry = async (data: CheckinData) => {
   }
 };
 
-import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
 const ComfortCheckin = () => {
   const [step, setStep] = useState(0);

@@ -47,7 +47,7 @@ interface SavedJournal {
 
 type Screen = "intro" | "prompt" | "reflection" | "completion" | "history";
 
-import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
 const Index = () => {
   const navigate = useNavigate();

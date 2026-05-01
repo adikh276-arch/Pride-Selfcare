@@ -11,7 +11,7 @@ import { sql } from "@/lib/db";
 
 type Screen = "intro" | "mirror" | "reflection" | "completion" | "saved";
 
-import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
 const Index = () => {
   const navigate = useNavigate();

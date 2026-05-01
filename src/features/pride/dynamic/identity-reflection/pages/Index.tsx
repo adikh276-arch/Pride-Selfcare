@@ -15,7 +15,7 @@ export interface StarData {
   label: string;
 }
 
-import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
 const Index = () => {
   const [screen, setScreen] = useState<"welcome" | "selection" | "reflection" | "history">("welcome");

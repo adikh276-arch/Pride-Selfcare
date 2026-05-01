@@ -27,7 +27,7 @@ export interface HistoryEntry {
 
 const TOTAL_SCREENS = 13;
 
-import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
 const ExplorerFlow = () => {
   const navigate = useNavigate();

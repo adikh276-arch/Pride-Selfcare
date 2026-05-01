@@ -73,7 +73,7 @@ interface ScreenProps { answers: Answers; setAnswer: (k: string, v: string | num
 interface MultiProps extends ScreenProps { toggleMulti: (k: string, v: string) => void }
 
 /* ─── Main Component ─── */
-import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
 const ExploreIdentity = () => {
   const navigate = useNavigate();
