@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronDown, Lightbulb, MessageSquare, TrendingUp, BookOpen, Smile, User, Users, Heart, Sparkles } from "lucide-react";
+import { ChevronDown, Lightbulb, MessageSquare, TrendingUp, BookOpen, Smile, User, Users, Heart, Sparkles } from "lucide-react";
 import { useState } from "react";
+import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
+import { PrideActivityHeader } from "../components/PrideActivityHeader";
 
 interface InteractiveTool {
   id: string;
@@ -113,211 +115,180 @@ export function LesbianGuide() {
   };
 
   return (
-    <div className="activity-root bg-[#F9F6FE]">
-      <div className="flex-1 flex flex-col min-w-0 w-full">
-        <main className="activity-container-lg py-4 md:py-8 pt-[72px] md:pt-8">
-          {/* Back Button */}
-          <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            whileHover={{ x: -4, scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/lgbtq-hub')}
-            className="flex items-center justify-center w-11 h-11 rounded-xl bg-white backdrop-blur-sm text-[#64748B] hover:text-[#EC4899] hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100 mb-8"
-          >
-            <ChevronLeft size={22} strokeWidth={2.5} />
-          </motion.button>
+    <div className="activity-root bg-[#F9F6FE] py-8">
+      <PrideFloatingOrbs />
+      
+      <main className="activity-container-lg relative">
+        <PrideActivityHeader 
+          title="Lesbian Guide" 
+          subtitle="Resources and support for your journey"
+        />
 
-          {/* Header with decorative element */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mb-10 relative"
+        {/* Tips Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-4"
+        >
+          <button
+            onClick={() => setExpandedSection(expandedSection === 'tips' ? null : 'tips')}
+            className="w-full bg-white/80 backdrop-blur-md rounded-3xl p-6 border border-white hover:shadow-xl transition-all duration-300 text-left flex items-center gap-5 shadow-sm group"
           >
-            <div className="absolute -left-2 top-0 w-1 h-16 bg-gradient-to-b from-[#EC4899] to-[#DB2777] rounded-full"></div>
-            <h1 className="text-4xl md:text-5xl font-bold text-[#020817] mb-3 pl-4">
-              Lesbian
-            </h1>
-            <p className="text-[#64748B] text-lg md:text-xl pl-4">
-              Resources and support for your journey
-            </p>
-          </motion.div>
-
-          {/* Tips Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-4"
-          >
-            <button
-              onClick={() => setExpandedSection(expandedSection === 'tips' ? null : 'tips')}
-              className="w-full bg-white rounded-2xl p-5 border border-gray-200 hover:shadow-lg transition-all duration-300 text-left flex items-center gap-4 shadow-sm group"
-            >
-              <div className="w-12 h-12 rounded-xl bg-[#A855F7] flex items-center justify-center flex-shrink-0">
-                <Lightbulb className="text-white" size={24} strokeWidth={2} />
-              </div>
-              <div className="flex-1">
-                <h2 className="text-lg font-bold text-[#020817] mb-0.5">Tips</h2>
-                <p className="text-[#64748B] text-sm">Daily wisdom for your wellbeing</p>
-              </div>
-              <ChevronDown
-                className={`text-[#64748B] transition-all duration-300 flex-shrink-0 ${
-                  expandedSection === 'tips' ? "rotate-180" : ""
-                }`}
-                size={20}
-                strokeWidth={2}
-              />
-            </button>
-            
-            {expandedSection === 'tips' && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mt-4 space-y-3"
-              >
-                {tips.map((tip, index) => (
-                  <motion.div
-                    key={tip.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="rounded-2xl p-5 border border-[#A855F7]/20 shadow-sm bg-[#FAF5FF]"
-                  >
-                    <div className="flex items-start gap-3 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-[#A855F7] flex items-center justify-center flex-shrink-0">
-                        <Lightbulb className="text-white" size={16} strokeWidth={2} />
-                      </div>
-                      <h3 className="text-base font-bold text-[#020817] leading-tight flex-1">{tip.title}</h3>
-                    </div>
-                    <p className="text-[#64748B] leading-relaxed text-sm">
-                      {tip.description}
-                    </p>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </motion.div>
-
-          {/* Myths Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mb-8"
-          >
-            <button
-              onClick={() => setExpandedSection(expandedSection === 'myths' ? null : 'myths')}
-              className="w-full bg-white rounded-2xl p-5 border border-gray-200 hover:shadow-lg transition-all duration-300 text-left flex items-center gap-4 shadow-sm group"
-            >
-              <div className="w-12 h-12 rounded-xl bg-[#EC4899] flex items-center justify-center flex-shrink-0">
-                <MessageSquare className="text-white" size={24} strokeWidth={2} />
-              </div>
-              <div className="flex-1">
-                <h2 className="text-lg font-bold text-[#020817] mb-0.5">Myths</h2>
-                <p className="text-[#64748B] text-sm">Debunking harmful stereotypes</p>
-              </div>
-              <ChevronDown
-                className={`text-[#64748B] transition-all duration-300 flex-shrink-0 ${
-                  expandedSection === 'myths' ? "rotate-180" : ""
-                }`}
-                size={20}
-                strokeWidth={2}
-              />
-            </button>
-
-            {expandedSection === 'myths' && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mt-4 space-y-3"
-              >
-                {myths.map((myth, index) => (
-                  <motion.div
-                    key={myth.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="rounded-2xl p-5 border border-[#EC4899]/20 shadow-sm bg-[#FFF1F2]"
-                  >
-                    <div className="flex items-start gap-3 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-[#EC4899] flex items-center justify-center flex-shrink-0">
-                        <MessageSquare className="text-white" size={16} strokeWidth={2} />
-                      </div>
-                      <h3 className="text-base font-bold text-[#020817] leading-tight flex-1">{myth.title}</h3>
-                    </div>
-                    <p className="text-[#64748B] leading-relaxed text-sm">
-                      {myth.description}
-                    </p>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </motion.div>
-
-          {/* Interactive Tools Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="mb-8"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-full bg-[#F97316] flex items-center justify-center">
-                <TrendingUp className="text-white" size={24} strokeWidth={2} />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-[#020817] mb-0.5">Interactive Tools</h2>
-                <p className="text-[#64748B] text-sm">Exercises for recovery and wellness</p>
-              </div>
+            <div className="w-14 h-14 rounded-2xl bg-[#A855F7] flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-100">
+              <Lightbulb className="text-white" size={28} strokeWidth={2} />
             </div>
-
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-              {interactiveTools.map((tool, index) => {
-                const IconComponent = tool.icon;
-                const bgColors = ['#FFF4ED', '#EFF6FF', '#F0FDF4', '#FAF5FF', '#FFF1F2', '#F5F3FF'];
-                const iconColors = ['#F97316', '#3B82F6', '#10B981', '#A855F7', '#EC4899', '#8B5CF6'];
-                const borderColors = ['#F97316', '#3B82F6', '#10B981', '#A855F7', '#EC4899', '#8B5CF6'];
-                return (
-                  <motion.button
-                    key={tool.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 + 0.05 * index }}
-                    whileHover={{ scale: 1.05, y: -4 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleToolClick(tool.link)}
-                    className="bg-white rounded-2xl p-4 flex flex-col items-center gap-3 shadow-md hover:shadow-xl transition-all duration-300 border-2 group relative overflow-hidden"
-                    style={{ borderColor: `${borderColors[index]}20` }}
-                  >
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ background: `linear-gradient(135deg, ${bgColors[index]} 0%, white 100%)` }}
-                    ></div>
-                    <div
-                      className="w-14 h-14 rounded-xl flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300"
-                      style={{ backgroundColor: bgColors[index] }}
-                    >
-                      <IconComponent style={{ color: iconColors[index] }} size={24} strokeWidth={2.5} />
-                    </div>
-                    <span className="text-xs font-bold text-[#020817] text-center leading-tight relative z-10 group-hover:text-[#020817]/90">
-                      {tool.label}
-                    </span>
-                  </motion.button>
-                );
-              })}
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-[#020817] mb-1">Tips</h2>
+              <p className="text-[#64748B] text-sm font-medium">Daily wisdom for your wellbeing</p>
             </div>
-          </motion.div>
-        </main>
-      </div>
+            <ChevronDown
+              className={`text-[#64748B] transition-all duration-300 flex-shrink-0 ${
+                expandedSection === 'tips' ? "rotate-180" : ""
+              }`}
+              size={24}
+              strokeWidth={2.5}
+            />
+          </button>
+          
+          {expandedSection === 'tips' && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 space-y-4 px-2"
+            >
+              {tips.map((tip, index) => (
+                <motion.div
+                  key={tip.id}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="rounded-3xl p-6 border border-white bg-white/60 backdrop-blur-sm shadow-sm"
+                >
+                  <div className="flex items-start gap-4 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#A855F7]/10 flex items-center justify-center flex-shrink-0">
+                      <Lightbulb className="text-[#A855F7]" size={20} strokeWidth={2.5} />
+                    </div>
+                    <h3 className="text-lg font-bold text-[#020817] leading-tight pt-1">{tip.title}</h3>
+                  </div>
+                  <p className="text-[#64748B] leading-relaxed text-sm ml-14">
+                    {tip.description}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </motion.div>
 
-      {/* Decorative background elements */}
-      <div className="fixed top-20 right-10 w-64 h-64 bg-gradient-to-br from-[#EC4899]/10 to-transparent rounded-full blur-3xl pointer-events-none -z-10"></div>
-      <div className="fixed bottom-20 left-10 w-80 h-80 bg-gradient-to-tr from-[#10B981]/10 to-transparent rounded-full blur-3xl pointer-events-none -z-10"></div>
+        {/* Myths Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-8"
+        >
+          <button
+            onClick={() => setExpandedSection(expandedSection === 'myths' ? null : 'myths')}
+            className="w-full bg-white/80 backdrop-blur-md rounded-3xl p-6 border border-white hover:shadow-xl transition-all duration-300 text-left flex items-center gap-5 shadow-sm group"
+          >
+            <div className="w-14 h-14 rounded-2xl bg-[#EC4899] flex items-center justify-center flex-shrink-0 shadow-lg shadow-pink-100">
+              <MessageSquare className="text-white" size={28} strokeWidth={2} />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-[#020817] mb-1">Myths</h2>
+              <p className="text-[#64748B] text-sm font-medium">Debunking harmful stereotypes</p>
+            </div>
+            <ChevronDown
+              className={`text-[#64748B] transition-all duration-300 flex-shrink-0 ${
+                expandedSection === 'myths' ? "rotate-180" : ""
+              }`}
+              size={24}
+              strokeWidth={2.5}
+            />
+          </button>
+
+          {expandedSection === 'myths' && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 space-y-4 px-2"
+            >
+              {myths.map((myth, index) => (
+                <motion.div
+                  key={myth.id}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="rounded-3xl p-6 border border-white bg-white/60 backdrop-blur-sm shadow-sm"
+                >
+                  <div className="flex items-start gap-4 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#EC4899]/10 flex items-center justify-center flex-shrink-0">
+                      <MessageSquare className="text-[#EC4899]" size={20} strokeWidth={2.5} />
+                    </div>
+                    <h3 className="text-lg font-bold text-[#020817] leading-tight pt-1">{myth.title}</h3>
+                  </div>
+                  <p className="text-[#64748B] leading-relaxed text-sm ml-14">
+                    {myth.description}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </motion.div>
+
+        {/* Interactive Tools Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-8"
+        >
+          <div className="flex items-center gap-4 mb-8 ml-2">
+            <div className="w-12 h-12 rounded-2xl bg-[#F97316] flex items-center justify-center shadow-lg shadow-orange-100">
+              <TrendingUp className="text-white" size={24} strokeWidth={2.5} />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-[#020817]">Interactive Tools</h2>
+              <p className="text-[#64748B] text-sm font-medium">Exercises for recovery and wellness</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {interactiveTools.map((tool, index) => {
+              const IconComponent = tool.icon;
+              const bgColors = ['#FFF4ED', '#EFF6FF', '#F0FDF4', '#FAF5FF', '#FFF1F2', '#F5F3FF'];
+              const iconColors = ['#F97316', '#3B82F6', '#10B981', '#A855F7', '#EC4899', '#8B5CF6'];
+              return (
+                <motion.button
+                  key={tool.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + 0.05 * index }}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => handleToolClick(tool.link)}
+                  className="bg-white/80 backdrop-blur-md rounded-[32px] p-6 flex flex-col items-center gap-4 shadow-lg hover:shadow-2xl transition-all duration-300 border border-white group relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/0 via-white/40 to-white/0" />
+                  <div
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center relative z-10 transition-all duration-500 group-hover:scale-110 shadow-sm"
+                    style={{ backgroundColor: bgColors[index] }}
+                  >
+                    <IconComponent style={{ color: iconColors[index] }} size={32} strokeWidth={2} />
+                  </div>
+                  <span className="text-sm font-bold text-[#020817] text-center leading-tight relative z-10">
+                    {tool.label}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
+        </motion.div>
+      </main>
     </div>
   );
 }

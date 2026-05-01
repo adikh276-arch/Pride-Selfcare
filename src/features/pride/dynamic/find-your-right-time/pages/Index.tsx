@@ -33,7 +33,11 @@ const slideVariants = {
   exit: (dir: number) => ({ x: dir > 0 ? -80 : 80, opacity: 0 }),
 };
 
+import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+import { useNavigate } from "react-router-dom";
+
 const Index = () => {
+  const navigate = useNavigate();
   const [screen, setScreen] = useState(0);
   const [direction, setDirection] = useState(1);
   const [answers, setAnswers] = useState<Answers>({});
@@ -87,8 +91,19 @@ const Index = () => {
     setScreen(0);
   };
 
+  const handleBack = () => {
+    if (screen > 0) {
+      go(screen - 1);
+    }
+  };
+
   if (showHistory) {
-    return <HistoryScreen onBack={() => setShowHistory(false)} />;
+    return (
+      <div className="min-h-svh flex flex-col p-6 max-w-md mx-auto">
+        <PrideActivityHeader title="Reflection History" onBack={() => setShowHistory(false)} />
+        <HistoryScreen onBack={() => setShowHistory(false)} />
+      </div>
+    );
   }
 
   const screens = [
@@ -166,8 +181,15 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-svh flex flex-col items-center justify-center overflow-hidden">
-      <div className="w-full max-w-md mx-auto px-6 py-12 flex flex-col items-center min-h-svh relative">
+    <div className="min-h-svh flex flex-col items-center justify-start overflow-hidden py-8 px-6">
+      <div className="w-full max-w-md">
+        <PrideActivityHeader 
+          title="Right Time?" 
+          onBack={screen > 0 ? handleBack : undefined}
+          className="mb-8"
+        />
+      </div>
+      <div className="w-full max-w-md mx-auto flex flex-col items-center flex-1 relative">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={screen}

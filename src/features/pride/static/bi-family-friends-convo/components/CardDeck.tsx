@@ -59,59 +59,58 @@ const CardDeck = () => {
   const progress = ((current + 1) / TOTAL) * 100;
 
   return (
-    <div className="flex flex-col items-center w-full max-w-[440px] mx-auto px-4 py-6 gap-5 min-h-screen">
-      <div className="w-full flex justify-start mb-2">
-        <button
-          onClick={() => navigate('/lgbtq-hub')}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
-        >
-          <ChevronLeft size={18} strokeWidth={2.5} />
-          Back to Hub
-        </button>
-      </div>
-
-      {/* Progress bar */}
-      <div className="w-full h-1 rounded-full bg-muted overflow-hidden">
-        <div
-          className="h-full progress-gradient rounded-full transition-all duration-500 ease-out"
-          style={{ width: `${progress}%` }}
+    <div className="flex flex-col items-center w-full max-w-[440px] mx-auto px-4 py-8 gap-5 min-h-screen justify-start">
+      <div className="w-full mb-4">
+        <PrideActivityHeader 
+          title="Conversation Guide" 
+          onBack={current > 0 && !finished ? prev : undefined}
         />
       </div>
 
-      <p className="text-xs text-muted-foreground">
-        {current + 1} / {TOTAL}
-      </p>
-
-      {/* Card stack */}
-      <div
-        className="relative w-full"
-        style={{ minHeight: 480 }}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Behind cards */}
-        {current < TOTAL - 1 && (
+      <div className="flex-1 flex flex-col items-center w-full justify-center">
+        {/* Progress bar */}
+        <div className="w-full h-1 rounded-full bg-muted overflow-hidden mb-2">
           <div
-            className="absolute inset-x-3 top-3 card-glass h-full opacity-40"
-            style={{ transform: "scale(0.95)", zIndex: 0 }}
+            className="h-full progress-gradient rounded-full transition-all duration-500 ease-out"
+            style={{ width: `${progress}%` }}
           />
-        )}
-        {current < TOTAL - 2 && (
-          <div
-            className="absolute inset-x-5 top-5 card-glass h-full opacity-20"
-            style={{ transform: "scale(0.9)", zIndex: -1 }}
-          />
-        )}
+        </div>
 
-        {/* Active card */}
-        <div className="relative z-10">
-          {renderCard(current, next, handleFinish, finished)}
+        <p className="text-xs text-muted-foreground mb-6">
+          {current + 1} / {TOTAL}
+        </p>
+
+        {/* Card stack */}
+        <div
+          className="relative w-full"
+          style={{ minHeight: 480 }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Behind cards */}
+          {current < TOTAL - 1 && (
+            <div
+              className="absolute inset-x-3 top-3 card-glass h-full opacity-40"
+              style={{ transform: "scale(0.95)", zIndex: 0 }}
+            />
+          )}
+          {current < TOTAL - 2 && (
+            <div
+              className="absolute inset-x-5 top-5 card-glass h-full opacity-20"
+              style={{ transform: "scale(0.9)", zIndex: -1 }}
+            />
+          )}
+
+          {/* Active card */}
+          <div className="relative z-10">
+            {renderCard(current, next, handleFinish, finished, navigate, setCurrent, setFinished)}
+          </div>
         </div>
       </div>
 
       {/* Nav buttons — hide on first card (has its own CTA) and after finish */}
       {!finished && current > 0 && (
-        <div className="flex gap-3 w-full">
+        <div className="flex gap-3 w-full mt-4">
           <button onClick={prev} className="btn-pill flex-1 !bg-muted !text-foreground">
             ← Back
           </button>
@@ -191,7 +190,15 @@ const Scenario = ({ emoji, title, desc }: { emoji: string; title?: string; desc:
   </div>
 );
 
-function renderCard(index: number, next: () => void, handleFinish: () => void, finished: boolean) {
+function renderCard(
+  index: number, 
+  next: () => void, 
+  handleFinish: () => void, 
+  finished: boolean,
+  navigate: (path: string) => void,
+  setCurrent: (idx: number) => void,
+  setFinished: (fin: boolean) => void
+) {
   switch (index) {
     case 0:
       return (

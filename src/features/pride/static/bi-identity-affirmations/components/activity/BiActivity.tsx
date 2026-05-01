@@ -5,6 +5,8 @@ import FloatingOrbs from '../../components/activity/FloatingOrbs';
 import ProgressBar from '../../components/activity/ProgressBar';
 import ActivityCard from '../../components/activity/ActivityCard';
 
+import { PrideActivityHeader } from '../../../../components/PrideActivityHeader';
+
 const BiActivity = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,20 +41,13 @@ const BiActivity = () => {
 
   if (finished) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4" style={{ background: '#fdf8ff' }}>
+      <div className="min-h-screen flex flex-col items-center justify-start px-4 py-8" style={{ background: '#fdf8ff' }}>
         <FloatingOrbs />
-        
-        <div className="absolute top-6 left-6 z-50">
-          <button
-            onClick={() => navigate('/lgbtq-hub')}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
-          >
-            <ChevronLeft size={18} strokeWidth={2.5} />
-            Back to Hub
-          </button>
+        <div className="w-full max-w-md mb-8">
+          <PrideActivityHeader title="Activity Complete" />
         </div>
 
-        <div className="text-center relative z-10 animate-card-enter">
+        <div className="text-center relative z-10 animate-card-enter flex-1 flex flex-col justify-center">
           <h1 className="font-display text-3xl sm:text-4xl text-foreground mb-4" style={{ lineHeight: 1.1 }}>
             You are enough.
           </h1>
@@ -61,7 +56,7 @@ const BiActivity = () => {
           </p>
           <button
             onClick={() => { setCurrentIndex(0); setFinished(false); }}
-            className="px-8 py-3 rounded-full font-body font-semibold text-sm text-primary-foreground transition-opacity hover:opacity-85 active:opacity-70"
+            className="px-8 py-3 rounded-full font-body font-semibold text-sm text-primary-foreground transition-opacity hover:opacity-85 active:opacity-70 mx-auto"
             style={{ background: 'hsl(var(--bi-purple))' }}
           >
             Start Again
@@ -73,24 +68,21 @@ const BiActivity = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-8"
+      className="min-h-screen flex flex-col items-center justify-start px-4 py-8"
       style={{ background: '#fdf8ff' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
       <FloatingOrbs />
 
-      <div className="absolute top-6 left-6 z-50">
-        <button
-          onClick={() => navigate('/lgbtq-hub')}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
-        >
-          <ChevronLeft size={18} strokeWidth={2.5} />
-          Back to Hub
-        </button>
+      <div className="w-full max-w-md mb-8">
+        <PrideActivityHeader 
+          title="Identity Affirmations" 
+          onBack={currentIndex > 0 ? () => setCurrentIndex(currentIndex - 1) : undefined}
+        />
       </div>
 
-      <div className="relative z-10 w-full max-w-[440px]">
+      <div className="relative z-10 w-full max-w-[440px] flex-1 flex flex-col justify-center">
         {/* Progress */}
         <div className="mb-6 px-1">
           <ProgressBar current={currentIndex} total={cards.length} />

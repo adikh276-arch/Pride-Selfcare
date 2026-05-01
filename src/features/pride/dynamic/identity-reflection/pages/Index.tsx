@@ -15,6 +15,8 @@ export interface StarData {
   label: string;
 }
 
+import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+
 const Index = () => {
   const [screen, setScreen] = useState<"welcome" | "selection" | "reflection" | "history">("welcome");
   const [stars, setStars] = useState<StarData[]>([]);
@@ -118,9 +120,17 @@ const Index = () => {
   const handleBack = useCallback(() => setScreen("welcome"), []);
 
   return (
-    <div className="relative min-h-screen bg-night-sky overflow-hidden">
+    <div className="relative min-h-screen bg-night-sky overflow-hidden p-6 md:p-8">
       <BackgroundStars />
-      <div className="relative z-10 min-h-screen flex items-center justify-center py-6 px-2">
+      <div className="relative z-20 max-w-7xl mx-auto">
+        <PrideActivityHeader 
+          title="Identity Reflection" 
+          subtitle="Map your inner constellation"
+          onBack={screen !== "welcome" ? handleBack : undefined}
+          className="mb-4"
+        />
+      </div>
+      <div className="relative z-10 min-h-[calc(100vh-120px)] flex items-center justify-center py-6 px-2">
         <AnimatePresence mode="wait">
           {screen === "welcome" && (
             <WelcomeScreen key="welcome" onStart={handleStart} onHistory={handleHistory} hasHistory={savedConstellations.length > 0} />

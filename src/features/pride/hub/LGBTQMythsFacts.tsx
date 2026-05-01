@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChevronLeft } from "lucide-react";
+import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
+import { PrideActivityHeader } from "../components/PrideActivityHeader";
 
 export function LGBTQMythsFacts() {
   const navigate = useNavigate();
@@ -53,94 +54,70 @@ export function LGBTQMythsFacts() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-[#F9F6FE] via-[#FBF8FF] to-[#F5F3FF]">
-      <div className="flex-1 flex flex-col min-w-0">
-        <main className="max-w-[1000px] w-full mx-auto px-4 md:px-6 py-4 md:py-8 pt-[72px] md:pt-8">
-          {/* Back Button */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8 md:mb-10"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <motion.button
-                whileHover={{ x: -4 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate('/lgbtq-hub')}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm text-[#64748B] hover:text-[#020817] hover:bg-white transition-all shadow-sm hover:shadow-md border border-gray-100"
-              >
-                <ChevronLeft size={20} strokeWidth={2.5} />
-              </motion.button>
-              <div>
-                <h1 className="text-3xl md:text-4xl text-[#1E293B] font-bold tracking-tight">
-                  Myths & Facts
-                </h1>
-                <p className="text-base md:text-lg text-[#64748B] mt-2">
-                  Common misconceptions about LGBTQ+ people and what's actually true.
-                </p>
-              </div>
-            </div>
+    <div className="activity-root bg-[#F9F6FE] py-8">
+      <PrideFloatingOrbs />
+      
+      <main className="activity-container-lg relative">
+        <PrideActivityHeader 
+          title="Myths & Facts" 
+          subtitle="Debunking misconceptions about the LGBTQ+ community"
+          className="mb-8"
+        />
 
-            <div className="h-1.5 w-24 bg-gradient-to-r from-[#BE51F5] via-[#EE4F84] to-[#F472B6] rounded-full"></div>
-          </motion.div>
-
-          {/* Myths & Facts List */}
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="space-y-6 mb-12"
-          >
-            {mythsFacts.map((mythFact) => (
-              <motion.button
-                key={mythFact.id}
-                variants={item}
-                onClick={() => navigate(`/lgbtq-myth/${mythFact.id}`)}
-                className="w-full bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-gray-100 hover:border-[#C4B5FD]/50 cursor-pointer group"
-              >
-                <div className="bg-gradient-to-br from-[#FEF2F2] to-[#FEE2E2] p-5 md:p-6 border-b border-[#FCA5A5]/30 group-hover:from-[#FEE2E2] group-hover:to-[#FECACA] transition-colors">
-                  <div className="flex items-start gap-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-[#FCA5A5] to-[#F87171] text-[#7F1D1D] text-xs font-bold uppercase tracking-wide shadow-sm">
-                      MYTH
-                    </span>
-                    <p className="flex-1 text-[#991B1B] text-base md:text-lg italic leading-relaxed pt-0.5 text-left">
-                      {mythFact.myth}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-5 md:p-6 flex items-start gap-4 group-hover:bg-gray-50/50 transition-colors">
-                  <div className="flex-1">
-                    <p className="text-[#334155] text-base md:text-lg leading-relaxed text-left">
-                      {mythFact.fact}
-                    </p>
-                  </div>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-[#D1FAE5] to-[#A7F3D0] text-[#065F46] text-xs font-bold uppercase tracking-wide shadow-sm whitespace-nowrap">
-                    Fact ✓
+        {/* Myths & Facts List */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="space-y-6 mb-12"
+        >
+          {mythsFacts.map((mythFact) => (
+            <motion.button
+              key={mythFact.id}
+              variants={item}
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              onClick={() => navigate(`/lgbtq-myth/${mythFact.id}`)}
+              className="w-full bg-white/80 backdrop-blur-md rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition-all border border-white group text-left"
+            >
+              <div className="bg-red-50/50 p-6 border-b border-red-100 group-hover:bg-red-100/50 transition-colors">
+                <div className="flex items-start gap-3">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold uppercase tracking-wide">
+                    MYTH
                   </span>
+                  <p className="flex-1 text-red-900 text-lg italic leading-relaxed pt-0.5">
+                    {mythFact.myth}
+                  </p>
                 </div>
-              </motion.button>
-            ))}
-          </motion.div>
+              </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="text-center py-8 md:py-12"
-          >
-            <div className="max-w-2xl mx-auto px-6 py-4 bg-gradient-to-r from-[#F0F9FF] to-[#E0F2FE] rounded-2xl border border-[#BAE6FD]/50">
-              <p className="text-[#0369A1] text-sm md:text-base leading-relaxed">
-                These facts are grounded in decades of research by medical, psychological, and social science communities worldwide.
-              </p>
-            </div>
-          </motion.div>
-        </main>
-      </div>
+              <div className="p-6 flex items-start gap-4 group-hover:bg-white/90 transition-colors">
+                <div className="flex-1">
+                  <p className="text-gray-700 text-lg leading-relaxed">
+                    {mythFact.fact}
+                  </p>
+                </div>
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wide whitespace-nowrap">
+                  Fact ✓
+                </span>
+              </div>
+            </motion.button>
+          ))}
+        </motion.div>
 
-      <div className="fixed top-20 right-10 w-64 h-64 bg-gradient-to-br from-[#BE51F5]/10 to-transparent rounded-full blur-3xl pointer-events-none -z-10"></div>
-      <div className="fixed bottom-20 left-10 w-80 h-80 bg-gradient-to-tr from-[#EE4F84]/10 to-transparent rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="text-center py-8"
+        >
+          <div className="max-w-2xl mx-auto px-6 py-4 bg-white/40 backdrop-blur-sm rounded-2xl border border-white/50 shadow-sm">
+            <p className="text-gray-500 text-sm leading-relaxed italic">
+              These facts are grounded in decades of research by medical, psychological, and social science communities worldwide.
+            </p>
+          </div>
+        </motion.div>
+      </main>
     </div>
   );
 }

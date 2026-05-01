@@ -47,6 +47,8 @@ interface SavedJournal {
 
 type Screen = "intro" | "prompt" | "reflection" | "completion" | "history";
 
+import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+
 const Index = () => {
   const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>("intro");
@@ -134,7 +136,9 @@ const Index = () => {
   const handleBackFromHistory = () => setScreen("intro");
 
   const handleBack = () => {
-    if (screen === "prompt" && promptIndex > 0) {
+    if (screen === "history") {
+      handleBackFromHistory();
+    } else if (screen === "prompt" && promptIndex > 0) {
       setPromptIndex((p) => p - 1);
       setEntries((prev) => prev.slice(0, -1));
     } else if (screen === "prompt" && promptIndex === 0) {
@@ -143,32 +147,49 @@ const Index = () => {
       setScreen("prompt");
     } else if (screen === "completion") {
       setScreen("reflection");
+    } else if (screen === "intro") {
+      navigate('/lgbtq-hub');
     }
   };
 
-  switch (screen) {
-    case "intro":
-      return <IntroScreen onStart={handleStart} onViewHistory={handleViewHistory} hasHistory={history.length > 0} onBack={() => navigate('/lgbtq-hub')} />;
-    case "prompt":
-      return (
-        <PromptScreen
-          key={promptIndex}
-          prompt={PROMPTS[promptIndex].prompt}
-          hints={PROMPTS[promptIndex].hints}
-          current={promptIndex + 1}
-          total={PROMPTS.length}
-          isLast={promptIndex === PROMPTS.length - 1}
-          onSubmit={handleSubmit}
-          onBack={handleBack}
-        />
-      );
-    case "reflection":
-      return <ReflectionScreen entries={entries} onComplete={handleReflectionComplete} onBack={handleBack} />;
-    case "completion":
-      return <CompletionScreen entries={entries} onSave={handleSave} onRestart={handleRestart} onViewHistory={handleViewHistory} onBackToHub={() => navigate('/lgbtq-hub')} />;
-    case "history":
-      return <HistoryScreen journals={history} onBack={handleBackFromHistory} />;
-  }
+  const renderScreen = () => {
+    switch (screen) {
+      case "intro":
+        return <IntroScreen onStart={handleStart} onViewHistory={handleViewHistory} hasHistory={history.length > 0} onBack={handleBack} />;
+      case "prompt":
+        return (
+          <PromptScreen
+            key={promptIndex}
+            prompt={PROMPTS[promptIndex].prompt}
+            hints={PROMPTS[promptIndex].hints}
+            current={promptIndex + 1}
+            total={PROMPTS.length}
+            isLast={promptIndex === PROMPTS.length - 1}
+            onSubmit={handleSubmit}
+            onBack={handleBack}
+          />
+        );
+      case "reflection":
+        return <ReflectionScreen entries={entries} onComplete={handleReflectionComplete} onBack={handleBack} />;
+      case "completion":
+        return <CompletionScreen entries={entries} onSave={handleSave} onRestart={handleRestart} onViewHistory={handleViewHistory} onBackToHub={() => navigate('/lgbtq-hub')} />;
+      case "history":
+        return <HistoryScreen journals={history} onBack={handleBackFromHistory} />;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col p-6 max-w-md mx-auto">
+      <PrideActivityHeader 
+        title="Pride Journal" 
+        onBack={screen !== "intro" || promptIndex > 0 ? handleBack : undefined}
+        className="mb-6"
+      />
+      <div className="flex-1 flex flex-col">
+        {renderScreen()}
+      </div>
+    </div>
+  );
 };
 
 export default Index;

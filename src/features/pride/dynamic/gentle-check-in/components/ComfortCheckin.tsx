@@ -61,6 +61,8 @@ const saveEntry = async (data: CheckinData) => {
   }
 };
 
+import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+
 const ComfortCheckin = () => {
   const [step, setStep] = useState(0);
   const [showHistory, setShowHistory] = useState(false);
@@ -83,10 +85,17 @@ const ComfortCheckin = () => {
     setData({ type: "", trigger: "", intensity: "", whatHelps: "", nowFeeling: "", note: "" });
   };
 
+  const handleBack = () => {
+    if (step > 0) {
+      setStep(step - 1);
+    }
+  };
+
   if (showHistory) {
     return (
       <div className="min-h-svh flex flex-col items-center justify-start p-6 text-center" style={{ background: 'var(--pride-gradient), hsl(var(--background))' }}>
         <div className="w-full max-w-sm">
+          <PrideActivityHeader title="Check-in History" onBack={() => setShowHistory(false)} />
           <HistoryScreen onBack={() => setShowHistory(false)} />
         </div>
       </div>
@@ -108,19 +117,28 @@ const ComfortCheckin = () => {
   const totalSteps = 9;
 
   return (
-    <div className="min-h-svh flex flex-col items-center justify-center p-6 text-center" style={{ background: 'var(--pride-gradient), hsl(var(--background))' }}>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={step}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={transition}
-          className="w-full max-w-sm space-y-8"
-        >
-          {screens[step]}
-        </motion.div>
-      </AnimatePresence>
+    <div className="min-h-svh flex flex-col items-center justify-start p-6 text-center relative" style={{ background: 'var(--pride-gradient), hsl(var(--background))' }}>
+      <div className="w-full max-w-sm mb-4">
+        <PrideActivityHeader 
+          title="Gentle Check-in" 
+          onBack={step > 0 ? handleBack : undefined}
+          className="mb-4"
+        />
+      </div>
+      <div className="flex-1 flex flex-col justify-center w-full max-w-sm">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={transition}
+            className="w-full space-y-8"
+          >
+            {screens[step]}
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {step > 0 && step < 8 && (
         <div className="flex gap-2 mt-8">

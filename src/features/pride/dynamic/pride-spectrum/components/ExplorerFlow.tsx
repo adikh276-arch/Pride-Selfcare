@@ -27,6 +27,8 @@ export interface HistoryEntry {
 
 const TOTAL_SCREENS = 13;
 
+import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+
 const ExplorerFlow = () => {
   const navigate = useNavigate();
   const [screen, setScreen] = useState(0);
@@ -59,6 +61,8 @@ const ExplorerFlow = () => {
     }
     goTo(Math.max(0, screen - 1));
   };
+  
+  // ... rest of logic stays same ...
 
   const generateResult = (): string[] => {
     const lines: string[] = [];
@@ -384,17 +388,14 @@ const ExplorerFlow = () => {
       <div className="fixed inset-0 -z-10 bg-background/50" />
 
       <div className="w-full max-w-md mx-auto px-5 py-8 flex flex-col min-h-screen relative">
-        {(
-          <button
-            onClick={prev}
-            className="absolute top-8 left-5 w-10 h-10 flex items-center justify-center rounded-full bg-card border border-border text-foreground hover:bg-accent transition-colors z-10"
-            aria-label="Go back"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-          </button>
-        )}
+        <PrideActivityHeader 
+          title="Pride Spectrum" 
+          subtitle="Explore your attraction"
+          onBack={screen > 0 ? prev : undefined}
+          className="mb-8"
+        />
         {screen >= 2 && screen <= 11 && (
-          <div className="mb-6 mt-12">
+          <div className="mb-6">
             <ProgressBar current={screen - 1} total={10} />
           </div>
         )}

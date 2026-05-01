@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Users, Shield, Leaf, Sparkles, Home, Moon } from "lucide-react";
+import { ChevronRight, Users, Shield, Leaf, Sparkles, Home, Moon } from "lucide-react";
+import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
+import { PrideActivityHeader } from "../components/PrideActivityHeader";
 
 export function LGBTQTips() {
   const navigate = useNavigate();
@@ -29,105 +31,78 @@ export function LGBTQTips() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-[#F5EBFF] via-[#F2F0FF] to-[#FFE8EC]">
-      <div className="flex-1 flex flex-col min-w-0">
-        <main className="max-w-[1000px] w-full mx-auto px-4 md:px-6 py-4 md:py-8 pt-[72px] md:pt-8">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-10 md:mb-12"
-          >
-            <div className="flex items-center gap-3 mb-6">
+    <div className="activity-root bg-[#F5EBFF] py-8">
+      <PrideFloatingOrbs />
+      
+      <main className="activity-container-lg relative">
+        <PrideActivityHeader 
+          title="LGBTQ+ Tips" 
+          subtitle="Advice and support for your journey"
+          className="mb-8"
+        />
+
+        {/* Tips List */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="space-y-4 mb-12"
+        >
+          {tips.map((tip) => {
+            const IconComponent = tip.icon;
+            return (
               <motion.button
-                whileHover={{ x: -4 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate('/lgbtq-hub')}
-                className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm text-[#64748B] hover:text-[#020817] hover:bg-white transition-all shadow-sm hover:shadow-md border border-gray-100"
+                key={tip.id}
+                variants={item}
+                whileHover={{ scale: 1.01, x: 5 }}
+                whileTap={{ scale: 0.99 }}
+                onClick={() => navigate(tip.link)}
+                className="w-full bg-white/80 backdrop-blur-md rounded-3xl p-6 md:p-7 flex items-center gap-6 shadow-sm hover:shadow-xl transition-all border border-white group relative overflow-hidden text-left"
               >
-                <ChevronLeft size={20} strokeWidth={2.5} />
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-50/0 via-purple-50/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div className={`relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br ${tip.iconBg} rounded-2xl md:rounded-3xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:shadow-2xl transition-all group-hover:scale-105 duration-500`}>
+                  <IconComponent className="text-white" size={32} strokeWidth={2} />
+                </div>
+
+                <div className="flex-1 relative z-10">
+                  <h3 className="text-lg md:text-xl font-bold text-[#1E293B] mb-2 group-hover:text-[#A855F7] transition-colors duration-300">
+                    {tip.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-[#64748B] leading-relaxed">
+                    {tip.description}
+                  </p>
+                </div>
+
+                <div className="relative flex-shrink-0 hidden sm:block">
+                  <div className="w-11 h-11 rounded-xl bg-gray-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110">
+                    <ChevronRight 
+                      className="text-[#A855F7] group-hover:translate-x-1 transition-transform duration-300" 
+                      size={24}
+                      strokeWidth={2.5}
+                    />
+                  </div>
+                </div>
               </motion.button>
-              <div>
-                <h1 className="text-3xl md:text-4xl text-[#1E293B] font-bold tracking-tight">
-                  Care for Your Whole Self
-                </h1>
-                <p className="text-base md:text-lg text-[#64748B] mt-2">
-                  Small, gentle steps for LGBTQ+ wellbeing at your own pace.
-                </p>
-              </div>
-            </div>
+            );
+          })}
+        </motion.div>
 
-            <div className="h-1.5 w-24 bg-gradient-to-r from-[#BE51F5] via-[#EE4F84] to-[#F472B6] rounded-full"></div>
-          </motion.div>
-
-          {/* Tips List */}
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="space-y-4 mb-12"
-          >
-            {tips.map((tip) => {
-              const IconComponent = tip.icon;
-              return (
-                <motion.button
-                  key={tip.id}
-                  variants={item}
-                  whileHover={{ scale: 1.02, x: 8 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => navigate(tip.link)}
-                  className="w-full bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-7 flex items-center gap-5 shadow-sm hover:shadow-xl transition-all border border-gray-100/50 hover:border-[#BE51F5]/20 group relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#BE51F5]/0 via-[#EE4F84]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                  <div className={`relative w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br ${tip.iconBg} rounded-2xl md:rounded-3xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:shadow-2xl transition-all group-hover:scale-110 duration-300`}>
-                    <IconComponent className="text-white" size={32} strokeWidth={2} />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl md:rounded-3xl"></div>
-                  </div>
-
-                  <div className="flex-1 text-left relative z-10">
-                    <h3 className="text-lg md:text-xl font-bold text-[#1E293B] mb-2 group-hover:text-[#BE51F5] transition-colors duration-300">
-                      {tip.title}
-                    </h3>
-                    <p className="text-sm md:text-base text-[#64748B] leading-relaxed">
-                      {tip.description}
-                    </p>
-                  </div>
-
-                  <div className="relative flex-shrink-0">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-[#F3E1FD] to-[#FAE8FF] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110">
-                      <ChevronRight 
-                        className="text-[#BE51F5] group-hover:translate-x-1 transition-transform duration-300" 
-                        size={24}
-                        strokeWidth={2.5}
-                      />
-                    </div>
-                  </div>
-                </motion.button>
-              );
-            })}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="text-center py-8 md:py-12"
-          >
-            <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-[#BE51F5]/10 via-[#EE4F84]/10 to-[#F472B6]/10 rounded-2xl border border-[#BE51F5]/20">
-              <Sparkles className="text-[#BE51F5]" size={20} />
-              <p className="text-[#64748B] text-sm md:text-base font-medium">
-                You're doing great. Take your time.
-              </p>
-              <Sparkles className="text-[#EE4F84]" size={20} />
-            </div>
-          </motion.div>
-        </main>
-      </div>
-
-      <div className="fixed top-20 right-10 w-64 h-64 bg-gradient-to-br from-[#BE51F5]/10 to-transparent rounded-full blur-3xl pointer-events-none -z-10"></div>
-      <div className="fixed bottom-20 left-10 w-80 h-80 bg-gradient-to-tr from-[#EE4F84]/10 to-transparent rounded-full blur-3xl pointer-events-none -z-10"></div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="text-center py-8"
+        >
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/40 backdrop-blur-sm rounded-2xl border border-white/50">
+            <Sparkles className="text-[#A855F7]" size={20} />
+            <p className="text-[#64748B] text-sm md:text-base font-medium italic">
+              You're doing great. Take your time.
+            </p>
+            <Sparkles className="text-[#EC4899]" size={20} />
+          </div>
+        </motion.div>
+      </main>
     </div>
   );
 }

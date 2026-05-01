@@ -73,6 +73,8 @@ interface ScreenProps { answers: Answers; setAnswer: (k: string, v: string | num
 interface MultiProps extends ScreenProps { toggleMulti: (k: string, v: string) => void }
 
 /* ─── Main Component ─── */
+import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+
 const ExploreIdentity = () => {
   const navigate = useNavigate();
   const [screen, setScreen] = useState(0);
@@ -82,6 +84,15 @@ const ExploreIdentity = () => {
   const [isSaving, setIsSaving] = useState(false);
 
   const next = useCallback(() => { setScreen(s => s + 1); setRevealStep(0); }, []);
+  const prev = useCallback(() => { 
+    if (screen > 0) {
+      setScreen(s => s - 1);
+      setRevealStep(0);
+    } else {
+      navigate('/lgbtq-hub');
+    }
+  }, [screen, navigate]);
+
   const setAnswer = useCallback((k: string, v: string | number) => {
     setAnswers(a => ({ ...a, [k]: v }));
     setTimeout(() => setRevealStep(s => s + 1), 400);
@@ -117,7 +128,12 @@ const ExploreIdentity = () => {
   };
 
   if (showHistory) {
-    return <HistoryScreen onBack={() => setShowHistory(false)} />;
+    return (
+      <div className="min-h-screen p-6" style={{ background: prideGradientBg }}>
+        <PrideActivityHeader title="Exploration History" onBack={() => setShowHistory(false)} />
+        <HistoryScreen onBack={() => setShowHistory(false)} />
+      </div>
+    );
   }
 
   const screens = [
@@ -137,8 +153,13 @@ const ExploreIdentity = () => {
   const prideGradientBg = "radial-gradient(circle at 15% 10%, hsl(0 75% 65% / 0.1), transparent 40%), radial-gradient(circle at 85% 15%, hsl(30 85% 60% / 0.1), transparent 40%), radial-gradient(circle at 10% 50%, hsl(50 90% 65% / 0.08), transparent 40%), radial-gradient(circle at 90% 50%, hsl(140 55% 50% / 0.1), transparent 40%), radial-gradient(circle at 20% 85%, hsl(210 70% 55% / 0.1), transparent 40%), radial-gradient(circle at 80% 90%, hsl(275 60% 60% / 0.1), transparent 40%), hsl(30 20% 98%)";
 
   return (
-    <div className="min-h-screen" style={{ background: prideGradientBg }}>
+    <div className="min-h-screen p-6" style={{ background: prideGradientBg }}>
       <div className="mx-auto flex min-h-screen max-w-md flex-col">
+        <PrideActivityHeader 
+          title="Identity Exploration" 
+          onBack={screen > 0 ? prev : undefined}
+          className="mb-6"
+        />
         <AnimatePresence mode="wait">
           <motion.div key={screen} variants={pageV} initial="enter" animate="center" exit="exit" transition={t} className="flex flex-1 flex-col">
             {screens[screen]}
@@ -191,44 +212,34 @@ const HistoryScreen = ({ onBack }: { onBack: () => void }) => {
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: "radial-gradient(circle at 15% 10%, hsl(0 75% 65% / 0.1), transparent 40%), radial-gradient(circle at 85% 15%, hsl(30 85% 60% / 0.1), transparent 40%), radial-gradient(circle at 10% 50%, hsl(50 90% 65% / 0.08), transparent 40%), radial-gradient(circle at 90% 50%, hsl(140 55% 50% / 0.1), transparent 40%), radial-gradient(circle at 20% 85%, hsl(210 70% 55% / 0.1), transparent 40%), radial-gradient(circle at 80% 90%, hsl(275 60% 60% / 0.1), transparent 40%), hsl(30 20% 98%)" }}>
-      <div className="mx-auto flex min-h-screen max-w-md flex-col">
-        <div className="flex items-center gap-3 px-5 pt-6 pb-2">
-          <button onClick={onBack} className="flex h-10 w-10 items-center justify-center rounded-full bg-card/80 cloud-shadow">
-            <ArrowLeft className="h-5 w-5 text-foreground" />
-          </button>
-          <h2 className="text-lg font-semibold text-foreground">Your History</h2>
+    <div className="flex flex-1 flex-col px-5 py-6 gap-8 overflow-y-auto">
+      {loading ? (
+        <div className="flex flex-1 items-center justify-center"><Loader2 className="animate-spin text-muted-foreground" /></div>
+      ) : history.length === 0 ? (
+        <div className="flex flex-1 items-center justify-center">
+          <p className="text-muted-foreground text-center">No responses yet. Complete the activity to see your history here.</p>
         </div>
-        <div className="flex flex-1 flex-col px-5 py-6 gap-8 overflow-y-auto">
-          {loading ? (
-            <div className="flex flex-1 items-center justify-center"><Loader2 className="animate-spin text-muted-foreground" /></div>
-          ) : history.length === 0 ? (
-            <div className="flex flex-1 items-center justify-center">
-              <p className="text-muted-foreground text-center">No responses yet. Complete the activity to see your history here.</p>
-            </div>
-          ) : (
-            history.map((entry, idx) => (
-              <div key={idx} className="space-y-3">
-                <p className="text-sm font-bold text-primary">{new Date(entry.date).toLocaleDateString()}</p>
-                {fields.filter(f => entry.answers[f.key] !== undefined).map((f) => {
-                  const raw = entry.answers[f.key];
-                  const display = f.format
-                    ? (f.format as (v: any) => string)(raw)
-                    : Array.isArray(raw) ? raw.join(", ") : String(raw);
-                  return (
-                    <motion.div key={f.key} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                      className="cloud-shadow rounded-2xl bg-card/80 px-5 py-4">
-                      <p className="text-xs text-muted-foreground mb-1">{f.label}</p>
-                      <p className="text-foreground text-[0.95rem]">{display}</p>
-                    </motion.div>
-                  );
-                })}
-                <hr className="opacity-10" />
-              </div>
-            ))
-          )}
-        </div>
-      </div>
+      ) : (
+        history.map((entry, idx) => (
+          <div key={idx} className="space-y-3">
+            <p className="text-sm font-bold text-primary">{new Date(entry.date).toLocaleDateString()}</p>
+            {fields.filter(f => entry.answers[f.key] !== undefined).map((f) => {
+              const raw = entry.answers[f.key];
+              const display = f.format
+                ? (f.format as (v: any) => string)(raw)
+                : Array.isArray(raw) ? raw.join(", ") : String(raw);
+              return (
+                <motion.div key={f.key} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                  className="cloud-shadow rounded-2xl bg-card/80 px-5 py-4">
+                  <p className="text-xs text-muted-foreground mb-1">{f.label}</p>
+                  <p className="text-foreground text-[0.95rem]">{display}</p>
+                </motion.div>
+              );
+            })}
+            <hr className="opacity-10" />
+          </div>
+        ))
+      )}
     </div>
   );
 };
@@ -237,10 +248,7 @@ const HistoryScreen = ({ onBack }: { onBack: () => void }) => {
 const S0 = ({ onNext, onHistory, onBack }: { onNext: () => void; onHistory: () => void; onBack: () => void }) => (
   <div className="flex flex-1 flex-col px-6 py-12"
     style={{ background: "radial-gradient(circle at 30% 20%, hsl(0 75% 65% / 0.08), transparent 50%), radial-gradient(circle at 70% 30%, hsl(30 85% 60% / 0.08), transparent 50%), radial-gradient(circle at 50% 60%, hsl(210 70% 55% / 0.06), transparent 50%), radial-gradient(circle at 80% 80%, hsl(275 60% 60% / 0.08), transparent 50%), hsl(30 20% 98%)" }}>
-    <div className="flex items-center justify-between">
-      <button onClick={onBack} className="flex h-10 w-10 items-center justify-center rounded-full bg-card/80 cloud-shadow">
-        <ChevronLeft className="h-5 w-5 text-foreground" />
-      </button>
+    <div className="flex items-center justify-end">
       <button onClick={onHistory} className="flex h-10 w-10 items-center justify-center rounded-full bg-card/80 cloud-shadow">
         <History className="h-5 w-5 text-foreground" />
       </button>

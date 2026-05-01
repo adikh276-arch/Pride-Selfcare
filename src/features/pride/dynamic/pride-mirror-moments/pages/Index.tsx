@@ -11,6 +11,8 @@ import { sql } from "@/lib/db";
 
 type Screen = "intro" | "mirror" | "reflection" | "completion" | "saved";
 
+import { PrideActivityHeader } from "../../components/PrideActivityHeader";
+
 const Index = () => {
   const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>("intro");
@@ -81,16 +83,27 @@ const Index = () => {
   }, []);
 
   const handleBack = useCallback(() => {
-    setNotes([]);
-    setScreen("intro");
-  }, []);
+    if (screen === "intro") {
+      navigate('/lgbtq-hub');
+    } else {
+      setScreen("intro");
+      setNotes([]);
+    }
+  }, [screen, navigate]);
 
   return (
-    <div className="min-h-screen bg-background max-w-md mx-auto pride-bg relative z-0">
-      <div className="relative z-10">
+    <div className="min-h-screen bg-background max-w-md mx-auto pride-bg relative z-0 p-6">
+      <div className="relative z-20">
+        <PrideActivityHeader 
+          title="Mirror Moments" 
+          onBack={screen !== "intro" ? handleBack : undefined}
+          className="mb-4"
+        />
+      </div>
+      <div className="relative z-10 flex-1">
       <AnimatePresence mode="wait">
         {screen === "intro" && (
-          <IntroScreen key="intro" onStart={() => setScreen("mirror")} onBack={() => navigate('/lgbtq-hub')} />
+          <IntroScreen key="intro" onStart={() => setScreen("mirror")} onBack={handleBack} />
         )}
         {screen === "mirror" && (
           <MirrorScreen
