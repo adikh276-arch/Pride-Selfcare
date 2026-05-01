@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, History, Loader2, ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { sql } from "@/lib/db";
+import { toast } from "sonner";
 
 /* ─── Shared Animation Config ─── */
 const ease = [0.32, 0.72, 0, 1] as [number, number, number, number];
@@ -11,43 +12,45 @@ const pageV = { enter: { opacity: 0, y: 20 }, center: { opacity: 1, y: 0 }, exit
 
 /* ─── Small reusable pieces ─── */
 const Dots = ({ total, current }: { total: number; current: number }) => (
-  <div className="flex items-center justify-center gap-2 py-2">
-    {Array.from({ length: total }).map((_, i) => {
-      const prideColors = ["bg-pride-red", "bg-pride-orange", "bg-pride-yellow", "bg-pride-green", "bg-pride-blue"];
-      return (
-        <div key={i} className={`h-2 w-2 rounded-full transition-all duration-300 ${i < current ? `${prideColors[i % prideColors.length]} scale-110` : "bg-border"}`} />
-      );
-    })}
+  <div className="flex items-center justify-center gap-3 py-4">
+    {Array.from({ length: total }).map((_, i) => (
+      <div 
+        key={i} 
+        className={`h-2 rounded-full transition-all duration-500 ${
+          i < current 
+            ? "w-8 bg-pride-purple shadow-[0_0_10px_rgba(168,85,247,0.4)]" 
+            : "w-2 bg-pride-purple/10"
+        }`} 
+      />
+    ))}
   </div>
 );
 
 const Bubble = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
   <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ ...t, delay }}
-    className="cloud-shadow rounded-2xl bg-card/80 px-5 py-4 backdrop-blur-sm">
-    <p className="justified-text text-foreground">{children}</p>
+    className="premium-card px-8 py-6 shadow-xl border-l-4 border-l-pride-blue">
+    <p className="justified-text text-foreground/90 text-lg font-medium leading-relaxed">{children}</p>
   </motion.div>
 );
 
 const QuestionBubble = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => (
   <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ ...t, delay }}
-    className="cloud-shadow rounded-2xl px-5 py-4 backdrop-blur-sm"
-    style={{ background: "linear-gradient(135deg, hsl(275 60% 60% / 0.15), hsl(210 70% 55% / 0.15), hsl(140 55% 50% / 0.12))", border: "1px solid hsl(275 60% 60% / 0.2)" }}>
-    <p className="justified-text text-foreground font-medium">{children}</p>
+    className="premium-card px-8 py-6 border-pride-purple/20 bg-pride-purple/5 shadow-inner">
+    <p className="justified-text text-foreground font-bold text-xl leading-tight">{children}</p>
   </motion.div>
 );
 
 const Btn = ({ children, onClick, variant = "primary", disabled = false }: { children: React.ReactNode; onClick: () => void; variant?: "primary" | "secondary" | "ghost"; disabled?: boolean }) => {
-  const styles = {
-    primary: "text-foreground cloud-shadow",
-    secondary: "bg-card/80 text-foreground cloud-shadow",
-    ghost: "text-muted-foreground",
+  const variants = {
+    primary: "btn-primary h-14 text-lg font-bold shadow-lg",
+    secondary: "btn-secondary h-14 text-lg font-bold",
+    ghost: "btn-ghost h-12 text-base font-bold",
   };
-  const primaryStyle = variant === "primary" ? { background: "linear-gradient(135deg, hsl(0 75% 65% / 0.25), hsl(30 85% 60% / 0.25), hsl(50 90% 65% / 0.25), hsl(140 55% 50% / 0.2), hsl(210 70% 55% / 0.25), hsl(275 60% 60% / 0.25))" } : {};
   return (
-    <motion.button whileTap={{ scale: disabled ? 1 : 0.98 }} onClick={onClick} style={primaryStyle} disabled={disabled}
-      className={`w-full rounded-2xl px-6 py-4 text-[0.95rem] font-medium transition-all duration-200 text-center justified-text ${styles[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
+    <button onClick={onClick} disabled={disabled}
+      className={`w-full ${variants[variant]}`}>
       {children}
-    </motion.button>
+    </button>
   );
 };
 
@@ -56,14 +59,32 @@ const Opt = ({ label, selected, onClick, delay = 0, multi }: {
 }) => (
   <motion.button initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ ...t, delay }}
     whileTap={{ scale: 0.98 }} onClick={onClick}
-    className={`w-full rounded-2xl px-5 py-3.5 text-left transition-all duration-200 justified-text ${
-      selected ? "shadow-sm" : "cloud-shadow bg-card/80"
-    }`}
-    style={selected ? { background: "linear-gradient(135deg, hsl(275 60% 60% / 0.15), hsl(210 70% 55% / 0.15), hsl(140 55% 50% / 0.1))", border: "1px solid hsl(275 60% 60% / 0.25)" } : {}}>
-    <span className="text-foreground text-[0.95rem]">
-      {multi && <span className={`mr-2.5 inline-flex h-[18px] w-[18px] items-center justify-center rounded align-middle text-xs leading-none ${selected ? "bg-primary/30" : "border border-border"}`}>{selected ? "✓" : ""}</span>}
-      {label}
-    </span>
+    className={cn(
+      "w-full py-5 px-8 text-left font-bold transition-all duration-300 rounded-2xl",
+      selected
+        ? "premium-card border-pride-purple/40 ring-2 ring-pride-purple/20 text-pride-purple bg-pride-purple/5 shadow-lg"
+        : "premium-card-interactive text-foreground/80 hover:text-foreground"
+    )}
+  >
+    <div className="flex items-center justify-between w-full">
+      <span className="text-lg">
+        {multi && (
+          <span className={`mr-4 inline-flex h-6 w-6 items-center justify-center rounded-lg align-middle transition-all ${
+            selected ? "bg-pride-purple text-white shadow-md scale-110" : "border-2 border-border"
+          }`}>
+            {selected ? "✓" : ""}
+          </span>
+        )}
+        {label}
+      </span>
+      {selected && !multi && (
+        <div className="w-6 h-6 rounded-full bg-pride-purple flex items-center justify-center shadow-md animate-in zoom-in duration-300">
+          <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 3L4.5 8.5L2 6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+      )}
+    </div>
   </motion.button>
 );
 
@@ -74,6 +95,8 @@ interface MultiProps extends ScreenProps { toggleMulti: (k: string, v: string) =
 
 /* ─── Main Component ─── */
 import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
+import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
+import { cn } from "@/lib/utils";
 
 const ExploreIdentity = () => {
   const navigate = useNavigate();
@@ -114,14 +137,13 @@ const ExploreIdentity = () => {
         INSERT INTO identity_exploration_entries (user_id, data)
         VALUES (${userId}, ${JSON.stringify(answers)})
       `;
-      alert('Profile saved successfully!');
+      toast.success('Profile saved to your journey!');
     } catch (err) {
       console.error('Failed to save profile:', err);
-      // Fallback to localStorage
       const history = JSON.parse(localStorage.getItem("identity_exploration_history") || "[]");
       history.push({ date: new Date().toISOString(), answers });
       localStorage.setItem("identity_exploration_history", JSON.stringify(history));
-      alert('Saved locally. Connect to internet to sync.');
+      toast.success('Saved locally. Connect to sync.');
     } finally {
       setIsSaving(false);
     }
@@ -129,9 +151,12 @@ const ExploreIdentity = () => {
 
   if (showHistory) {
     return (
-      <div className="min-h-screen p-6" style={{ background: prideGradientBg }}>
-        <PrideActivityHeader title="Exploration History" onBack={() => setShowHistory(false)} />
-        <HistoryScreen onBack={() => setShowHistory(false)} />
+      <div className="activity-root">
+        <PrideFloatingOrbs />
+        <div className="activity-container-sm py-8 relative z-10">
+          <PrideActivityHeader title="Exploration History" onBack={() => setShowHistory(false)} className="mb-8" />
+          <HistoryScreen onBack={() => setShowHistory(false)} />
+        </div>
       </div>
     );
   }
@@ -150,15 +175,15 @@ const ExploreIdentity = () => {
     <S10 key={10} onHistory={() => setShowHistory(true)} onSave={saveProfile} isSaving={isSaving} onBackToHub={() => navigate('/lgbtq-hub')} />,
   ];
 
-  const prideGradientBg = "radial-gradient(circle at 15% 10%, hsl(0 75% 65% / 0.1), transparent 40%), radial-gradient(circle at 85% 15%, hsl(30 85% 60% / 0.1), transparent 40%), radial-gradient(circle at 10% 50%, hsl(50 90% 65% / 0.08), transparent 40%), radial-gradient(circle at 90% 50%, hsl(140 55% 50% / 0.1), transparent 40%), radial-gradient(circle at 20% 85%, hsl(210 70% 55% / 0.1), transparent 40%), radial-gradient(circle at 80% 90%, hsl(275 60% 60% / 0.1), transparent 40%), hsl(30 20% 98%)";
-
   return (
-    <div className="min-h-screen p-6" style={{ background: prideGradientBg }}>
-      <div className="mx-auto flex min-h-screen max-w-md flex-col">
+    <div className="activity-root">
+      <PrideFloatingOrbs />
+      <div className="activity-container-sm py-8 flex flex-col min-h-screen relative z-10">
         <PrideActivityHeader 
           title="Identity Exploration" 
+          subtitle="Reflect on your journey"
           onBack={screen > 0 ? prev : undefined}
-          className="mb-6"
+          className="mb-8"
         />
         <AnimatePresence mode="wait">
           <motion.div key={screen} variants={pageV} initial="enter" animate="center" exit="exit" transition={t} className="flex flex-1 flex-col">
@@ -330,13 +355,18 @@ const S3 = ({ answers, setAnswer, toggleMulti, revealStep, onNext }: MultiProps)
         <Bubble>Now, let&apos;s look at how you express yourself.</Bubble>
         <QuestionBubble delay={0.15}>What kind of expression feels most like you?</QuestionBubble>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ ...t, delay: 0.25 }}
-          className="cloud-shadow mt-2 rounded-2xl bg-card/80 p-6">
-          <div className="flex justify-between text-sm text-muted-foreground mb-3">
-            <span>Feminine</span><span>Androgynous</span><span>Masculine</span>
+          className="premium-card mt-2 p-8">
+          <div className="flex justify-between text-xs font-black uppercase tracking-widest text-muted-foreground mb-6">
+            <span className="text-pride-purple">Feminine</span>
+            <span className="text-pride-green">Androgynous</span>
+            <span className="text-pride-orange">Masculine</span>
           </div>
-          <input type="range" min="0" max="100" value={val}
-            onChange={e => setAnswer("expr_slider", Number(e.target.value))}
-            className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer" />
+          <div className="relative h-4 w-full rounded-full bg-black/5 p-1 mb-2">
+            <div className="absolute inset-1 rounded-full bg-gradient-to-r from-pride-purple via-pride-green to-pride-orange opacity-30" />
+            <input type="range" min="0" max="100" value={val}
+              onChange={e => setAnswer("expr_slider", Number(e.target.value))}
+              className="absolute inset-0 w-full h-full appearance-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-pride-purple" />
+          </div>
         </motion.div>
         {answers.expr_slider !== undefined && revealStep >= 1 && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={t} className="mt-4 flex flex-col gap-4">
@@ -475,13 +505,15 @@ const S8 = ({ onNext }: { onNext: () => void }) => {
         <h2 className="text-xl font-semibold text-foreground tracking-tight">Your Gender Expression Profile</h2>
         <p className="text-sm text-muted-foreground mt-1 px-2 text-center">This isn&apos;t a label—just a reflection of what you shared.</p>
       </motion.div>
-      <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 px-5 no-scrollbar">
+      <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 px-5 no-scrollbar">
         {cards.map((c, i) => (
           <motion.div key={c.title} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ ...t, delay: 0.1 + i * 0.08 }}
-            className="cloud-shadow min-w-[80vw] max-w-[340px] snap-center rounded-3xl bg-card/80 p-8 flex-shrink-0">
-            <p className="text-3xl mb-3">{c.icon}</p>
-            <h3 className="font-semibold text-foreground mb-2">{c.title}</h3>
-            <p className="justified-text text-foreground/80 text-sm">{c.text}</p>
+            className="premium-card min-w-[85vw] max-w-[340px] snap-center p-8 flex-shrink-0 flex flex-col items-center text-center">
+            <div className="w-16 h-16 bg-accent/50 rounded-full flex items-center justify-center text-3xl mb-4">
+              {c.icon}
+            </div>
+            <h3 className="text-xl font-bold text-foreground mb-3">{c.title}</h3>
+            <p className="justified-text text-foreground/80 text-base leading-relaxed">{c.text}</p>
           </motion.div>
         ))}
       </div>

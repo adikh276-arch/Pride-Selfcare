@@ -17,49 +17,50 @@ const PromptScreen = ({ prompt, hints, current, total, isLast, onSubmit, onBack 
   const [text, setText] = useState("");
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen rainbow-bg px-6 py-10 animate-fade-in relative">
-      <button onClick={onBack} className="absolute top-6 left-6 text-muted-foreground hover:text-foreground transition-colors">
-        <ArrowLeft className="w-5 h-5" />
-      </button>
-      <div className="max-w-md w-full space-y-5">
-        <ProgressBar current={current} total={total} />
+  <div className="flex flex-col space-y-8 pt-4 animate-fade-in relative z-10">
+    <ProgressBar current={current} total={total} />
 
-        <div className="bg-card/80 backdrop-blur-sm rounded-2xl p-5 shadow-md space-y-4">
-          <h2 className="text-lg text-foreground leading-snug text-justify">{prompt}</h2>
+    <div className="premium-card p-10 md:p-12 space-y-10 shadow-2xl">
+      <div className="space-y-4">
+        <p className="text-[10px] font-black uppercase tracking-widest text-pride-purple opacity-60">Reflection {current} of {total}</p>
+        <h2 className="text-3xl font-bold text-foreground leading-tight">{prompt}</h2>
+      </div>
 
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Write your reflection here..."
-            className="w-full min-h-[120px] p-4 rounded-xl bg-background/60 border border-border text-foreground journal-font text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ring text-justify"
-          />
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Tap into your feelings here..."
+        className="w-full min-h-[220px] p-6 rounded-2xl bg-white/5 border border-border text-foreground text-xl leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-pride-purple/40 transition-all placeholder:text-muted-foreground/30"
+        autoFocus
+      />
 
-          <div className="space-y-1.5">
-            <p className="text-xs text-muted-foreground">Tap to use:</p>
-            {hints.map((h, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setText(h)}
-                className="block w-full text-left text-xs text-primary/70 hover:text-primary italic journal-font text-justify px-3 py-1.5 rounded-lg hover:bg-primary/10 transition-colors cursor-pointer"
-              >
-                "{h}"
-              </button>
-            ))}
-          </div>
+      <div className="space-y-4">
+        <p className="text-xs font-black uppercase tracking-widest text-muted-foreground opacity-60 px-1">Reflection Ideas:</p>
+        <div className="grid gap-3">
+          {hints.map((h, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setText(h)}
+              className="text-left text-sm text-foreground/80 hover:text-foreground italic bg-black/5 hover:bg-black/10 px-5 py-4 rounded-xl border border-white/5 hover:border-white/10 transition-all duration-300 group"
+            >
+              <span className="opacity-40 group-hover:opacity-100 transition-opacity">“</span>
+              {h}
+              <span className="opacity-40 group-hover:opacity-100 transition-opacity">”</span>
+            </button>
+          ))}
         </div>
-
-        <Button
-          variant="pride"
-          size="lg"
-          className="w-full"
-          disabled={!text.trim()}
-          onClick={() => onSubmit(text.trim())}
-        >
-          {isLast ? "Finish Journal" : "Next"}
-        </Button>
       </div>
     </div>
+
+    <button
+      className="btn-primary w-full h-14 text-lg font-bold shadow-2xl shadow-pride-purple/20 disabled:opacity-40"
+      disabled={!text.trim()}
+      onClick={() => onSubmit(text.trim())}
+    >
+      {isLast ? "Finish Journal" : "Next Reflection"}
+    </button>
+  </div>
   );
 };
 

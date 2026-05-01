@@ -10,48 +10,37 @@ interface Props {
 const WelcomeScreen = ({ onStart, onViewHistory }: Props) => {
   const navigate = useNavigate();
   return (
-  <div className="flex flex-col items-center justify-center flex-1 w-full space-y-8">
-    <div className="w-full flex justify-between items-center">
-      <button 
-        onClick={() => navigate('/lgbtq-hub')}
-        className="p-2 rounded-2xl text-muted-foreground hover:bg-secondary transition-colors"
+  <div className="premium-card p-10 md:p-12 text-center space-y-10 w-full animate-fade-in relative z-10">
+    <div className="w-20 h-20 bg-pride-yellow/10 rounded-full flex items-center justify-center mx-auto text-5xl">
+      🛡️
+    </div>
+
+    <div className="space-y-4">
+      <h1 className="text-3xl font-bold text-foreground">
+        Finding Your Right Time
+      </h1>
+      <p className="text-lg text-muted-foreground leading-relaxed justified-text">
+        A private space to reflect on your coming out journey. Explore what feels safe, comfortable, and right for you.
+      </p>
+      <div className="flex items-center justify-center gap-2 text-sm font-bold text-pride-yellow/80 uppercase tracking-widest pt-2">
+        <span>Takes about 3–4 minutes</span>
+      </div>
+    </div>
+
+    <div className="space-y-4 pt-4">
+      <button
+        onClick={onStart}
+        className="btn-primary w-full h-14 text-lg font-bold shadow-lg"
       >
-        <ArrowLeft size={20} />
+        Begin Reflection
       </button>
       <button
         onClick={onViewHistory}
-        className="flex items-center gap-2 px-4 py-2 rounded-2xl text-sm text-muted-foreground hover:bg-secondary transition-colors"
+        className="btn-secondary w-full h-14"
       >
-        <History size={16} />
-        View History
+        View Past Reflections
       </button>
     </div>
-
-    <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center">
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.1 }}
-        className="text-4xl"
-      >
-        🛡️
-      </motion.div>
-      <h1 className="text-2xl font-semibold tracking-tight text-balance text-foreground">
-        Finding Your Right Time
-      </h1>
-      <p className="text-base leading-relaxed text-foreground/90 text-justify hyphens-auto">
-        A space to reflect on what feels safe and right for you.
-      </p>
-      <p className="text-sm text-muted-foreground">⏱ Takes about 3–4 minutes</p>
-    </div>
-
-    <motion.button
-      whileTap={{ scale: 0.97 }}
-      onClick={onStart}
-      className="w-full py-4 px-6 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-soft transition-all duration-200 hover:opacity-90"
-    >
-      Start
-    </motion.button>
   </div>
   );
 };

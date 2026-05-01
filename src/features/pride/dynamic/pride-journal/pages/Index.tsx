@@ -48,6 +48,7 @@ interface SavedJournal {
 type Screen = "intro" | "prompt" | "reflection" | "completion" | "history";
 
 import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
+import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -179,14 +180,18 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col p-6 max-w-md mx-auto">
-      <PrideActivityHeader 
-        title="Pride Journal" 
-        onBack={screen !== "intro" || promptIndex > 0 ? handleBack : undefined}
-        className="mb-6"
-      />
-      <div className="flex-1 flex flex-col">
-        {renderScreen()}
+    <div className="activity-root">
+      <PrideFloatingOrbs />
+      <div className="activity-container-sm py-8 flex flex-col min-h-screen relative z-10">
+        <PrideActivityHeader 
+          title="Pride Journal" 
+          subtitle="Gratitude & Reflection"
+          onBack={screen !== "intro" || promptIndex > 0 ? handleBack : undefined}
+          className="mb-8"
+        />
+        <div className="flex-1 flex flex-col">
+          {renderScreen()}
+        </div>
       </div>
     </div>
   );

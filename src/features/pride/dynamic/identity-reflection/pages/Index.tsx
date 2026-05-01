@@ -16,6 +16,7 @@ export interface StarData {
 }
 
 import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
+import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
 
 const Index = () => {
   const [screen, setScreen] = useState<"welcome" | "selection" | "reflection" | "history">("welcome");
@@ -92,12 +93,9 @@ const Index = () => {
   const handleDelete = useCallback(async (id: string) => {
     if (!userId) return;
     try {
-      // If it's a UUID from local storage, we might need different logic, 
-      // but for DB entries we use the ID.
       if (typeof id === 'number' || id.length < 30) {
          await sql`DELETE FROM identity_reflection_entries WHERE id = ${id} AND user_id = ${userId}`;
       } else {
-         // Handle local deletion
          const local = JSON.parse(localStorage.getItem("constellations") || "[]");
          localStorage.setItem("constellations", JSON.stringify(local.filter((c: any) => c.id !== id)));
       }
@@ -120,42 +118,45 @@ const Index = () => {
   const handleBack = useCallback(() => setScreen("welcome"), []);
 
   return (
-    <div className="relative min-h-screen bg-night-sky overflow-hidden p-6 md:p-8">
+    <div className="activity-root">
+      <PrideFloatingOrbs />
       <BackgroundStars />
-      <div className="relative z-20 max-w-7xl mx-auto">
+      
+      <div className="activity-container-sm py-8 flex flex-col min-h-screen relative z-10">
         <PrideActivityHeader 
           title="Identity Reflection" 
           subtitle="Map your inner constellation"
           onBack={screen !== "welcome" ? handleBack : undefined}
-          className="mb-4"
+          className="mb-8"
         />
-      </div>
-      <div className="relative z-10 min-h-[calc(100vh-120px)] flex items-center justify-center py-6 px-2">
-        <AnimatePresence mode="wait">
-          {screen === "welcome" && (
-            <WelcomeScreen key="welcome" onStart={handleStart} onHistory={handleHistory} hasHistory={savedConstellations.length > 0} />
-          )}
-          {screen === "selection" && (
-            <StarSelectionScreen key="selection" onComplete={handleComplete} onBack={handleBack} />
-          )}
-          {screen === "reflection" && (
-            <ReflectionScreen
-              key="reflection"
-              stars={stars}
-              onSave={handleSave}
-              onCreateAnother={handleReset}
-            />
-          )}
-          {screen === "history" && (
-            <HistoryScreen
-              key="history"
-              constellations={savedConstellations}
-              onBack={handleBack}
-              onDelete={handleDelete}
-              onView={handleViewSaved}
-            />
-          )}
-        </AnimatePresence>
+
+        <div className="flex-1 flex flex-col justify-center">
+          <AnimatePresence mode="wait">
+            {screen === "welcome" && (
+              <WelcomeScreen key="welcome" onStart={handleStart} onHistory={handleHistory} hasHistory={savedConstellations.length > 0} />
+            )}
+            {screen === "selection" && (
+              <StarSelectionScreen key="selection" onComplete={handleComplete} onBack={handleBack} />
+            )}
+            {screen === "reflection" && (
+              <ReflectionScreen
+                key="reflection"
+                stars={stars}
+                onSave={handleSave}
+                onCreateAnother={handleReset}
+              />
+            )}
+            {screen === "history" && (
+              <HistoryScreen
+                key="history"
+                constellations={savedConstellations}
+                onBack={handleBack}
+                onDelete={handleDelete}
+                onView={handleViewSaved}
+              />
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

@@ -45,21 +45,21 @@ export function LGBTQAssessments() {
   };
 
   return (
-    <div className="activity-root bg-gradient-to-br from-[#F0FDFA] via-[#F8FAFC] to-[#F1F5F9]">
+    <div className="activity-root">
       <PrideFloatingOrbs />
       
-      <main className="activity-container-lg py-8 relative">
+      <main className="activity-container-lg py-8 relative z-10">
         <PrideActivityHeader 
           title="Self-Discovery Tests" 
           subtitle="Explore your identity through guided assessments"
+          className="mb-12"
         />
 
-        {/* Assessments List */}
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="space-y-4"
+          className="grid gap-4"
         >
           {assessments.map((assessment) => {
             const IconComponent = assessment.icon;
@@ -67,56 +67,42 @@ export function LGBTQAssessments() {
               <motion.button
                 key={assessment.id}
                 variants={item}
-                whileHover={{ y: -4, scale: 1.005 }}
-                whileTap={{ scale: 0.995 }}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.99 }}
                 onClick={() => handleAssessmentClick(assessment.link)}
-                className="w-full bg-white/80 backdrop-blur-md rounded-3xl p-5 md:p-6 flex items-center gap-5 shadow-sm hover:shadow-xl transition-all duration-300 group text-left relative overflow-hidden border border-white"
+                className="premium-card p-6 md:p-8 flex items-center gap-6 group transition-all duration-300 hover:border-pride-purple/20"
               >
-                {/* Subtle hover background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-50/0 via-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                {/* Icon Box */}
-                <div className={`w-14 h-14 md:w-16 md:h-16 ${assessment.iconBg} rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform duration-500 group-hover:scale-105 relative z-10`}>
-                  <IconComponent style={{ color: assessment.iconColor }} size={28} strokeWidth={2.5} />
+                <div className={`w-16 h-16 md:w-20 md:h-20 ${assessment.iconBg} rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform duration-500 group-hover:scale-105 shadow-sm`}>
+                  <IconComponent style={{ color: assessment.iconColor }} size={32} />
                 </div>
 
-                {/* Content */}
-                <div className="flex-1 relative z-10 pr-4">
-                  <h3 className="text-lg md:text-xl font-bold text-[#020817] mb-1 transition-colors duration-300 group-hover:text-black">
+                <div className="flex-1 space-y-2">
+                  <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
                     {assessment.title}
                   </h3>
-                  <p className="text-sm md:text-base text-[#64748B] leading-relaxed line-clamp-2">
+                  <p className="text-muted-foreground leading-relaxed line-clamp-2 text-lg">
                     {assessment.description}
                   </p>
                 </div>
 
-                {/* Begin Test Button (Right Side) */}
-                <div className="flex-shrink-0 relative z-10 hidden sm:block">
-                  <div className="flex items-center gap-2 text-[#F59E0B] font-extrabold text-xs uppercase tracking-widest transition-all duration-300 group-hover:translate-x-1">
-                    <span>BEGIN TEST</span>
-                    <ArrowRight size={16} strokeWidth={3} />
-                  </div>
+                <div className="flex-shrink-0 hidden sm:flex items-center gap-2 text-pride-purple font-black text-xs uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
+                  <span>Take Test</span>
+                  <ArrowRight size={18} />
                 </div>
                 
-                {/* Mobile Arrow */}
-                <div className="sm:hidden flex-shrink-0 relative z-10">
-                  <ArrowRight className="text-[#F59E0B]" size={20} strokeWidth={3} />
+                <div className="sm:hidden text-pride-purple">
+                  <ArrowRight size={24} />
                 </div>
               </motion.button>
             );
           })}
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="text-center py-12"
-        >
-          <p className="text-[#94A3B8] text-sm font-medium italic">
-            Take your time. There are no wrong answers.
+        <div className="text-center py-16">
+          <p className="text-muted-foreground text-lg font-medium italic opacity-60">
+            Take your time. These assessments are tools for reflection, not labels.
           </p>
-        </motion.div>
+        </div>
       </main>
     </div>
   );

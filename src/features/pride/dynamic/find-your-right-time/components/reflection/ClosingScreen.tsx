@@ -19,50 +19,47 @@ const ClosingScreen = ({ onSave, onViewHistory, onGoHome }: Props) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1 w-full space-y-8">
-      <div className="flex-1 flex flex-col items-center justify-center space-y-6">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-5xl"
-        >
-          🌸
-        </motion.div>
-        <p className="text-lg leading-relaxed text-foreground/90 text-justify hyphens-auto font-medium">
-          There's no right time except what feels right for you. Take things at your own pace.
-        </p>
-      </div>
+  <div className="premium-card p-10 md:p-12 text-center space-y-10 w-full animate-fade-in">
+    <div className="text-6xl animate-bounce">🌸</div>
+    
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-foreground">
+        Honor Your Pace.
+      </h2>
+      <p className="text-lg text-muted-foreground leading-relaxed justified-text">
+        There's no single "right" time to come out. The only right time is the one that feels safe, comfortable, and authentic to you.
+      </p>
+    </div>
 
-      <div className="w-full space-y-3">
-        <motion.button
-          whileTap={{ scale: 0.97 }}
-          onClick={handleSave}
-          disabled={saved}
-          className="w-full py-4 px-6 rounded-2xl bg-lavender text-foreground font-semibold text-base shadow-card transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60"
-        >
-          <Save size={18} />
-          {saved ? "Reflection Saved ✓" : "Save Reflection"}
-        </motion.button>
+    <div className="w-full space-y-4">
+      <button
+        onClick={handleSave}
+        disabled={saved}
+        className="btn-primary w-full h-14 text-lg font-bold shadow-lg flex items-center justify-center gap-3 disabled:opacity-60"
+      >
+        <Save size={20} />
+        {saved ? "Reflection Saved ✓" : "Save My Reflection"}
+      </button>
 
-        <motion.button
-          whileTap={{ scale: 0.97 }}
+      <div className="grid grid-cols-2 gap-4">
+        <button
           onClick={onViewHistory}
-          className="w-full py-4 px-6 rounded-2xl bg-peach text-foreground font-semibold text-base shadow-card transition-all duration-200 flex items-center justify-center gap-2"
+          className="btn-secondary w-full h-14 flex items-center justify-center gap-2"
         >
           <History size={18} />
-          View History
-        </motion.button>
+          History
+        </button>
 
-        <motion.button
-          whileTap={{ scale: 0.97 }}
+        <button
           onClick={() => navigate('/lgbtq-hub')}
-          className="w-full py-4 px-6 rounded-2xl bg-mint text-foreground font-semibold text-base shadow-card transition-all duration-200 flex items-center justify-center gap-2"
+          className="btn-secondary w-full h-14 flex items-center justify-center gap-2"
         >
           <Home size={18} />
-          Back to Hub
-        </motion.button>
+          Hub
+        </button>
       </div>
     </div>
+  </div>
   );
 };
 

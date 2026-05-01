@@ -31,27 +31,27 @@ export const PrideActivityHeader: React.FC<PrideActivityHeaderProps> = ({
   };
 
   return (
-    <div className={cn("flex items-center justify-between mb-10", className)}>
-      <div className="flex items-center gap-4">
+    <div className={cn("flex items-center justify-between mb-12 relative z-50", className)}>
+      <div className="flex items-center gap-6">
         <button
           onClick={handleBack}
-          className="flex items-center justify-center w-11 h-11 rounded-xl bg-white backdrop-blur-sm text-[#64748B] hover:text-[#A855F7] hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100"
+          className="flex items-center justify-center w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md text-foreground hover:text-pride-purple hover:bg-white/20 transition-all shadow-lg border border-white/10 group"
           aria-label="Go back"
         >
-          <ChevronLeft size={22} strokeWidth={2.5} />
+          <ChevronLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
         </button>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 leading-tight">{title}</h1>
-          {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
+        <div className="space-y-1">
+          <h1 className="text-3xl font-black text-foreground tracking-tight leading-none">{title}</h1>
+          {subtitle && <p className="text-base text-muted-foreground font-medium">{subtitle}</p>}
         </div>
       </div>
 
       <button
         onClick={handleExit}
-        className="flex items-center justify-center w-11 h-11 rounded-xl bg-white backdrop-blur-sm text-[#64748B] hover:text-red-500 hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100 group"
+        className="flex items-center justify-center w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md text-foreground hover:text-pride-red hover:bg-white/20 transition-all shadow-lg border border-white/10 group"
         aria-label="Exit activity"
       >
-        <X size={20} strokeWidth={2.5} className="group-hover:rotate-90 transition-transform duration-300" />
+        <X size={24} className="group-hover:rotate-90 transition-transform duration-500" />
       </button>
     </div>
   );

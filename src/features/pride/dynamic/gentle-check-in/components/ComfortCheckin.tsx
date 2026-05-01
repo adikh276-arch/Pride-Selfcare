@@ -62,6 +62,7 @@ const saveEntry = async (data: CheckinData) => {
 };
 
 import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
+import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
 
 const ComfortCheckin = () => {
   const [step, setStep] = useState(0);
@@ -93,9 +94,10 @@ const ComfortCheckin = () => {
 
   if (showHistory) {
     return (
-      <div className="min-h-svh flex flex-col items-center justify-start p-6 text-center" style={{ background: 'var(--pride-gradient), hsl(var(--background))' }}>
-        <div className="w-full max-w-sm">
-          <PrideActivityHeader title="Check-in History" onBack={() => setShowHistory(false)} />
+      <div className="activity-root">
+        <PrideFloatingOrbs />
+        <div className="activity-container-sm py-8 relative z-10">
+          <PrideActivityHeader title="Check-in History" onBack={() => setShowHistory(false)} className="mb-8" />
           <HistoryScreen onBack={() => setShowHistory(false)} />
         </div>
       </div>
@@ -117,41 +119,47 @@ const ComfortCheckin = () => {
   const totalSteps = 9;
 
   return (
-    <div className="min-h-svh flex flex-col items-center justify-start p-6 text-center relative" style={{ background: 'var(--pride-gradient), hsl(var(--background))' }}>
-      <div className="w-full max-w-sm mb-4">
+    <div className="activity-root">
+      <PrideFloatingOrbs />
+      
+      <div className="activity-container-sm py-8 flex flex-col min-h-screen relative z-10">
         <PrideActivityHeader 
           title="Gentle Check-in" 
+          subtitle="How are you feeling?"
           onBack={step > 0 ? handleBack : undefined}
-          className="mb-4"
+          className="mb-8"
         />
-      </div>
-      <div className="flex-1 flex flex-col justify-center w-full max-w-sm">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={step}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={transition}
-            className="w-full space-y-8"
-          >
-            {screens[step]}
-          </motion.div>
-        </AnimatePresence>
-      </div>
 
-      {step > 0 && step < 8 && (
-        <div className="flex gap-2 mt-8">
-          {Array.from({ length: totalSteps }).map((_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                i === step ? "bg-primary scale-125" : "bg-border"
-              }`}
-            />
-          ))}
+        <div className="flex-1 flex flex-col justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, y: 15, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -15, scale: 0.98 }}
+              transition={transition}
+              className="w-full"
+            >
+              {screens[step]}
+            </motion.div>
+          </AnimatePresence>
         </div>
-      )}
+
+        {step > 0 && step < 8 && (
+          <div className="flex gap-2 justify-center mt-12 mb-6">
+            {Array.from({ length: totalSteps }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-1.5 rounded-full transition-all duration-500 ${
+                  i === step 
+                    ? "bg-pride-purple w-8 shadow-[0_0_10px_rgba(var(--pride-purple-rgb),0.3)]" 
+                    : "bg-border w-4 opacity-40"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

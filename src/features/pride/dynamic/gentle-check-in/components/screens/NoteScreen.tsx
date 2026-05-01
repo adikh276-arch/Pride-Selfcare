@@ -7,23 +7,22 @@ interface Props {
 }
 
 const NoteScreen = ({ data, setData, onSave }: Props) => (
-  <div className="space-y-8">
-    <h1 className="text-2xl font-medium tracking-tight text-foreground" style={{ letterSpacing: "-0.02em", textWrap: "balance" }}>
+  <div className="premium-card p-8 md:p-10 space-y-8">
+    <h1 className="text-2xl font-bold text-foreground leading-tight">
       Would you like to add a small note?
     </h1>
     <textarea
       value={data.note}
       onChange={(e) => setData((d) => ({ ...d, note: e.target.value }))}
-      placeholder="Anything you want to note…"
-      rows={4}
-      className="w-full p-5 rounded-3xl bg-card text-foreground placeholder:text-muted text-base outline-none resize-none leading-relaxed focus:shadow-lg transition-shadow"
-      style={{ boxShadow: "var(--shadow-cloud)" }}
+      placeholder="Anything you want to note... (optional)"
+      rows={5}
+      className="w-full p-6 rounded-2xl bg-white/50 border border-border text-foreground placeholder:text-muted-foreground/40 text-lg outline-none resize-none leading-relaxed focus:ring-2 focus:ring-pride-purple/30 transition-all"
     />
     <button
       onClick={onSave}
-      className="h-14 w-full rounded-full bg-primary text-primary-foreground font-medium text-base transition-all active:scale-95"
+      className="btn-primary w-full h-14 text-lg font-bold shadow-lg"
     >
-      Save
+      Save Check-In
     </button>
   </div>
 );

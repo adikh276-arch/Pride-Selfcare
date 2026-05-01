@@ -34,6 +34,7 @@ const slideVariants = {
 };
 
 import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
+import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -99,9 +100,12 @@ const Index = () => {
 
   if (showHistory) {
     return (
-      <div className="min-h-svh flex flex-col p-6 max-w-md mx-auto">
-        <PrideActivityHeader title="Reflection History" onBack={() => setShowHistory(false)} />
-        <HistoryScreen onBack={() => setShowHistory(false)} />
+      <div className="activity-root">
+        <PrideFloatingOrbs />
+        <div className="activity-container-sm py-8 relative z-10">
+          <PrideActivityHeader title="Reflection History" onBack={() => setShowHistory(false)} className="mb-8" />
+          <HistoryScreen onBack={() => setShowHistory(false)} />
+        </div>
       </div>
     );
   }
@@ -181,29 +185,33 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-svh flex flex-col items-center justify-start overflow-hidden py-8 px-6">
-      <div className="w-full max-w-md">
+    <div className="activity-root">
+      <PrideFloatingOrbs />
+      
+      <div className="activity-container-sm py-8 flex flex-col min-h-screen relative z-10">
         <PrideActivityHeader 
-          title="Right Time?" 
+          title="Find Your Time" 
+          subtitle="Coming Out Reflection"
           onBack={screen > 0 ? handleBack : undefined}
           className="mb-8"
         />
-      </div>
-      <div className="w-full max-w-md mx-auto flex flex-col items-center flex-1 relative">
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={screen}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-            className="w-full flex flex-col items-center flex-1"
-          >
-            {screens[screen]}
-          </motion.div>
-        </AnimatePresence>
+
+        <div className="flex-1 flex flex-col justify-center">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={screen}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+              className="w-full flex flex-col items-center flex-1"
+            >
+              {screens[screen]}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

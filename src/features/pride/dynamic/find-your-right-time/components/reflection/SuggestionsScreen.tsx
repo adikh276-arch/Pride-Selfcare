@@ -27,34 +27,36 @@ const SuggestionsScreen = ({ answers, onContinue }: Props) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1 w-full space-y-8">
-      <div className="flex-1 flex flex-col items-center justify-center space-y-6 w-full">
-        <p className="text-sm text-muted-foreground font-medium">💡 What might help you next</p>
-
-        <div className="w-full space-y-3">
-          {suggestions.map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="w-full p-5 rounded-2xl bg-card shadow-card flex items-start gap-4"
-            >
-              <span className="text-2xl">{s.emoji}</span>
-              <p className="text-base text-foreground/90 leading-relaxed">{s.text}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      <motion.button
-        whileTap={{ scale: 0.97 }}
-        onClick={onContinue}
-        className="w-full py-4 px-6 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-soft transition-all duration-200 hover:opacity-90"
-      >
-        Continue
-      </motion.button>
+  <div className="flex flex-col items-center w-full space-y-8 animate-fade-in">
+    <div className="text-center space-y-2">
+      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">💡 Helpful Next Steps</p>
+      <h2 className="text-3xl font-bold text-foreground">Actionable Guidance</h2>
     </div>
+
+    <div className="w-full space-y-4">
+      {suggestions.map((s, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: i * 0.1 }}
+          className="premium-card p-6 flex items-center gap-5 group hover:border-pride-blue/30 transition-all duration-300"
+        >
+          <div className="w-14 h-14 bg-black/5 rounded-2xl flex items-center justify-center text-3xl shrink-0 group-hover:scale-110 transition-transform">
+            {s.emoji}
+          </div>
+          <p className="text-lg font-bold text-foreground leading-snug">{s.text}</p>
+        </motion.div>
+      ))}
+    </div>
+
+    <button
+      onClick={onContinue}
+      className="btn-primary w-full h-14 text-lg font-bold shadow-lg mt-4"
+    >
+      Complete Reflection
+    </button>
+  </div>
   );
 };
 

@@ -13,6 +13,14 @@
     --bg-pride-4: 120 45% 94%;
     --bg-pride-5: 210 60% 94%;
     --bg-pride-6: 275 55% 94%;
+
+    /* Solid versions for buttons/text */
+    --pride-red: 0 75% 65%;
+    --pride-orange: 30 85% 60%;
+    --pride-yellow: 55 90% 65%;
+    --pride-green: 140 55% 50%;
+    --pride-blue: 210 70% 55%;
+    --pride-purple: 275 60% 60%;
     --foreground: 240 3% 23%;
 
     --card: 0 0% 100%;
@@ -121,6 +129,52 @@
   }
 }
 
+  /* Premium Card Styles */
+  .premium-card {
+    @apply bg-white/80 backdrop-blur-md rounded-3xl border border-white/50 shadow-soft;
+  }
+
+  .premium-card-interactive {
+    @apply premium-card transition-all duration-300 hover:shadow-card hover:translate-y-[-2px] active:scale-[0.98];
+  }
+
+  /* Premium Button Styles */
+  .btn-primary {
+    @apply py-4 px-6 rounded-2xl font-bold text-white transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(135deg, hsl(var(--pride-purple)) 0%, hsl(var(--pride-blue)) 100%);
+  }
+
+  .btn-secondary {
+    @apply py-4 px-6 rounded-2xl font-bold text-foreground bg-white/50 backdrop-blur-sm border border-white shadow-soft transition-all duration-300 hover:bg-white active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply py-2 px-4 rounded-xl text-muted-foreground font-medium transition-all hover:bg-black/5 active:scale-95;
+  }
+
+  /* Text Justification and readability */
+  .justified-text {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+
+  /* Rainbow border animation */
+  .rainbow-border {
+    position: relative;
+    border-radius: var(--radius);
+    padding: 2px;
+    background: linear-gradient(135deg, hsl(var(--pride-red)), hsl(var(--pride-orange)), hsl(var(--pride-yellow)), hsl(var(--pride-green)), hsl(var(--pride-blue)), hsl(var(--pride-purple)));
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 /* Scrollbar Customization for a premium feel */
 ::-webkit-scrollbar {
   width: 6px;
@@ -131,10 +185,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.2);
+  background: hsla(var(--pride-purple), 0.3);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 85, 247, 0.4);
+  background: hsla(var(--pride-purple), 0.5);
 }

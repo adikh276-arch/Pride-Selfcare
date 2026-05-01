@@ -9,40 +9,33 @@ interface Props {
 const WelcomeScreen = ({ onStart, onViewHistory }: Props) => {
   const navigate = useNavigate();
   return (
-  <div className="space-y-8">
-    <div className="flex justify-start">
-      <button 
-        onClick={() => navigate('/lgbtq-hub')}
-        className="w-10 h-10 rounded-full bg-card flex items-center justify-center text-muted" 
-        style={{ boxShadow: "var(--shadow-cloud)" }}
-      >
-        <ArrowLeft className="w-5 h-5" />
-      </button>
+  <div className="premium-card p-10 md:p-12 text-center space-y-10">
+    <div className="w-20 h-20 bg-pride-green/10 rounded-full flex items-center justify-center mx-auto text-5xl">
+      🌿
     </div>
 
     <div className="space-y-4">
-      <h1 className="text-2xl font-medium tracking-tight text-foreground" style={{ letterSpacing: "-0.02em", textWrap: "balance" }}>
-        🌿 Right Now Check-In
+      <h1 className="text-3xl font-bold text-foreground">
+        Right Now Check-In
       </h1>
-      <p className="text-base text-muted leading-relaxed" style={{ textWrap: "pretty" }}>
-        Take a moment to notice how you feel right now in your body or surroundings.
-        There's no pressure—just notice what's there.
+      <p className="text-lg text-muted-foreground leading-relaxed justified-text">
+        Take a moment to notice how you feel right now.
+        There's no pressure—just a safe space to breathe and reflect.
       </p>
     </div>
 
-    <div className="space-y-3">
+    <div className="space-y-4 pt-4">
       <button
         onClick={onStart}
-        className="h-14 w-full rounded-full bg-primary text-primary-foreground font-medium text-base transition-all active:scale-95"
+        className="btn-primary w-full h-14 text-lg font-bold"
       >
-        👉 Start
+        Begin Check-In
       </button>
       <button
         onClick={onViewHistory}
-        className="h-14 w-full rounded-full bg-card text-foreground font-medium text-base transition-all active:scale-95"
-        style={{ boxShadow: "var(--shadow-cloud)" }}
+        className="btn-secondary w-full h-14"
       >
-        👉 View past entries
+        Past Entries
       </button>
     </div>
   </div>

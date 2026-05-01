@@ -31,31 +31,29 @@ const ResultScreen = ({ result, onContinue }: Props) => {
   const data = resultData[result];
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1 w-full space-y-8">
-      <div className="flex-1 flex flex-col items-center justify-center space-y-6 w-full">
-        <p className="text-sm text-muted-foreground font-medium">🧭 Your Readiness Reflection</p>
-
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className={`w-full p-8 rounded-3xl ${data.bg} flex flex-col items-center space-y-4 shadow-card`}
-        >
-          <span className="text-5xl">{data.emoji}</span>
-          <h2 className="text-xl font-semibold text-foreground text-center">{data.title}</h2>
-          <p className="text-base text-foreground/80 text-justify leading-relaxed hyphens-auto">
-            {data.description}
-          </p>
-        </motion.div>
-      </div>
-
-      <motion.button
-        whileTap={{ scale: 0.97 }}
-        onClick={onContinue}
-        className="w-full py-4 px-6 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-soft transition-all duration-200 hover:opacity-90"
-      >
-        Continue
-      </motion.button>
+  <div className="flex flex-col items-center w-full space-y-8 animate-fade-in">
+    <div className="text-center space-y-2">
+      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">🧭 Your Readiness Reflection</p>
+      <h2 className="text-3xl font-bold text-foreground">Your Path Forward</h2>
     </div>
+
+    <div className="premium-card p-10 md:p-12 w-full space-y-6 text-center">
+      <span className="text-6xl mx-auto block mb-4">{data.emoji}</span>
+      <h3 className="text-2xl font-bold text-foreground leading-tight">
+        {data.title}
+      </h3>
+      <p className="text-lg text-muted-foreground leading-relaxed justified-text">
+        {data.description}
+      </p>
+    </div>
+
+    <button
+      onClick={onContinue}
+      className="btn-primary w-full h-14 text-lg font-bold shadow-lg"
+    >
+      Explore Suggestions
+    </button>
+  </div>
   );
 };
 

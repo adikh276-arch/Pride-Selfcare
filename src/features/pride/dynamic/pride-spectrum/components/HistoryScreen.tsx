@@ -7,6 +7,9 @@ interface HistoryScreenProps {
   onBack: () => void;
 }
 
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
+import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
+
 const HistoryScreen = ({ onBack }: HistoryScreenProps) => {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,34 +47,51 @@ const HistoryScreen = ({ onBack }: HistoryScreenProps) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center">
-      <div className="w-full max-w-md mx-auto px-5 py-6 flex flex-col min-h-screen">
-        <h2 className="text-xl font-semibold text-foreground mb-6">Past Explorations</h2>
+    <div className="activity-root">
+      <PrideFloatingOrbs />
+      
+      <div className="activity-container-sm py-8 flex flex-col min-h-screen relative z-10">
+        <PrideActivityHeader 
+          title="Past Explorations" 
+          subtitle="Your journey history"
+          onBack={onBack}
+          className="mb-8"
+        />
 
         {loading ? (
           <div className="flex-1 flex items-center justify-center">
-            <Loader2 className="animate-spin text-muted-foreground" size={32} />
+            <Loader2 className="animate-spin text-pride-purple" size={40} />
           </div>
         ) : history.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center">
-            <p className="text-muted-foreground text-center">No past explorations yet. Complete the activity to see your history here.</p>
+          <div className="flex-1 flex flex-col items-center justify-center premium-card p-12 text-center">
+            <div className="text-5xl mb-4">🍃</div>
+            <p className="text-muted-foreground text-lg">No past explorations yet. Complete the activity to see your history here.</p>
           </div>
         ) : (
-          <div className="space-y-4 flex-1 overflow-y-auto max-h-[70vh] no-scrollbar">
+          <div className="space-y-6 flex-1 overflow-y-auto max-h-[70vh] no-scrollbar pb-8 px-1">
             {history.map((entry, i) => (
-              <div key={i} className="bg-card rounded-2xl p-5 border border-border">
-                <p className="text-xs text-muted-foreground/60 mb-3">
-                  {new Date(entry.date).toLocaleDateString("en-US", { 
-                    year: "numeric", 
-                    month: "long", 
-                    day: "numeric", 
-                    hour: "2-digit", 
-                    minute: "2-digit" 
-                  })}
-                </p>
-                <div className="space-y-2">
+              <div key={i} className="premium-card p-6 border-l-4 border-l-pride-purple">
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-sm font-bold text-pride-purple">
+                    {new Date(entry.date).toLocaleDateString("en-US", { 
+                      month: "short", 
+                      day: "numeric", 
+                      year: "numeric"
+                    })}
+                  </p>
+                  <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest opacity-60">
+                    {new Date(entry.date).toLocaleTimeString("en-US", { 
+                      hour: "2-digit", 
+                      minute: "2-digit" 
+                    })}
+                  </p>
+                </div>
+                <div className="space-y-3">
                   {entry.result.map((line, j) => (
-                    <p key={j} className="text-sm text-muted-foreground text-justified leading-relaxed">{line}</p>
+                    <div key={j} className="flex gap-3 items-start bg-black/5 p-4 rounded-xl">
+                      <div className="w-1 h-1 rounded-full bg-pride-purple mt-2 flex-shrink-0" />
+                      <p className="text-foreground/80 text-sm leading-relaxed justified-text">{line}</p>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -79,17 +99,20 @@ const HistoryScreen = ({ onBack }: HistoryScreenProps) => {
           </div>
         )}
 
-        <button
-          onClick={onBack}
-          className="w-full py-3.5 rounded-2xl bg-primary text-primary-foreground font-medium mt-6 transition-all hover:opacity-90"
-        >
-          Back to Explorer
-        </button>
-
-        <div className="py-4 mt-2">
-          <p className="text-xs text-muted-foreground/60 text-center">
-            🔐 Your responses are private and in your control.
-          </p>
+        <div className="mt-auto pt-6 space-y-4">
+          <button
+            onClick={onBack}
+            className="btn-primary w-full"
+          >
+            Back to Explorer
+          </button>
+          
+          <div className="opacity-60">
+            <div className="flex items-center justify-center gap-2 text-[10px] text-muted-foreground font-bold uppercase tracking-tighter">
+              <span>🔐</span>
+              <span>Private & Secure History</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

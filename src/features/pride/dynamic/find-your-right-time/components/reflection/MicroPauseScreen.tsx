@@ -5,31 +5,24 @@ interface Props {
 }
 
 const MicroPauseScreen = ({ onContinue }: Props) => (
-  <div className="flex flex-col items-center justify-center flex-1 w-full space-y-8">
-    <div className="flex-1 flex flex-col items-center justify-center space-y-6">
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-5xl"
-      >
-        🕊️
-      </motion.div>
-      <p className="text-lg leading-relaxed text-foreground/90 text-center font-medium">
-        Take a moment.
-      </p>
-      <p className="text-base leading-relaxed text-foreground/70 text-center">
-        Your safety always comes first.
+  <div className="premium-card p-10 md:p-12 text-center space-y-10 w-full animate-fade-in">
+    <div className="text-6xl animate-pulse">🕊️</div>
+    
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-foreground">
+        Take a breath.
+      </h2>
+      <p className="text-lg text-muted-foreground leading-relaxed">
+        Your journey is unique, and your safety always comes first. Honor your pace.
       </p>
     </div>
 
-    <motion.button
-      whileTap={{ scale: 0.97 }}
+    <button
       onClick={onContinue}
-      className="w-full py-4 px-6 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-soft transition-all duration-200 hover:opacity-90"
+      className="btn-primary w-full h-14 text-lg font-bold shadow-lg"
     >
       Continue
-    </motion.button>
+    </button>
   </div>
 );
 

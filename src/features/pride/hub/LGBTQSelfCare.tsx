@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronLeft, CheckSquare, BookOpen, Compass, Lightbulb, Info, FileText, Target, HeartPulse, Smile, Moon, Sparkles, Activity, Heart, Users2, Star, Shield } from "lucide-react";
+import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
 
 interface ResourceCard {
   id: string;
@@ -65,194 +66,154 @@ export function LGBTQSelfCare() {
   };
 
   return (
-    <div 
-      className="activity-root" 
-      style={{ background: 'linear-gradient(135deg, #FDFCFE 0%, #F8F7FF 50%, #FFF5F7 100%)' }}
-    >
-      {/* Decorative Background Blobs */}
-      <div className="fixed -top-24 -right-24 w-96 h-96 bg-purple-200/40 rounded-full blur-[120px] pointer-events-none z-0"></div>
-      <div className="fixed -bottom-32 -left-32 w-[500px] h-[500px] bg-pink-100/30 rounded-full blur-[140px] pointer-events-none z-0"></div>
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-50/10 pointer-events-none z-0"></div>
+    <div className="activity-root">
+      <PrideFloatingOrbs />
 
       <div className="flex-1 flex flex-col min-w-0 relative z-10 w-full">
-        <main className="activity-container-lg py-4 md:py-8 pt-[72px] md:pt-8 relative">
+        <main className="activity-container-lg py-8 pt-[72px] md:pt-8 relative">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
+            className="mb-12"
           >
             <motion.button
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              whileHover={{ x: -4, scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => {
                 window.parent.postMessage({ action: 'exit' }, 'https://web.mantracare.com');
                 navigate(-1);
               }}
-              className="flex items-center justify-center w-10 h-10 rounded-xl bg-white text-[#64748B] hover:text-[#A855F7] hover:bg-white transition-all shadow-md hover:shadow-xl border border-gray-100 mb-6"
+              className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-foreground border border-white/10 shadow-lg mb-8"
             >
-              <ChevronLeft size={20} strokeWidth={2.5} />
+              <ChevronLeft size={24} />
             </motion.button>
 
-            <div className="relative">
-              <div className="absolute -left-2 top-0 w-1 h-14 bg-gradient-to-b from-[#EC4899] via-[#A855F7] to-[#3B82F6] rounded-full"></div>
-              <div className="pl-5">
-                <h1 className="text-3xl md:text-4xl font-bold text-[#020817] mb-2 bg-gradient-to-r from-[#EC4899] to-[#A855F7] bg-clip-text text-transparent">
-                  LGBTQ+ Self-Care
-                </h1>
-                <p className="text-[#64748B] text-base md:text-lg">
-                  Explore resources, track your journey, and embrace your authentic self
-                </p>
-              </div>
+            <div className="space-y-4">
+              <h1 className="text-4xl md:text-5xl font-black text-foreground tracking-tight">
+                LGBTQ+ <span className="text-pride-purple text-glow">Self-Care</span>
+              </h1>
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
+                Explore resources, track your journey, and embrace your authentic self in a safe space.
+              </p>
             </div>
           </motion.div>
 
           {/* Resources Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mb-8"
-          >
-            <div className="mb-4 flex items-center gap-3">
-              <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#14B8A6] to-[#0D9488]"></div>
+          <section className="mb-12">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="w-1.5 h-8 rounded-full bg-pride-green shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
               <div>
-                <h2 className="text-xl font-bold text-[#020817] tracking-tight">Resources</h2>
-                <p className="text-[#64748B] text-xs font-medium">Essential tools and information</p>
+                <h2 className="text-2xl font-bold text-foreground">Resources</h2>
+                <p className="text-sm text-muted-foreground font-medium">Essential tools and information</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {resources.map((resource, index) => {
                 const IconComponent = resource.icon;
                 return (
                   <motion.button
                     key={resource.id}
-                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ delay: 0.1 + 0.05 * index, type: "spring", stiffness: 200 }}
-                    whileHover={{ scale: 1.05, y: -6, rotate: 1 }}
-                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    whileHover={{ y: -8 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => handleCardClick(resource.link)}
-                    className="bg-white/90 backdrop-blur-md rounded-[28px] p-4 flex flex-col items-center gap-2 shadow-md hover:shadow-2xl transition-all duration-500 group relative overflow-hidden border border-white/50"
+                    className="premium-card p-6 flex flex-col items-center gap-4 group transition-all duration-300 hover:border-pride-purple/20"
                   >
                     <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center shadow-md relative z-10 group-hover:scale-110 transition-transform duration-300"
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-500"
                       style={{ background: resource.bgColor }}
                     >
-                      <IconComponent className="text-white" size={22} strokeWidth={2.5} />
+                      <IconComponent className="text-white" size={28} />
                     </div>
-                    <span className="text-xs font-bold text-[#020817] text-center leading-tight relative z-10">
+                    <span className="text-sm font-black text-foreground text-center leading-tight">
                       {resource.label}
                     </span>
-                    <div className="w-full h-0.5 rounded-full relative z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ background: resource.bgColor }}
-                    ></div>
                   </motion.button>
                 );
               })}
             </div>
-          </motion.div>
+          </section>
 
           {/* Trackers Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-8"
-          >
-            <div className="mb-4 flex items-center gap-3">
-              <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#A855F7] to-[#9333EA]"></div>
+          <section className="mb-12">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="w-1.5 h-8 rounded-full bg-pride-purple shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
               <div>
-                <h2 className="text-xl font-bold text-[#020817] tracking-tight">Trackers</h2>
-                <p className="text-[#64748B] text-xs font-medium">Monitor your wellness journey</p>
+                <h2 className="text-2xl font-bold text-foreground">Trackers</h2>
+                <p className="text-sm text-muted-foreground font-medium">Monitor your wellness journey</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {trackers.map((tracker, index) => {
                 const IconComponent = tracker.icon;
                 return (
                   <motion.button
                     key={tracker.id}
-                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ delay: 0.2 + 0.05 * index, type: "spring", stiffness: 200 }}
-                    whileHover={{ scale: 1.05, y: -6, rotate: -1 }}
-                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    whileHover={{ y: -8 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => handleCardClick(tracker.link)}
-                    className="bg-white/90 backdrop-blur-md rounded-[28px] p-4 flex flex-col items-center gap-2 shadow-md hover:shadow-2xl transition-all duration-500 group relative overflow-hidden border border-white/50"
+                    className="premium-card p-6 flex flex-col items-center gap-4 group transition-all duration-300 hover:border-pride-blue/20"
                   >
                     <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center shadow-md relative z-10 group-hover:scale-110 transition-transform duration-300"
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-500"
                       style={{ background: tracker.bgColor }}
                     >
-                      <IconComponent className="text-white" size={22} strokeWidth={2.5} />
+                      <IconComponent className="text-white" size={28} />
                     </div>
-                    <span className="text-xs font-bold text-[#020817] text-center leading-tight relative z-10">
+                    <span className="text-sm font-black text-foreground text-center leading-tight">
                       {tracker.label}
                     </span>
-                    <div className="w-full h-0.5 rounded-full relative z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ background: tracker.bgColor }}
-                    ></div>
                   </motion.button>
                 );
               })}
             </div>
-          </motion.div>
+          </section>
 
           {/* Wellness Guides Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mb-8"
-          >
-            <div className="mb-4 flex items-center gap-3">
-              <div className="w-1 h-6 rounded-full bg-gradient-to-b from-[#EC4899] to-[#D946EF]"></div>
+          <section className="mb-12">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="w-1.5 h-8 rounded-full bg-pride-red shadow-[0_0_15px_rgba(239,68,68,0.5)]"></div>
               <div>
-                <h2 className="text-xl font-bold text-[#020817] tracking-tight">Wellness Guides</h2>
-                <p className="text-[#64748B] text-xs font-medium">Identity-specific support and resources</p>
+                <h2 className="text-2xl font-bold text-foreground">Wellness Guides</h2>
+                <p className="text-sm text-muted-foreground font-medium">Identity-specific support and resources</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {guides.map((guide, index) => {
                 const IconComponent = guide.icon;
                 return (
                   <motion.button
                     key={guide.id}
-                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ delay: 0.3 + 0.08 * index, type: "spring", stiffness: 180 }}
-                    whileHover={{ scale: 1.03, y: -8 }}
-                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    whileHover={{ y: -8 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => handleCardClick(guide.link)}
-                    className="bg-white/90 backdrop-blur-md rounded-[32px] p-5 flex flex-col items-center gap-3 shadow-md hover:shadow-2xl transition-all duration-500 group relative overflow-hidden border border-white/50"
+                    className="premium-card p-8 flex flex-col items-center gap-6 group transition-all duration-300 hover:border-pride-red/20"
                   >
                     <div
-                      className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg relative z-10 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300"
+                      className="w-20 h-20 rounded-[2rem] flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500"
                       style={{ background: guide.bgColor }}
                     >
-                      <IconComponent className="text-white" size={28} strokeWidth={2.5} />
+                      <IconComponent className="text-white" size={36} />
                     </div>
-                    <span className="text-sm font-bold text-[#020817] text-center leading-tight relative z-10">
-                      {guide.label}
+                    <span className="text-lg font-black text-foreground text-center leading-tight">
+                      {guide.label} Guide
                     </span>
-                    <div className="w-full h-0.5 rounded-full relative z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ background: guide.bgColor }}
-                    ></div>
                   </motion.button>
                 );
               })}
             </div>
-          </motion.div>
+          </section>
         </main>
       </div>
-
-      {/* Decorative background elements */}
-      <div className="fixed top-20 right-10 w-80 h-80 bg-gradient-to-br from-[#EC4899]/10 to-transparent rounded-full blur-3xl pointer-events-none z-0"></div>
-      <div className="fixed bottom-20 left-10 w-80 h-80 bg-gradient-to-tr from-[#A855F7]/10 to-transparent rounded-full blur-3xl pointer-events-none z-0"></div>
-      <div className="fixed top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-[#3B82F6]/10 to-transparent rounded-full blur-3xl pointer-events-none z-0"></div>
     </div>
   );
 }

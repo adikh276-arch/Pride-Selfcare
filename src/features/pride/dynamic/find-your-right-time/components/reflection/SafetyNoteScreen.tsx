@@ -5,30 +5,24 @@ interface Props {
 }
 
 const SafetyNoteScreen = ({ onContinue }: Props) => (
-  <div className="flex flex-col items-center justify-center flex-1 w-full space-y-8">
-    <div className="flex-1 flex flex-col items-center justify-center space-y-6">
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        className="text-4xl"
-      >
-        💛
-      </motion.div>
-      <p className="text-lg leading-relaxed text-foreground/90 text-justify hyphens-auto font-medium">
+  <div className="premium-card p-10 md:p-12 text-center space-y-10 w-full animate-fade-in">
+    <div className="text-6xl animate-pulse">💛</div>
+    
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-foreground">
         Your safety matters most.
-      </p>
-      <p className="text-base leading-relaxed text-foreground/80 text-justify hyphens-auto">
-        You don't have to come out until you feel ready—and it's okay if that time isn't now.
+      </h2>
+      <p className="text-lg text-muted-foreground leading-relaxed justified-text">
+        You don't have to come out until you feel ready—and it's okay if that time isn't now. Trust your instincts and prioritize your well-being.
       </p>
     </div>
 
-    <motion.button
-      whileTap={{ scale: 0.97 }}
+    <button
       onClick={onContinue}
-      className="w-full py-4 px-6 rounded-2xl bg-primary text-primary-foreground font-semibold text-lg shadow-soft transition-all duration-200 hover:opacity-90"
+      className="btn-primary w-full h-14 text-lg font-bold shadow-lg"
     >
-      Continue
-    </motion.button>
+      Continue Reflection
+    </button>
   </div>
 );
 

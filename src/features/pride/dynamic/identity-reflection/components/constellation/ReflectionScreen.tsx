@@ -26,101 +26,77 @@ const ReflectionScreen = ({ stars, onSave, onCreateAnother }: ReflectionScreenPr
   }));
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1, ease: "easeOut" }}
-      className="flex flex-col items-center px-4 text-center max-w-sm mx-auto"
-    >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3, duration: 1 }}
-        className="mb-6"
-      >
-        <svg width="260" height="260" viewBox="0 0 260 260">
-          {normalized.map((star, i) => {
-            if (i === 0) return null;
-            const prev = normalized[i - 1];
-            return (
-              <motion.line
-                key={`line-${i}`}
-                x1={prev.nx} y1={prev.ny} x2={star.nx} y2={star.ny}
-                className="stroke-constellation"
-                strokeWidth="1.5" opacity="0.5"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ delay: 0.5 + i * 0.3, duration: 0.8 }}
-              />
-            );
-          })}
-          {normalized.map((star, i) => (
-            <motion.g
-              key={star.id}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.3 + i * 0.2, type: "spring", stiffness: 150 }}
+  <div className="flex flex-col items-center w-full max-w-sm mx-auto space-y-10 animate-fade-in relative z-10">
+    <div className="relative group">
+      <div className="absolute -inset-4 bg-white/5 rounded-full blur-2xl group-hover:bg-white/10 transition-all duration-1000" />
+      <svg width="280" height="280" viewBox="0 0 260 260" className="relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+        {normalized.map((star, i) => {
+          if (i === 0) return null;
+          const prev = normalized[i - 1];
+          return (
+            <motion.line
+              key={`line-${i}`}
+              x1={prev.nx} y1={prev.ny} x2={star.nx} y2={star.ny}
+              className="stroke-white"
+              strokeWidth="1.5" opacity="0.3"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ delay: 0.5 + i * 0.3, duration: 1, ease: "easeInOut" }}
+            />
+          );
+        })}
+        {normalized.map((star, i) => (
+          <motion.g
+            key={star.id}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3 + i * 0.2, type: "spring", stiffness: 100 }}
+          >
+            <circle cx={star.nx} cy={star.ny} r="5" className="fill-white" />
+            <circle cx={star.nx} cy={star.ny} r="12" fill="none" className="stroke-white" strokeWidth="0.5" opacity="0.2" />
+            <text
+              x={star.nx} y={star.ny + 22}
+              textAnchor="middle"
+              className="fill-white text-[10px] font-black uppercase tracking-widest opacity-80"
             >
-              <circle cx={star.nx} cy={star.ny} r="6" className="fill-star-selected glow-star" />
-              <circle cx={star.nx} cy={star.ny} r="10" fill="none" className="stroke-star-selected" strokeWidth="0.5" opacity="0.3" />
-              <text
-                x={star.nx} y={star.ny + 18}
-                textAnchor="middle"
-                className="fill-foreground text-[10px] font-reflection"
-              >
-                {star.label}
-              </text>
-            </motion.g>
-          ))}
-        </svg>
-      </motion.div>
+              {star.label}
+            </text>
+          </motion.g>
+        ))}
+      </svg>
+    </div>
 
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2 }}
-        className="font-reflection text-base leading-relaxed text-foreground/90 mb-8 text-justified"
-      >
-        {t("reflection_text_1")}
-        <br />
-        <span className="text-accent-lavender">
-          {t("reflection_text_2")}
-        </span>
-      </motion.p>
+    <div className="premium-card p-10 md:p-12 text-center space-y-6 w-full border-white/5 bg-black/40 backdrop-blur-xl">
+      <h2 className="text-2xl font-bold text-white">Your Identity Map</h2>
+      <p className="text-lg text-white/70 leading-relaxed justified-text">
+        {t("reflection_text_1")} {t("reflection_text_2")}
+      </p>
+    </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5 }}
-        className="flex flex-col gap-3 w-full"
+    <div className="w-full space-y-4">
+      <button
+        onClick={onSave}
+        className="btn-primary w-full h-14 text-lg font-bold shadow-2xl shadow-pride-purple/20"
       >
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onSave}
-          className="bg-gradient-primary px-8 py-2.5 rounded-full text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/30"
-        >
-          {t("save")}
-        </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        Save Constellation
+      </button>
+      
+      <div className="grid grid-cols-2 gap-4">
+        <button
           onClick={onCreateAnother}
-          className="px-8 py-2.5 rounded-full border border-secondary text-secondary font-semibold text-sm hover:bg-secondary/10 transition-colors"
+          className="btn-secondary w-full h-14 text-white/80 border-white/5 hover:bg-white/5"
         >
-          {t("create_another")}
-        </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          New Map
+        </button>
+        <button
           onClick={() => navigate('/lgbtq-hub')}
-          className="px-8 py-2.5 rounded-full border border-secondary text-secondary font-semibold text-sm hover:bg-secondary/10 transition-colors"
+          className="btn-secondary w-full h-14 text-white/80 border-white/5 hover:bg-white/5"
         >
-          Back to Hub
-        </motion.button>
-      </motion.div>
-    </motion.div>
+          To Hub
+        </button>
+      </div>
+    </div>
+  </div>
   );
 };
 

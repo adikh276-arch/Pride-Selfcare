@@ -13,6 +13,9 @@ type Screen = "intro" | "mirror" | "reflection" | "completion" | "saved";
 
 import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
+import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
+
 const Index = () => {
   const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>("intro");
@@ -92,53 +95,57 @@ const Index = () => {
   }, [screen, navigate]);
 
   return (
-    <div className="min-h-screen bg-background max-w-md mx-auto pride-bg relative z-0 p-6">
-      <div className="relative z-20">
+    <div className="activity-root">
+      <PrideFloatingOrbs />
+      
+      <div className="activity-container-sm py-8 flex flex-col min-h-screen relative z-10">
         <PrideActivityHeader 
           title="Mirror Moments" 
+          subtitle="Reflections of Pride"
           onBack={screen !== "intro" ? handleBack : undefined}
-          className="mb-4"
+          className="mb-8"
         />
-      </div>
-      <div className="relative z-10 flex-1">
-      <AnimatePresence mode="wait">
-        {screen === "intro" && (
-          <IntroScreen key="intro" onStart={() => setScreen("mirror")} onBack={handleBack} />
-        )}
-        {screen === "mirror" && (
-          <MirrorScreen
-            key="mirror"
-            notes={notes}
-            onAddNote={handleAddNote}
-            onContinue={() => setScreen("reflection")}
-          />
-        )}
-        {screen === "reflection" && (
-          <ReflectionScreen
-            key="reflection"
-            notes={notes}
-            onContinue={() => setScreen("completion")}
-          />
-        )}
-        {screen === "completion" && (
-          <CompletionScreen
-            key="completion"
-            notes={notes}
-            onSave={handleSave}
-            onAddMore={handleAddMore}
-            onViewSaved={handleViewSaved}
-            onBackToHub={() => navigate('/lgbtq-hub')}
-          />
-        )}
-        {screen === "saved" && (
-          <SavedNotesScreen
-            key="saved"
-            notes={notes}
-            onAddMore={handleAddMore}
-            onBack={handleBack}
-          />
-        )}
-      </AnimatePresence>
+
+        <div className="flex-1 flex flex-col justify-center">
+          <AnimatePresence mode="wait">
+            {screen === "intro" && (
+              <IntroScreen key="intro" onStart={() => setScreen("mirror")} onBack={handleBack} />
+            )}
+            {screen === "mirror" && (
+              <MirrorScreen
+                key="mirror"
+                notes={notes}
+                onAddNote={handleAddNote}
+                onContinue={() => setScreen("reflection")}
+              />
+            )}
+            {screen === "reflection" && (
+              <ReflectionScreen
+                key="reflection"
+                notes={notes}
+                onContinue={() => setScreen("completion")}
+              />
+            )}
+            {screen === "completion" && (
+              <CompletionScreen
+                key="completion"
+                notes={notes}
+                onSave={handleSave}
+                onAddMore={handleAddMore}
+                onViewSaved={handleViewSaved}
+                onBackToHub={() => navigate('/lgbtq-hub')}
+              />
+            )}
+            {screen === "saved" && (
+              <SavedNotesScreen
+                key="saved"
+                notes={notes}
+                onAddMore={handleAddMore}
+                onBack={handleBack}
+              />
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

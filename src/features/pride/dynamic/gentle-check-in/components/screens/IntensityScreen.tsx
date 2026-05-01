@@ -15,8 +15,8 @@ const options = [
 ];
 
 const IntensityScreen = ({ data, setData, onNext }: Props) => (
-  <div className="space-y-6">
-    <h1 className="text-2xl font-medium tracking-tight text-foreground" style={{ letterSpacing: "-0.02em", textWrap: "balance" }}>
+  <div className="premium-card p-8 md:p-10 space-y-8">
+    <h1 className="text-2xl font-bold text-foreground leading-tight">
       How strong is this feeling?
     </h1>
     <div className="space-y-3">
@@ -26,14 +26,19 @@ const IntensityScreen = ({ data, setData, onNext }: Props) => (
           <button
             key={opt}
             onClick={() => setData((d) => ({ ...d, intensity: opt }))}
-            className={`w-full p-4 rounded-2xl text-left text-base font-medium transition-all active:scale-[0.98] ${
-              selected ? "bg-card text-foreground ring-2 ring-primary" : "bg-card text-foreground"
+            className={`w-full p-5 rounded-2xl text-left text-lg font-semibold transition-all duration-300 ${
+              selected 
+                ? "premium-card border-pride-purple/40 ring-2 ring-pride-purple/20 text-pride-purple bg-pride-purple/5 shadow-lg" 
+                : "premium-card-interactive text-foreground/80 hover:text-foreground"
             }`}
-            style={{ boxShadow: "var(--shadow-cloud)" }}
           >
             <span className="flex items-center justify-between">
               {opt}
-              {selected && <Check className="w-5 h-5 text-primary flex-shrink-0" />}
+              {selected && (
+                <div className="w-6 h-6 rounded-full bg-pride-purple flex items-center justify-center">
+                  <Check className="w-4 h-4 text-white" />
+                </div>
+              )}
             </span>
           </button>
         );
@@ -42,9 +47,9 @@ const IntensityScreen = ({ data, setData, onNext }: Props) => (
     <button
       onClick={onNext}
       disabled={!data.intensity}
-      className="h-14 w-full rounded-full bg-primary text-primary-foreground font-medium text-base transition-all active:scale-95 disabled:opacity-40"
+      className="btn-primary w-full h-14 text-lg font-bold shadow-lg mt-4 disabled:opacity-40"
     >
-      Next
+      Continue
     </button>
   </div>
 );
