@@ -67,7 +67,6 @@ export default function SleepTracker() {
   }
 
   return (
-  return (
     <div className="activity-root bg-[#FDFCFE] py-8">
       {/* Floating orbs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
