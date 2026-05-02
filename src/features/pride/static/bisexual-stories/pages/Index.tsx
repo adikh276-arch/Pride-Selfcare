@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import HeroSection from "../components/HeroSection";
 import StoriesList from "../components/StoriesList";
 import StoryDetail from "../components/StoryDetail";
@@ -9,6 +10,7 @@ import { PrideFloatingOrbs } from "../../../components/PrideFloatingOrbs";
 type View = "hero" | "list" | "detail";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [view, setView] = useState<View>("hero");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
@@ -41,6 +43,7 @@ const Index = () => {
           <PrideActivityHeader 
             title="Bisexual Stories" 
             subtitle="Voices from the bisexual community"
+            onBack={() => navigate('/lgbtq-hub')}
             className="mb-0"
           />
         </div>

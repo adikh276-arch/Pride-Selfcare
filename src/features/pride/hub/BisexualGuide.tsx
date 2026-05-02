@@ -122,6 +122,7 @@ export function BisexualGuide() {
         <PrideActivityHeader 
           title="Bisexual Guide" 
           subtitle="Resources and support for your journey"
+          onBack={() => navigate('/lgbtq-hub')}
         />
 
         {/* Tips Section */}

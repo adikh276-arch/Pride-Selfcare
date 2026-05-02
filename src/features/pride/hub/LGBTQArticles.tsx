@@ -90,6 +90,7 @@ export function LGBTQArticles() {
         <PrideActivityHeader 
           title="LGBTQ+ Articles" 
           subtitle="Insights and stories from the community"
+          onBack={() => navigate('/lgbtq-hub')}
           className="mb-8"
         />
 

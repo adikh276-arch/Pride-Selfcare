@@ -52,6 +52,7 @@ export function LGBTQAssessments() {
         <PrideActivityHeader 
           title="Self-Discovery Tests" 
           subtitle="Explore your identity through guided assessments"
+          onBack={() => navigate('/lgbtq-hub')}
           className="mb-12"
         />
 

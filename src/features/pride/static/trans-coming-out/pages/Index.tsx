@@ -1,4 +1,5 @@
 import { useState, useCallback, ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import confetti from "canvas-confetti";
 import FloatingOrbs from "../components/FloatingOrbs";
@@ -218,6 +219,7 @@ const RevealHint = ({ cardIdx, total, revealedCounts, hasEverTapped }: {
 };
 
 const Index = () => {
+  const navigate = useNavigate();
   const [currentCard, setCurrentCard] = useState(0);
   const [revealedCounts, setRevealedCounts] = useState<Record<number, number>>({});
   const [hasEverTapped, setHasEverTapped] = useState(false);

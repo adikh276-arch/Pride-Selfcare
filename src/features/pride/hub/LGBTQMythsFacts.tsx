@@ -61,6 +61,7 @@ export function LGBTQMythsFacts() {
         <PrideActivityHeader 
           title="Myths & Facts" 
           subtitle="Debunking misconceptions about the LGBTQ+ community"
+          onBack={() => navigate('/lgbtq-hub')}
           className="mb-8"
         />
 

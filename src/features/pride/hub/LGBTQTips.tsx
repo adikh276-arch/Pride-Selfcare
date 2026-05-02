@@ -38,6 +38,7 @@ export function LGBTQTips() {
         <PrideActivityHeader 
           title="LGBTQ+ Tips" 
           subtitle="Advice and support for your journey"
+          onBack={() => navigate('/lgbtq-hub')}
           className="mb-8"
         />
 
