@@ -62,6 +62,7 @@ export default {
           green: "hsl(var(--pride-green))",
           blue: "hsl(var(--pride-blue))",
           purple: "hsl(var(--pride-purple))",
+          pink: "hsl(var(--pride-pink))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -99,12 +100,22 @@ export default {
           "33%": { transform: "translate(30px, -50px) scale(1.1)" },
           "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
         },
+        "bounce-subtle": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-4px)" },
+        },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.8" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "float-orb": "float-orb 20s infinite ease-in-out",
         "float-orb-reverse": "float-orb 25s infinite ease-in-out reverse",
+        "bounce-subtle": "bounce-subtle 2s infinite ease-in-out",
+        "pulse-slow": "pulse-slow 3s infinite ease-in-out",
       },
     },
   },

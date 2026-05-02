@@ -6,10 +6,10 @@ import { PrideActivityHeader } from "../components/PrideActivityHeader";
 import { PrideSuccessState } from "../components/PrideSuccessState";
 
 const VIBES = [
-  { id: "high-energy", label: "High Energy", icon: <Zap />, color: "from-yellow-400 to-orange-500" },
-  { id: "chill", label: "Chilled", icon: <Wind />, color: "from-blue-400 to-indigo-500" },
-  { id: "fiery", label: "Fiery", icon: <Flame />, color: "from-red-400 to-pink-500" },
-  { id: "dreamy", label: "Dreamy", icon: <Cloud />, color: "from-purple-400 to-pink-400" },
+  { id: "high-energy", label: "High Energy", icon: <Zap size={28} />, color: "from-amber-300 to-orange-500", glow: "shadow-orange-200" },
+  { id: "chill", label: "Chilled", icon: <Wind size={28} />, color: "from-sky-300 to-indigo-500", glow: "shadow-sky-200" },
+  { id: "fiery", label: "Fiery", icon: <Flame size={28} />, color: "from-rose-400 to-red-600", glow: "shadow-rose-200" },
+  { id: "dreamy", label: "Dreamy", icon: <Cloud size={28} />, color: "from-violet-300 to-fuchsia-500", glow: "shadow-violet-200" },
 ];
 
 const REFLECTIONS = [
@@ -48,7 +48,6 @@ export default function VibeTracker() {
       setIsSuccess(true);
     } catch (err) {
       console.error('Failed to save vibe:', err);
-      alert('Failed to save entry. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -56,12 +55,12 @@ export default function VibeTracker() {
 
   if (isSuccess) {
     return (
-      <div className="activity-root bg-[#FDFCFE] flex items-center justify-center p-6">
+      <div className="activity-root flex items-center justify-center p-6">
         <PrideFloatingOrbs />
         <div className="activity-container-sm">
           <PrideSuccessState 
-            title="Vibe Captured!"
-            message="Your energy levels are being tracked. Keep vibrating high and stay authentic."
+            title="Vibe Locked In!"
+            message="Your energy levels are recorded. Honor whatever space you're in today."
             emoji="✨"
             onRestart={() => {
               setIsSuccess(false);
@@ -75,75 +74,108 @@ export default function VibeTracker() {
   }
 
   return (
-    <div className="activity-root bg-[#FDFCFE] py-8">
+    <div className="activity-root py-12 md:py-20">
       <PrideFloatingOrbs />
 
       <div className="activity-container-sm">
         <PrideActivityHeader 
           title="Vibe Check" 
-          subtitle="How's your energy today?"
+          subtitle="Tune in to your internal frequency."
         />
 
-        <div className="space-y-10">
+        <div className="space-y-12">
           {/* Vibe Selection */}
-          <div className="space-y-4">
-            <label className="text-sm font-bold text-gray-700 ml-1">Current Vibe</label>
-            <div className="grid grid-cols-2 gap-4">
+          <section className="space-y-6">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-1.5 h-6 bg-pride-purple rounded-full" />
+              <h2 className="text-lg font-bold text-gray-800">Current Energy</h2>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4 md:gap-6">
               {VIBES.map((v) => (
                 <button
                   key={v.id}
                   onClick={() => setSelectedVibe(v.id)}
-                  className={`relative h-32 rounded-[32px] overflow-hidden transition-all group shadow-md hover:shadow-xl ${
-                    selectedVibe === v.id ? "scale-[1.02] ring-4 ring-[#EC4899]/30" : "opacity-60 grayscale hover:grayscale-0 hover:opacity-100"
+                  className={`relative group h-40 rounded-[40px] transition-all duration-500 ease-out active:scale-95 ${
+                    selectedVibe === v.id 
+                    ? `ring-[3px] ring-white shadow-2xl scale-[1.03] ${v.glow} z-20` 
+                    : "opacity-80 hover:opacity-100 hover:scale-[1.01] grayscale-[0.3] hover:grayscale-0"
                   }`}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${v.color} opacity-80 group-hover:opacity-100 transition-opacity`} />
-                  <div className="absolute inset-0 bg-white/20 backdrop-blur-[2px] group-hover:backdrop-blur-none transition-all" />
-                  <div className="relative h-full flex flex-col items-center justify-center gap-2 text-white drop-shadow-md">
-                    <div className="text-3xl filter drop-shadow-sm">{v.icon}</div>
-                    <span className="font-bold text-sm uppercase tracking-wider">{v.label}</span>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${v.color} opacity-90 rounded-[40px]`} />
+                  
+                  {/* Subtle Pattern Overlay */}
+                  <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]" />
+                  
+                  <div className="relative h-full flex flex-col items-center justify-center gap-3 text-white">
+                    <div className={`p-4 rounded-3xl bg-white/20 backdrop-blur-md border border-white/30 transition-transform duration-500 ${selectedVibe === v.id ? 'scale-110 rotate-3' : 'group-hover:rotate-6'}`}>
+                      {v.icon}
+                    </div>
+                    <span className="font-bold text-base tracking-wide drop-shadow-sm">{v.label}</span>
                   </div>
+
                   {selectedVibe === v.id && (
-                    <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-white flex items-center justify-center">
-                      <Check size={14} className="text-orange-500" strokeWidth={4} />
+                    <div className="absolute -top-2 -right-2 w-10 h-10 rounded-2xl bg-white text-emerald-500 flex items-center justify-center shadow-lg animate-bounce-subtle">
+                      <Check size={24} strokeWidth={3} />
                     </div>
                   )}
                 </button>
               ))}
             </div>
-          </div>
+          </section>
 
           {/* Reflections Checklist */}
-          <div className="space-y-4">
-            <label className="text-sm font-bold text-gray-700 ml-1">Reflections</label>
-            <div className="flex flex-wrap gap-2">
-              {REFLECTIONS.map((r) => (
-                <button
-                  key={r}
-                  onClick={() => toggleReflection(r)}
-                  className={`px-5 py-3 rounded-full border-2 font-medium transition-all shadow-sm ${
-                    selectedReflections.includes(r)
-                      ? "border-[#EC4899] bg-white/90 backdrop-blur-md text-[#EC4899] shadow-md"
-                      : "border-white bg-white/60 backdrop-blur-sm text-gray-500 hover:border-[#EC4899]/30"
-                  }`}
-                >
-                  {r}
-                </button>
-              ))}
+          <section className="space-y-6">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-1.5 h-6 bg-pride-pink rounded-full" />
+              <h2 className="text-lg font-bold text-gray-800">Reflections</h2>
             </div>
-          </div>
+            
+            <div className="premium-card p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-3">
+              {REFLECTIONS.map((r) => {
+                const isSelected = selectedReflections.includes(r);
+                return (
+                  <button
+                    key={r}
+                    onClick={() => toggleReflection(r)}
+                    className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all duration-300 ${
+                      isSelected
+                        ? "border-pride-purple bg-pride-purple/5 text-pride-purple shadow-sm"
+                        : "border-black/5 bg-gray-50/50 text-gray-500 hover:border-pride-purple/20 hover:bg-white"
+                    }`}
+                  >
+                    <span className="font-semibold text-sm">{r}</span>
+                    <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
+                      isSelected ? "bg-pride-purple border-pride-purple" : "border-black/10 bg-white"
+                    }`}>
+                      {isSelected && <Check size={14} className="text-white" strokeWidth={4} />}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
 
-          <button
-            disabled={!selectedVibe || isSubmitting}
-            onClick={handleSubmit}
-            className="w-full py-5 rounded-3xl bg-gradient-to-r from-[#EC4899] via-[#A855F7] to-[#3B82F6] text-white font-bold text-lg shadow-xl shadow-purple-100 disabled:opacity-50 transition-all active:scale-95 flex items-center justify-center gap-2 hover:opacity-90"
-          >
-            {isSubmitting ? (
-              <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            ) : (
-              <span>Lock in the Vibe</span>
-            )}
-          </button>
+          <div className="pt-4">
+            <button
+              disabled={!selectedVibe || isSubmitting}
+              onClick={handleSubmit}
+              className="btn-primary w-full h-20 text-xl flex items-center justify-center gap-3 relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
+              {isSubmitting ? (
+                <div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  <Zap className={selectedVibe ? "animate-pulse" : ""} />
+                  <span>Lock in the Vibe</span>
+                </>
+              )}
+            </button>
+            <p className="text-center text-gray-400 text-sm mt-4 font-medium italic">
+              "Your energy is valid. No matter what the frequency is today."
+            </p>
+          </div>
         </div>
       </div>
     </div>
