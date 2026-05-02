@@ -1,6 +1,4 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 
 interface PrideSuccessStateProps {
   title?: string;
@@ -17,7 +15,6 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
   onRestart,
   variant = "pride"
 }) => {
-  const navigate = useNavigate();
   
   const gradientClass = variant === "trans"
     ? "from-[#55cdfc] to-[#f7a8b8]"
@@ -73,7 +70,7 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
           </button>
         )}
         <button
-          onClick={() => navigate('/lgbtq-hub')}
+          onClick={() => window.location.href = '/pride/lgbtq-hub'}
           className={`btn-primary w-full py-5 text-lg`}
           style={{ 
             background: variant === "trans" 

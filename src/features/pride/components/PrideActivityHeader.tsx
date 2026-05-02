@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { ChevronLeft, History } from "lucide-react";
 import { cn } from "../../../lib/utils";
 
@@ -20,13 +19,11 @@ export const PrideActivityHeader: React.FC<PrideActivityHeaderProps> = ({
   showHistory = false,
   className 
 }) => {
-  const navigate = useNavigate();
-
   const handleExit = () => {
     if (onBack) {
       onBack();
     } else {
-      navigate("/lgbtq-hub");
+      window.location.href = "/pride/lgbtq-hub";
     }
   };
 
