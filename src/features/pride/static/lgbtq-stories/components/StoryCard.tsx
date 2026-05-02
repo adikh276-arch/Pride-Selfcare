@@ -28,14 +28,14 @@ const StoryCard = ({ story, index, onClick }: StoryCardProps) => {
       <div className="p-8">
         <div className="flex items-center gap-4 mb-6">
           <div 
-            className="w-16 h-16 rounded-2xl overflow-hidden border-2 flex-shrink-0"
-            style={{ borderColor: story.color.stripe }}
+            className="w-16 h-16 rounded-2xl flex items-center justify-center border-2 flex-shrink-0 text-xl font-black"
+            style={{ 
+              borderColor: story.color.stripe,
+              background: story.color.tagBg,
+              color: story.color.tagText
+            }}
           >
-            <img 
-              src={avatarUrl} 
-              alt={story.name} 
-              className="w-full h-full object-cover transition-transform group-hover:scale-110"
-            />
+            {story.name.charAt(0)}
           </div>
           <div className="flex flex-col gap-1">
             <h3 className="font-bold text-slate-900 text-lg leading-tight">

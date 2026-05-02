@@ -53,12 +53,17 @@ function StoryCard({ story, index, onClick }: { story: Story; index: number; onC
       <div className="w-1.5 shrink-0" style={{ backgroundColor: story.color.stripe }} />
 
       <div className="flex items-center gap-4 p-4 sm:p-5 flex-1 min-w-0">
-        {/* Avatar */}
-        <img
-          src={story.photo}
-          alt={story.name}
-          className="w-[42px] h-[42px] rounded-full object-cover shrink-0"
-        />
+        {/* Avatar Placeholder */}
+        <div 
+          className="w-[42px] h-[42px] rounded-full shrink-0 flex items-center justify-center font-bold text-sm"
+          style={{ 
+            backgroundColor: story.color.tagBg,
+            color: story.color.tagText,
+            border: `1px solid ${story.color.border}`
+          }}
+        >
+          {story.name.charAt(0)}
+        </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2.5 mb-1 flex-wrap">

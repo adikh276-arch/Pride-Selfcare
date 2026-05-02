@@ -28,14 +28,7 @@ const StoryDetail = ({ story, onBack }: StoryDetailProps) => {
           Back to all stories
         </button>
 
-        {/* Photo */}
-        <div className="animate-fade-up rounded-2xl overflow-hidden mb-8 flex items-center justify-center bg-secondary/40 p-2 sm:p-3">
-          <img
-            src={story.photo}
-            alt={story.name}
-            className="w-full max-h-[340px] object-contain"
-          />
-        </div>
+
 
         {/* Name + badge */}
         <div className="animate-fade-up flex items-center gap-3 mb-8" style={{ animationDelay: "0.1s" }}>

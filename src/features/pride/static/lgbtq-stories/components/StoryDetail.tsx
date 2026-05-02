@@ -46,14 +46,7 @@ const StoryDetail = ({ story, index, onBack }: StoryDetailProps) => {
         </div>
       </div>
 
-      <div className="rounded-[3rem] overflow-hidden shadow-2xl mb-16 border-4 border-white aspect-[4/5] md:aspect-video relative group">
-        <img 
-          src={portraitUrl} 
-          alt={story.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-60" />
-      </div>
+
 
       <div className="space-y-8 mb-16">
         {story.story.map((para, i) => (
