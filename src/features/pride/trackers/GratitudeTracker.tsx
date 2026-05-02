@@ -13,13 +13,24 @@ const MOODS = [
   { label: "Soft", emoji: "🌸" },
 ];
 
+import { PrideTrackerHistory } from "../components/PrideTrackerHistory";
+
+const MOODS = [
+  { label: "Radiant", emoji: "✨" },
+  { label: "Peaceful", emoji: "🧘" },
+  { label: "Content", emoji: "🙂" },
+  { label: "Soft", emoji: "🌸" },
+];
+
 export default function GratitudeTracker() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [gratitude1, setGratitude1] = useState("");
   const [gratitude2, setGratitude2] = useState("");
   const [selectedMood, setSelectedMood] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -34,7 +45,6 @@ export default function GratitudeTracker() {
       setIsSuccess(true);
     } catch (err) {
       console.error('Failed to save gratitude:', err);
-      alert('Failed to save entry. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -42,7 +52,7 @@ export default function GratitudeTracker() {
 
   if (isSuccess) {
     return (
-      <div className="activity-root bg-[#FDFCFE] flex items-center justify-center p-6">
+      <div className="activity-root flex items-center justify-center p-6">
         <PrideFloatingOrbs />
         <div className="activity-container-sm">
           <PrideSuccessState 
@@ -63,109 +73,141 @@ export default function GratitudeTracker() {
   }
 
   return (
-    <div className="activity-root bg-[#FDFCFE] py-8">
+    <div className="activity-root py-8">
       <PrideFloatingOrbs />
 
       <div className="activity-container-sm">
         <PrideActivityHeader 
-          title="Gratitude Garden" 
-          subtitle="Plant a seed of thankfulness"
-          onBack={step > 1 ? () => setStep(step - 1) : undefined}
+          title={showHistory ? "Gratitude Garden" : "Gratitude Garden"} 
+          subtitle={showHistory ? "A collection of your thankful moments" : "Plant a seed of thankfulness"}
+          showHistory={!showHistory}
+          onHistory={() => setShowHistory(true)}
+          onBack={() => {
+            if (showHistory) {
+              setShowHistory(false);
+            } else if (step > 1) {
+              setStep(step - 1);
+            } else {
+              navigate('/lgbtq-hub');
+            }
+          }}
         />
 
-        <AnimatePresence mode="wait">
-          {step === 1 && (
-            <motion.div
-              key="step1"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="space-y-8"
-            >
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <label className="text-lg font-bold text-gray-800 block">
-                    What's one thing you're grateful for today?
-                  </label>
-                  <textarea
-                    value={gratitude1}
-                    onChange={(e) => setGratitude1(e.target.value)}
-                    placeholder="A small moment, a person, or an accomplishment..."
-                    className="w-full h-32 p-5 rounded-[32px] border-2 border-white bg-white/60 backdrop-blur-sm focus:border-[#A855F7]/50 focus:ring-0 transition-all resize-none text-gray-700 shadow-sm focus:bg-white/90"
-                  />
+        {showHistory ? (
+          <PrideTrackerHistory 
+            tableName="gratitude_entries"
+            renderEntry={(entry) => (
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-3xl">{entry.mood_emoji}</span>
+                  <span className="font-bold text-lg text-foreground">Feeling {MOODS.find(m => m.emoji === entry.mood_emoji)?.label || 'Good'}</span>
                 </div>
-                <div className="space-y-4">
-                  <label className="text-lg font-bold text-gray-800 block">
-                    And another thing?
-                  </label>
-                  <textarea
-                    value={gratitude2}
-                    onChange={(e) => setGratitude2(e.target.value)}
-                    placeholder="Something else that brought a smile..."
-                    className="w-full h-32 p-5 rounded-[32px] border-2 border-white bg-white/60 backdrop-blur-sm focus:border-[#A855F7]/50 focus:ring-0 transition-all resize-none text-gray-700 shadow-sm focus:bg-white/90"
-                  />
+                <div className="space-y-3">
+                  {entry.items.map((item: string, i: number) => (
+                    <div key={i} className="flex gap-3 items-start p-4 rounded-2xl bg-black/5">
+                      <div className="mt-1 w-2 h-2 rounded-full bg-pride-pink shrink-0" />
+                      <p className="text-sm text-foreground/80 leading-relaxed italic">"{item}"</p>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <button
-                disabled={!gratitude1.trim() && !gratitude2.trim()}
-                onClick={() => setStep(2)}
-                className="w-full py-5 rounded-3xl bg-gradient-to-r from-[#EC4899] to-[#A855F7] text-white font-bold text-lg shadow-xl shadow-pink-100 disabled:opacity-50 transition-all active:scale-95 flex items-center justify-center gap-2 hover:opacity-90"
+            )}
+          />
+        ) : (
+          <AnimatePresence mode="wait">
+            {step === 1 && (
+              <motion.div
+                key="step1"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="space-y-8"
               >
-                <span>Continue</span>
-                <ChevronRight size={20} />
-              </button>
-            </motion.div>
-          )}
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <label className="text-lg font-bold text-gray-800 block">
+                      What's one thing you're grateful for today?
+                    </label>
+                    <textarea
+                      value={gratitude1}
+                      onChange={(e) => setGratitude1(e.target.value)}
+                      placeholder="A small moment, a person, or an accomplishment..."
+                      className="w-full h-32 p-5 rounded-[32px] border-2 border-white bg-white/60 backdrop-blur-sm focus:border-pride-purple/50 focus:ring-0 transition-all resize-none text-gray-700 shadow-sm focus:bg-white/90"
+                    />
+                  </div>
+                  <div className="space-y-4">
+                    <label className="text-lg font-bold text-gray-800 block">
+                      And another thing?
+                    </label>
+                    <textarea
+                      value={gratitude2}
+                      onChange={(e) => setGratitude2(e.target.value)}
+                      placeholder="Something else that brought a smile..."
+                      className="w-full h-32 p-5 rounded-[32px] border-2 border-white bg-white/60 backdrop-blur-sm focus:border-pride-purple/50 focus:ring-0 transition-all resize-none text-gray-700 shadow-sm focus:bg-white/90"
+                    />
+                  </div>
+                </div>
+                <button
+                  disabled={!gratitude1.trim() && !gratitude2.trim()}
+                  onClick={() => setStep(2)}
+                  className="btn-primary w-full flex items-center justify-center gap-2"
+                >
+                  <span>Continue</span>
+                  <ChevronRight size={20} />
+                </button>
+              </motion.div>
+            )}
 
-          {step === 2 && (
-            <motion.div
-              key="step2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="space-y-8"
-            >
-              <div className="space-y-2">
-                <h2 className="text-xl font-bold text-gray-900">How do you feel after reflecting?</h2>
-                <p className="text-gray-500">Pick the emoji that matches your mood</p>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                {MOODS.map(m => (
-                  <button
-                    key={m.label}
-                    onClick={() => setSelectedMood(m.emoji)}
-                    className={`p-8 rounded-[40px] border-2 transition-all flex flex-col items-center gap-3 shadow-sm hover:shadow-xl ${
-                      selectedMood === m.emoji
-                        ? "border-[#EC4899] bg-white/90 backdrop-blur-md scale-105"
-                        : "border-white bg-white/60 backdrop-blur-sm hover:border-[#EC4899]/30"
-                    }`}
-                  >
-                    <span className="text-5xl">{m.emoji}</span>
-                    <span className={`font-bold ${
-                      selectedMood === m.emoji ? "text-emerald-700" : "text-gray-700"
-                    }`}>
-                      {m.label}
-                    </span>
-                  </button>
-                ))}
-              </div>
-              <button
-                disabled={!selectedMood || isSubmitting}
-                onClick={handleSubmit}
-                className="w-full py-5 rounded-3xl bg-gradient-to-r from-[#EC4899] via-[#A855F7] to-[#3B82F6] text-white font-bold text-lg shadow-xl shadow-purple-100 disabled:opacity-50 transition-all active:scale-95 flex items-center justify-center gap-2 hover:opacity-90"
+            {step === 2 && (
+              <motion.div
+                key="step2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="space-y-8"
               >
-                {isSubmitting ? (
-                  <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : (
-                  <>
-                    <Send size={20} />
-                    <span>Send to the Garden</span>
-                  </>
-                )}
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <div className="space-y-2">
+                  <h2 className="text-xl font-bold text-gray-900">How do you feel after reflecting?</h2>
+                  <p className="text-gray-500">Pick the emoji that matches your mood</p>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  {MOODS.map(m => (
+                    <button
+                      key={m.label}
+                      onClick={() => setSelectedMood(m.emoji)}
+                      className={`p-8 rounded-[40px] border-2 transition-all flex flex-col items-center gap-3 shadow-sm hover:shadow-xl ${
+                        selectedMood === m.emoji
+                          ? "border-pride-pink bg-white/90 backdrop-blur-md scale-105"
+                          : "border-white bg-white/60 backdrop-blur-sm hover:border-pride-pink/30"
+                      }`}
+                    >
+                      <span className="text-5xl">{m.emoji}</span>
+                      <span className={`font-bold ${
+                        selectedMood === m.emoji ? "text-pride-pink" : "text-gray-700"
+                      }`}>
+                        {m.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <button
+                  disabled={!selectedMood || isSubmitting}
+                  onClick={handleSubmit}
+                  className="btn-primary w-full flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <Send size={20} />
+                      <span>Send to the Garden</span>
+                    </>
+                  )}
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
       </div>
     </div>
   );
