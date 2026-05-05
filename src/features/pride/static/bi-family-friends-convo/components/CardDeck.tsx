@@ -5,6 +5,7 @@ import confetti from "canvas-confetti";
 import ActivityCard from "./ActivityCard";
 import TapBubble from "./TapBubble";
 import BreathingOrb from "./BreathingOrb";
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
 const TOTAL = 10;
 const bandPattern: ("pink" | "purple" | "blue")[] = [

@@ -7,7 +7,7 @@ import FloatingOrbs from '../../components/activity/FloatingOrbs';
 import ProgressBar from '../../components/activity/ProgressBar';
 import ActivityCard from '../../components/activity/ActivityCard';
 
-import { PrideActivityHeader } from '../../../../components/PrideActivityHeader';
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
 const BiActivity = () => {
   const navigate = useNavigate();

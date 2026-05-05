@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ChevronDown, Lightbulb, MessageSquare, TrendingUp, BookOpen, Smile, User, Users, Heart, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
-import { PrideActivityHeader } from "../components/PrideActivityHeader";
+import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
 
 interface InteractiveTool {
   id: string;
