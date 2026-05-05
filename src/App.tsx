@@ -231,44 +231,11 @@ function App() {
         }
       }
 
-      // 4. Silent Persistence: Try direct session check via alternative patterns
-      console.log('Handshake: Attempting silent session fallback...');
-      try {
-        const silentEndpoints = [
-          { url: 'https://api.mantracare.com/user/user-info', method: 'POST', body: { token: "" } },
-          { url: 'https://api.mantracare.com/user/get-token', method: 'POST', body: {} },
-          { url: 'https://api.mantracare.com/user/get-token', method: 'GET' }
-        ];
-
-        for (const ep of silentEndpoints) {
-          const checkRes = await fetch(ep.url, {
-            method: ep.method,
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: ep.body ? JSON.stringify(ep.body) : undefined
-          });
-
-          if (checkRes.ok) {
-            const checkData = await checkRes.json();
-            const userId = checkData.user_id || checkData.userId;
-            if (userId) {
-              sessionStorage.setItem('user_id', userId.toString());
-              await sql`INSERT INTO users (id) VALUES (${userId}) ON CONFLICT DO NOTHING`;
-              setIsAuthorized(true);
-              return;
-            }
-          }
-        }
-      } catch (e) {
-        console.error('Silent check failed', e);
-      }
-
-      // 5. Final Fail: Redirect to Fallback
-      if (!window.location.pathname.includes('/token')) {
-        const currentPath = window.location.pathname + window.location.search;
-        localStorage.setItem("APP_REDIRECT_PATH", currentPath);
-        window.location.href = '/pride/token';
-      }
+      // 4. Final Fail: Redirect to external Auth Portal
+      const currentPath = window.location.pathname + window.location.search;
+      console.log('Handshake: No session or token found. Redirecting to Auth Portal...', currentPath);
+      localStorage.setItem("APP_REDIRECT_PATH", currentPath);
+      window.location.href = 'https://web.mantracare.com/app/pride';
     }
 
     handshake();
