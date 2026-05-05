@@ -96,6 +96,13 @@ export const initTables = async () => {
         );
       `);
     }
+
+    // Add unique index for identity_journey_entries to support ON CONFLICT
+    await sql`
+      CREATE UNIQUE INDEX IF NOT EXISTS idx_identity_journey_user_week 
+      ON identity_journey_entries (user_id, (data->>'week_start'));
+    `;
+
     return true;
   } catch (err) {
     console.error("Database initialization failed:", err);

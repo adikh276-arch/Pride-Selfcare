@@ -31,7 +31,7 @@ const CheckInCard = ({ selected, onSelect }: CheckInCardProps) => {
         {t('pick_sentence')}
       </p>
 
-      <div className="mt-4 bg-white rounded-[32px] p-4 shadow-sm border border-black/[0.03] flex flex-col gap-3">
+      <div className="mt-4 bg-white rounded-[32px] p-4 shadow-sm border border-black/[0.05] flex flex-col gap-3">
         {sentences.map((text, i) => {
           const style = ITEM_STYLES[i % ITEM_STYLES.length];
           const isSelected = selected === i;

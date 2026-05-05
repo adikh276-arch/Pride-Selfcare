@@ -122,7 +122,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFCFE] max-w-md mx-auto border-x border-border/50 shadow-2xl">
+    <div className="min-h-screen bg-[#F0F2F5] max-w-md mx-auto border-x border-black/10 shadow-2xl">
       <Header />
       <div className="flex flex-col gap-4 p-4">
         <CheckInCard selected={selected} onSelect={setSelected} />
