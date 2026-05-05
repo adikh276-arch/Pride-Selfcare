@@ -1,11 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
+.bi-coming-out-theme {
     --background: 280 100% 99%;
     --foreground: 270 20% 15%;
 
@@ -52,29 +47,25 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    min-height: 100vh;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'DM Sans', sans-serif;
-  }
+.bi-coming-out-theme * {
+    border-color: hsl(var(--border));
 }
 
-@layer utilities {
-  .font-display {
+.bi-coming-out-theme .font-display {
     font-family: 'DM Serif Display', serif;
-  }
-
-  .font-body {
-    font-family: 'DM Sans', sans-serif;
-  }
 }
+
+.bi-coming-out-theme .font-body {
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Base styles moved to wrapper */
 
 @keyframes float-orb {
   0%, 100% { transform: translate(0, 0) scale(1); }

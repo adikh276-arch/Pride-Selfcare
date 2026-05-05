@@ -64,6 +64,9 @@ export default {
           purple: "hsl(var(--pride-purple))",
           pink: "hsl(var(--pride-pink))",
         },
+        "bi-pink": "hsl(var(--bi-pink))",
+        "bi-purple": "hsl(var(--bi-purple))",
+        "bi-blue": "hsl(var(--bi-blue))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
