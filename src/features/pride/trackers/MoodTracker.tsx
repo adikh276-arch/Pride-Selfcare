@@ -113,8 +113,8 @@ export default function MoodTracker() {
                   onClick={() => setSelectedMood(m.value)}
                   className={`flex flex-col items-center gap-2 p-4 rounded-[28px] transition-all shadow-sm hover:shadow-xl border-2 ${
                     selectedMood === m.value
-                      ? "border-pride-purple bg-white/90 backdrop-blur-md scale-105"
-                      : "border-white bg-white/60 backdrop-blur-sm grayscale opacity-60 hover:grayscale-0 hover:opacity-100 hover:border-pride-purple/30"
+                      ? "border-pride-purple bg-white shadow-md scale-105"
+                      : "border-white bg-white/60 backdrop-blur-sm hover:border-pride-purple/30"
                   }`}
                 >
                   <span className="text-3xl">{m.emoji}</span>
