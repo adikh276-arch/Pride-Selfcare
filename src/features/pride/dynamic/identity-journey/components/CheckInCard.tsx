@@ -25,13 +25,13 @@ const CheckInCard = ({ selected, onSelect }: CheckInCardProps) => {
   ];
 
   return (
-    <div className="card-base">
-      <h2 className="text-base font-bold text-foreground">{t('one_word_today')}</h2>
-      <p className="text-sm text-muted-foreground mt-1">
+    <div className="flex flex-col gap-1 px-2">
+      <h2 className="text-lg font-bold text-gray-900">{t('one_word_today')}</h2>
+      <p className="text-sm text-gray-500">
         {t('pick_sentence')}
       </p>
 
-      <div className="mt-4 flex flex-col gap-2.5">
+      <div className="mt-4 bg-white rounded-[32px] p-4 shadow-soft border border-black/5 flex flex-col gap-3">
         {sentences.map((text, i) => {
           const style = ITEM_STYLES[i % ITEM_STYLES.length];
           const isSelected = selected === i;
@@ -40,7 +40,7 @@ const CheckInCard = ({ selected, onSelect }: CheckInCardProps) => {
             <button
               key={i}
               onClick={() => onSelect(i)}
-              className={`w-full text-left px-4 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 min-h-[48px] border border-transparent ${isSelected
+              className={`w-full text-left px-5 py-4 rounded-2xl text-sm font-semibold transition-all duration-200 min-h-[64px] flex items-center border border-transparent ${isSelected
                   ? `${style.active} shadow-lg scale-[1.02]`
                   : `${style.base} hover:scale-[1.01]`
                 }`}
