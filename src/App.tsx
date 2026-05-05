@@ -227,26 +227,38 @@ function App() {
         }
       }
 
-      // 4. Silent Persistence: Try direct cookie handshake
-      console.log('Handshake: Attempting silent cookie check...');
+      // 4. Silent Persistence: Try direct session check via cookies
+      console.log('Handshake: Attempting silent session check...');
       try {
-        const checkRes = await fetch('https://api.mantracare.com/user/user-info', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({})
-        });
-        if (checkRes.ok) {
-          const checkData = await checkRes.json();
-          const userId = checkData.user_id || checkData.userId;
-          if (userId) {
-            sessionStorage.setItem('user_id', userId.toString());
-            await sql`INSERT INTO users (id) VALUES (${userId}) ON CONFLICT DO NOTHING`;
-            setIsAuthorized(true);
-            return;
+        const silentEndpoints = [
+          { url: 'https://api.mantracare.com/user/user-info', method: 'GET' },
+          { url: 'https://api.mantracare.com/user/user-info', method: 'POST', body: { token: null } },
+          { url: 'https://api.mantracare.com/user/get-token/', method: 'GET' } // Trailing slash fallback
+        ];
+
+        for (const ep of silentEndpoints) {
+          const checkRes = await fetch(ep.url, {
+            method: ep.method,
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: ep.body ? JSON.stringify(ep.body) : undefined
+          });
+
+          if (checkRes.ok) {
+            const checkData = await checkRes.json();
+            const userId = checkData.user_id || checkData.userId;
+            if (userId) {
+              console.log('Handshake: Silent check success for user:', userId);
+              sessionStorage.setItem('user_id', userId.toString());
+              await sql`INSERT INTO users (id) VALUES (${userId}) ON CONFLICT DO NOTHING`;
+              setIsAuthorized(true);
+              return;
+            }
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        console.error('Silent check failed', e);
+      }
 
       // 5. Final Fail: Redirect to Fallback
       if (!window.location.pathname.includes('/token')) {
