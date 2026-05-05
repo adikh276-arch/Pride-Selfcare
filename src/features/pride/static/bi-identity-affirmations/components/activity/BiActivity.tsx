@@ -59,19 +59,28 @@ const BiActivity = () => {
             Carry this with you. Come back whenever the doubt returns.
           </p>
           <button
+            onClick={() => { setCurrentIndex(0); setFinished(false); }}
+            className="btn-secondary w-full"
+          >
+            Start Over
+          </button>
+
+          <button
             onClick={() => setIsShareOpen(true)}
-            className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-4"
+            className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm"
           >
             <Share2 size={16} />
             <span>Share</span>
           </button>
 
           <button
-            onClick={() => { setCurrentIndex(0); setFinished(false); }}
-            className="px-8 py-3 rounded-full font-body font-semibold text-sm text-primary-foreground transition-opacity hover:opacity-85 active:opacity-70 mx-auto"
-            style={{ background: 'hsl(var(--bi-purple))' }}
+            onClick={() => {
+              window.parent.postMessage("exit_activity", "*");
+              window.location.href = "/pride/lgbtq-hub";
+            }}
+            className="btn-primary w-full"
           >
-            Start Again
+            Back to Hub
           </button>
 
           <ShareModal 

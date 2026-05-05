@@ -8,7 +8,8 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/lgbtq-hub");
+    window.parent.postMessage("exit_activity", "*");
+    window.location.href = "/pride/lgbtq-hub";
   };
 
   return (

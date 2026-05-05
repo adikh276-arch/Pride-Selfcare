@@ -50,14 +50,6 @@ export default function SleepTracker() {
       <div className="activity-root flex items-center justify-center p-6">
         <PrideFloatingOrbs />
         <div className="activity-container-sm space-y-4">
-          <button
-            onClick={() => setIsShareOpen(true)}
-            className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm"
-          >
-            <Share2 size={16} />
-            <span>Share</span>
-          </button>
-
           <PrideSuccessState 
             title="Sweet Dreams!"
             message="Your sleep data has been saved to your wellness profile. Consistency is key."

@@ -352,8 +352,11 @@ function renderCard(
                 >
                   Start Over
                 </button>
-                <button
-                  onClick={() => navigate('/lgbtq-hub')}
+                 <button
+                  onClick={() => {
+                    window.parent.postMessage("exit_activity", "*");
+                    window.location.href = "/pride/lgbtq-hub";
+                  }}
                   className="px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-80 flex-1"
                   style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
                 >

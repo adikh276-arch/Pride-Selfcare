@@ -58,7 +58,15 @@ const TransMentalHealthActivity = () => {
   ];
 
   if (finished) {
-    return <CardComplete onRestart={() => { setFinished(false); setCurrent(0); }} onBackToHub={() => navigate('/lgbtq-hub')} />;
+    return (
+      <CardComplete 
+        onRestart={() => { setFinished(false); setCurrent(0); }} 
+        onBackToHub={() => {
+          window.parent.postMessage("exit_activity", "*");
+          window.location.href = "/pride/lgbtq-hub";
+        }} 
+      />
+    );
   }
 
   return (
@@ -68,7 +76,10 @@ const TransMentalHealthActivity = () => {
     >
       <div className="absolute top-6 left-6 z-50">
         <button
-          onClick={() => navigate('/lgbtq-hub')}
+          onClick={() => {
+            window.parent.postMessage("exit_activity", "*");
+            window.location.href = "/pride/lgbtq-hub";
+          }}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
         >
           <ChevronLeft size={18} strokeWidth={2.5} />

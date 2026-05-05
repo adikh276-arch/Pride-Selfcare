@@ -28,6 +28,11 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
     ? ["💙", "🩷", "🤍", "🩷", "💙"]
     : ["✨", "🌈", "💖", "🦄", "🌈"];
 
+  const handleExit = () => {
+    window.parent.postMessage("exit_activity", "*");
+    window.location.href = '/pride/lgbtq-hub';
+  };
+
   return (
     <motion.div
       initial={{ scale: 0.9, opacity: 0 }}
@@ -50,7 +55,6 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
           {message}
         </p>
       </div>
-
       <div className="flex gap-2 justify-center text-2xl py-2">
         {icons.map((e, i) => (
           <motion.span
@@ -82,7 +86,7 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
         </button>
 
         <button
-          onClick={() => window.location.href = '/pride/lgbtq-hub'}
+          onClick={handleExit}
           className={`btn-primary w-full py-5 text-lg`}
           style={{ 
             background: variant === "trans" 

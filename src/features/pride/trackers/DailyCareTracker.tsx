@@ -255,14 +255,6 @@ export default function DailyCareTracker() {
 
               {step === 4 && (
                 <div className="space-y-4">
-                  <button
-                    onClick={() => setIsShareOpen(true)}
-                    className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm"
-                  >
-                    <Share2 size={16} />
-                    <span>Share</span>
-                  </button>
-
                   <PrideSuccessState 
                     title="Rituals Tracked!"
                     message="Your daily self-care has been saved. Keep nourishing yourself, you deserve it."

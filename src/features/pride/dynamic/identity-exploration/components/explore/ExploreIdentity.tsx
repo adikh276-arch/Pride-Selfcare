@@ -112,9 +112,10 @@ const ExploreIdentity = () => {
       setScreen(s => s - 1);
       setRevealStep(0);
     } else {
-      navigate('/lgbtq-hub');
+      window.parent.postMessage("exit_activity", "*");
+      window.location.href = "/pride/lgbtq-hub";
     }
-  }, [screen, navigate]);
+  }, [screen]);
 
   const setAnswer = useCallback((k: string, v: string | number) => {
     setAnswers(a => ({ ...a, [k]: v }));
@@ -162,7 +163,10 @@ const ExploreIdentity = () => {
   }
 
   const screens = [
-    <S0 key={0} onNext={next} onHistory={() => setShowHistory(true)} onBack={() => navigate('/lgbtq-hub')} />,
+    <S0 key={0} onNext={next} onHistory={() => setShowHistory(true)} onBack={() => {
+      window.parent.postMessage("exit_activity", "*");
+      window.location.href = "/pride/lgbtq-hub";
+    }} />,
     <S1 key={1} onNext={next} />,
     <S2 key={2} {...{ answers, setAnswer, revealStep, onNext: next }} />,
     <S3 key={3} {...{ answers, setAnswer, revealStep, onNext: next, toggleMulti }} />,
@@ -172,7 +176,10 @@ const ExploreIdentity = () => {
     <S7 key={7} onNext={next} />,
     <S8 key={8} onNext={next} />,
     <S9 key={9} {...{ answers, setAnswer, revealStep, onNext: next }} />,
-    <S10 key={10} onHistory={() => setShowHistory(true)} onSave={saveProfile} isSaving={isSaving} onBackToHub={() => navigate('/lgbtq-hub')} onShare={() => setIsShareOpen(true)} />,
+    <S10 key={10} onHistory={() => setShowHistory(true)} onSave={saveProfile} isSaving={isSaving} onBackToHub={() => {
+      window.parent.postMessage("exit_activity", "*");
+      window.location.href = "/pride/lgbtq-hub";
+    }} onShare={() => setIsShareOpen(true)} />,
   ];
 
   return (

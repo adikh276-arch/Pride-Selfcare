@@ -335,7 +335,10 @@ export default function ComingOutActivity() {
                 Start again
               </button>
               <button
-                onClick={() => navigate('/lgbtq-hub')}
+                onClick={() => {
+                  window.parent.postMessage("exit_activity", "*");
+                  window.location.href = "/pride/lgbtq-hub";
+                }}
                 className="font-body text-sm text-white bg-bi-purple px-6 py-2.5 rounded-full hover:opacity-70 transition-opacity flex-1"
               >
                 Back to Hub

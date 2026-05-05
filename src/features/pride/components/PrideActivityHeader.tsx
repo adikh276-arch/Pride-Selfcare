@@ -23,6 +23,7 @@ export const PrideActivityHeader: React.FC<PrideActivityHeaderProps> = ({
     if (onBack) {
       onBack();
     } else {
+      window.parent.postMessage("exit_activity", "*");
       window.location.href = "/pride/lgbtq-hub";
     }
   };

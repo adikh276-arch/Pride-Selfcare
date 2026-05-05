@@ -13,6 +13,7 @@ const CompletionScreen = ({
   onSave,
   onRestart,
   onViewHistory,
+  onBackToHub,
 }: {
   entries: Entry[];
   onSave: () => void;

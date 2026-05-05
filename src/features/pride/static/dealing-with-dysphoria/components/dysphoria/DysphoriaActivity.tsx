@@ -74,7 +74,14 @@ const DysphoriaActivity = () => {
         <PrideActivityHeader 
           title="Dealing with Dysphoria" 
           subtitle="Grounding and coping strategies"
-          onBack={() => current > 0 ? goTo(current - 1, -1) : navigate("/lgbtq-hub")}
+          onBack={() => {
+            if (current > 0) {
+              goTo(current - 1, -1);
+            } else {
+              window.parent.postMessage("exit_activity", "*");
+              window.location.href = "/pride/lgbtq-hub";
+            }
+          }}
         />
 
         {/* Progress bar */}

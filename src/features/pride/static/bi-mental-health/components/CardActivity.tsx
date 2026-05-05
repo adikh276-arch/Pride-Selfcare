@@ -284,7 +284,10 @@ const CardActivity = () => {
         
         <div className="absolute top-6 left-6 z-50">
           <button
-            onClick={() => navigate('/lgbtq-hub')}
+            onClick={() => {
+              window.parent.postMessage("exit_activity", "*");
+              window.location.href = "/pride/lgbtq-hub";
+            }}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
           >
             <ChevronLeft size={18} strokeWidth={2.5} />
@@ -297,31 +300,33 @@ const CardActivity = () => {
           <p className="text-sm font-body text-muted-foreground leading-relaxed">
             You showed up for yourself today. That matters more than you know.
           </p>
-          <div className="flex flex-col gap-3 justify-center w-full">
-            <button
-              onClick={() => setIsShareOpen(true)}
-              className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-2"
-            >
-              <Share2 size={16} />
-              <span>Share</span>
-            </button>
-
-            <div className="flex gap-3 justify-center">
+            <div className="flex flex-col gap-3 justify-center w-full">
               <button
                 onClick={() => { setCurrent(0); setFinished(false); }}
-                className="py-3 px-8 rounded-full font-body font-semibold text-sm text-foreground bg-secondary transition-opacity duration-200 hover:opacity-80 flex-1"
+                className="py-4 px-8 rounded-2xl font-body font-bold text-base text-foreground bg-secondary transition-all hover:scale-[1.02] active:scale-95"
               >
-                Start Again
+                Start Over
               </button>
+
               <button
-                onClick={() => navigate('/lgbtq-hub')}
-                className="py-3 px-8 rounded-full font-body font-semibold text-sm text-primary-foreground transition-opacity duration-200 hover:opacity-80 flex-1"
+                onClick={() => setIsShareOpen(true)}
+                className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm"
+              >
+                <Share2 size={16} />
+                <span>Share</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  window.parent.postMessage("exit_activity", "*");
+                  window.location.href = "/pride/lgbtq-hub";
+                }}
+                className="py-4 px-8 rounded-2xl font-body font-bold text-base text-white transition-all hover:scale-[1.02] active:scale-95"
                 style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
               >
                 Back to Hub
               </button>
             </div>
-          </div>
 
           <ShareModal 
             isOpen={isShareOpen} 
@@ -346,7 +351,10 @@ const CardActivity = () => {
 
       <div className="absolute top-6 left-6 z-50">
         <button
-          onClick={() => navigate('/lgbtq-hub')}
+          onClick={() => {
+            window.parent.postMessage("exit_activity", "*");
+            window.location.href = "/pride/lgbtq-hub";
+          }}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
         >
           <ChevronLeft size={18} strokeWidth={2.5} />

@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Share2 } from "lucide-react";
+import { motion } from "framer-motion";
 import { ShareModal } from "@/components/pride/ShareModal";
 
 interface QuoteScreenProps {
@@ -63,7 +64,10 @@ const QuoteScreen = ({ selectedIndex, onClose }: QuoteScreenProps) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.8 }}
-        onClick={onClose}
+        onClick={() => {
+          window.parent.postMessage("exit_activity", "*");
+          window.location.href = "/pride/lgbtq-hub";
+        }}
         className="mt-4 px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-xl shadow-md hover:bg-primary/90 transition-all w-full max-w-[200px]"
       >
         {t('back_home')}

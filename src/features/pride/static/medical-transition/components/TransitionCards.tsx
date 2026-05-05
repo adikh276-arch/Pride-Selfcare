@@ -214,7 +214,10 @@ const TransitionCards = () => {
 
         <div className="absolute top-6 left-6 z-50">
           <button
-            onClick={() => navigate('/lgbtq-hub')}
+            onClick={() => {
+              window.parent.postMessage("exit_activity", "*");
+              window.location.href = "/pride/lgbtq-hub";
+            }}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
           >
             <ChevronLeft size={18} strokeWidth={2.5} />
@@ -265,7 +268,10 @@ const TransitionCards = () => {
                   Start Over
                 </button>
                 <button
-                  onClick={() => navigate('/lgbtq-hub')}
+                  onClick={() => {
+                    window.parent.postMessage("exit_activity", "*");
+                    window.location.href = "/pride/lgbtq-hub";
+                  }}
                   className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-bold text-white shadow-lg shadow-cyan-200/50 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-200 flex-1"
                   style={{
                     background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
@@ -307,7 +313,10 @@ const TransitionCards = () => {
 
       <div className="absolute top-6 left-6 z-50">
         <button
-          onClick={() => navigate('/lgbtq-hub')}
+          onClick={() => {
+            window.parent.postMessage("exit_activity", "*");
+            window.location.href = "/pride/lgbtq-hub";
+          }}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
         >
           <ChevronLeft size={18} strokeWidth={2.5} />

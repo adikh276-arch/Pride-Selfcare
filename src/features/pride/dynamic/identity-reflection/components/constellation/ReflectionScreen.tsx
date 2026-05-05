@@ -107,7 +107,10 @@ const ReflectionScreen = ({ stars, onSave, onCreateAnother }: ReflectionScreenPr
           New Map
         </button>
         <button
-          onClick={() => navigate('/lgbtq-hub')}
+          onClick={() => {
+            window.parent.postMessage("exit_activity", "*");
+            window.location.href = "/pride/lgbtq-hub";
+          }}
           className="btn-secondary w-full h-14"
         >
           To Hub
