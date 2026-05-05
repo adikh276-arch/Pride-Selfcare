@@ -116,9 +116,8 @@ function TokenFallback() {
     const currentPath = window.location.pathname + window.location.search;
     localStorage.setItem("APP_REDIRECT_PATH", currentPath);
     
-    const platformOrigin = window.location.origin;
-    const redirectUrl = encodeURIComponent(`${platformOrigin}/pride/`);
-    window.location.href = `${platformOrigin}/login?redirect_url=${redirectUrl}`;
+    // Redirect to the external Auth Portal as per the new protocol
+    window.location.href = 'https://web.mantracare.com/app/pride';
   };
 
   return (
@@ -159,6 +158,7 @@ function App() {
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
+    console.log('BUILD_VERSION: 1.2 - AUTH_REDIRECT_ACTIVE');
     async function handshake() {
       // 1. Developer Bypass
       const devUserId = import.meta.env.VITE_DEV_USER_ID;
