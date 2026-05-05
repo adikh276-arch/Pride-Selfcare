@@ -4,6 +4,8 @@ import { sql } from "@/lib/db";
 import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
 import { PrideActivityHeader } from "../components/PrideActivityHeader";
 import { PrideSuccessState } from "../components/PrideSuccessState";
+import { Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 
 const MOOD_OPTIONS = [
   { value: 1, label: "Awful", emoji: "😫" },
@@ -21,6 +23,7 @@ export default function MoodTracker() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const handleSubmit = async () => {
     if (selectedMood === null) return;
@@ -45,7 +48,15 @@ export default function MoodTracker() {
     return (
       <div className="activity-root flex items-center justify-center p-6">
         <PrideFloatingOrbs />
-        <div className="activity-container-sm">
+        <div className="activity-container-sm space-y-4">
+          <button
+            onClick={() => setIsShareOpen(true)}
+            className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm"
+          >
+            <Share2 size={16} />
+            <span>Share</span>
+          </button>
+          
           <PrideSuccessState 
             title="Mood Logged!"
             message="Your emotional journey is being tracked with care. Every feeling is valid."
@@ -55,6 +66,12 @@ export default function MoodTracker() {
               setSelectedMood(null);
               setNote("");
             }}
+          />
+
+          <ShareModal 
+            isOpen={isShareOpen} 
+            onClose={() => setIsShareOpen(false)}
+            title="Share Your Mood Tracker"
           />
         </div>
       </div>

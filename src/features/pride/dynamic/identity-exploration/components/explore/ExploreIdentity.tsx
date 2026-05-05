@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, History, Loader2, ChevronLeft } from "lucide-react";
+import { ArrowLeft, History, Loader2, ChevronLeft, Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 import { useNavigate } from "react-router-dom";
 import { sql } from "@/lib/db";
 import { toast } from "sonner";
@@ -103,6 +104,7 @@ const ExploreIdentity = () => {
   const [revealStep, setRevealStep] = useState(0);
   const [showHistory, setShowHistory] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const next = useCallback(() => { setScreen(s => s + 1); setRevealStep(0); }, []);
   const prev = useCallback(() => { 
@@ -170,7 +172,7 @@ const ExploreIdentity = () => {
     <S7 key={7} onNext={next} />,
     <S8 key={8} onNext={next} />,
     <S9 key={9} {...{ answers, setAnswer, revealStep, onNext: next }} />,
-    <S10 key={10} onHistory={() => setShowHistory(true)} onSave={saveProfile} isSaving={isSaving} onBackToHub={() => navigate('/lgbtq-hub')} />,
+    <S10 key={10} onHistory={() => setShowHistory(true)} onSave={saveProfile} isSaving={isSaving} onBackToHub={() => navigate('/lgbtq-hub')} onShare={() => setIsShareOpen(true)} />,
   ];
 
   return (
@@ -188,6 +190,11 @@ const ExploreIdentity = () => {
             {screens[screen]}
           </motion.div>
         </AnimatePresence>
+        <ShareModal 
+          isOpen={isShareOpen} 
+          onClose={() => setIsShareOpen(false)} 
+          title="Share My Identity Profile"
+        />
       </div>
     </div>
   );
@@ -554,7 +561,7 @@ const S9 = ({ onNext }: { answers: Answers; setAnswer: (k: string, v: string | n
 };
 
 /* ─── SCREEN 10: Closing ─── */
-const S10 = ({ onHistory, onSave, isSaving, onBackToHub }: { onHistory: () => void; onSave: () => void; isSaving: boolean; onBackToHub: () => void }) => (
+const S10 = ({ onHistory, onSave, isSaving, onBackToHub, onShare }: { onHistory: () => void; onSave: () => void; isSaving: boolean; onBackToHub: () => void; onShare: () => void }) => (
   <div className="flex flex-1 flex-col items-center justify-center px-6 py-12">
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={t}
       className="cloud-shadow rounded-3xl bg-card/80 p-8 w-full mb-8">
@@ -563,6 +570,13 @@ const S10 = ({ onHistory, onSave, isSaving, onBackToHub }: { onHistory: () => vo
       </p>
     </motion.div>
     <div className="w-full flex flex-col gap-3">
+      <button
+        onClick={onShare}
+        className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-2"
+      >
+        <Share2 size={16} />
+        <span>Share</span>
+      </button>
       <Btn onClick={onSave} disabled={isSaving}>{isSaving ? 'Saving...' : 'Save my profile'}</Btn>
       <Btn onClick={onHistory} variant="secondary">View history</Btn>
       <Btn onClick={onBackToHub} variant="ghost">Back to Hub</Btn>

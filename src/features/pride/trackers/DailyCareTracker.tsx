@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, Share2 } from "lucide-react";
 import { sql } from "@/lib/db";
+import { ShareModal } from "@/components/pride/ShareModal";
 import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
 import { PrideActivityHeader } from "../components/PrideActivityHeader";
 import { PrideSuccessState } from "../components/PrideSuccessState";
@@ -33,6 +34,7 @@ export default function DailyCareTracker() {
   const [mood, setMood] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const toggleActivity = (id: string) => {
     setSelectedActivities(prev => 
@@ -252,16 +254,32 @@ export default function DailyCareTracker() {
               )}
 
               {step === 4 && (
-                <PrideSuccessState 
-                  title="Rituals Tracked!"
-                  message="Your daily self-care has been saved. Keep nourishing yourself, you deserve it."
-                  onRestart={() => {
-                    setStep(1);
-                    setSelectedActivities([]);
-                    setDuration("");
-                    setMood("");
-                  }}
-                />
+                <div className="space-y-4">
+                  <button
+                    onClick={() => setIsShareOpen(true)}
+                    className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm"
+                  >
+                    <Share2 size={16} />
+                    <span>Share</span>
+                  </button>
+
+                  <PrideSuccessState 
+                    title="Rituals Tracked!"
+                    message="Your daily self-care has been saved. Keep nourishing yourself, you deserve it."
+                    onRestart={() => {
+                      setStep(1);
+                      setSelectedActivities([]);
+                      setDuration("");
+                      setMood("");
+                    }}
+                  />
+
+                  <ShareModal 
+                    isOpen={isShareOpen} 
+                    onClose={() => setIsShareOpen(false)}
+                    title="Share Your Daily Care"
+                  />
+                </div>
               )}
             </AnimatePresence>
           </>

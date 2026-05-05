@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Save, History, Home } from "lucide-react";
+import { Save, History, Home, Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -12,6 +13,7 @@ interface Props {
 const ClosingScreen = ({ onSave, onViewHistory, onGoHome }: Props) => {
   const navigate = useNavigate();
   const [saved, setSaved] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const handleSave = () => {
     onSave();
@@ -33,6 +35,14 @@ const ClosingScreen = ({ onSave, onViewHistory, onGoHome }: Props) => {
 
     <div className="w-full space-y-4">
       <button
+        onClick={() => setIsShareOpen(true)}
+        className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-2"
+      >
+        <Share2 size={16} />
+        <span>Share</span>
+      </button>
+
+      <button
         onClick={handleSave}
         disabled={saved}
         className="btn-primary w-full h-14 text-lg font-bold shadow-lg flex items-center justify-center gap-3 disabled:opacity-60"
@@ -40,6 +50,12 @@ const ClosingScreen = ({ onSave, onViewHistory, onGoHome }: Props) => {
         <Save size={20} />
         {saved ? "Reflection Saved ✓" : "Save My Reflection"}
       </button>
+
+      <ShareModal 
+        isOpen={isShareOpen} 
+        onClose={() => setIsShareOpen(false)} 
+        title="Share My Reflection"
+      />
 
       <div className="grid grid-cols-2 gap-4">
         <button

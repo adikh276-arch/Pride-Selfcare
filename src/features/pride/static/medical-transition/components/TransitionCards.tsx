@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ArrowRight, ArrowLeft, RefreshCcw } from "lucide-react";
+import { ChevronLeft, ArrowRight, ArrowLeft, RefreshCcw, Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -148,6 +149,7 @@ const TransitionCards = () => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
   const [finished, setFinished] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const touchStart = useRef<number | null>(null);
 
   const goNext = useCallback(() => {
@@ -245,24 +247,40 @@ const TransitionCards = () => {
             <p className="text-foreground font-display italic text-lg mb-6">
               "The world is better with you in it, exactly as you are." 💛
             </p>
-            <div className="flex gap-4 justify-center mt-4">
+            <div className="flex flex-col gap-4 justify-center mt-4">
               <button
-                onClick={handleStartOver}
-                className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all duration-200"
+                onClick={() => setIsShareOpen(true)}
+                className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-cyan-200 bg-cyan-50/50 text-cyan-600 hover:bg-cyan-100/50 transition-all text-sm font-bold shadow-sm mb-2"
               >
-                <RefreshCcw size={16} />
-                Start Over
+                <Share2 size={16} />
+                <span>Share</span>
               </button>
-              <button
-                onClick={() => navigate('/lgbtq-hub')}
-                className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-bold text-white shadow-lg shadow-cyan-200/50 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-200"
-                style={{
-                  background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
-                }}
-              >
-                Back to Hub
-              </button>
+
+              <div className="flex gap-4 justify-center">
+                <button
+                  onClick={handleStartOver}
+                  className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all duration-200 flex-1"
+                >
+                  <RefreshCcw size={16} />
+                  Start Over
+                </button>
+                <button
+                  onClick={() => navigate('/lgbtq-hub')}
+                  className="flex items-center gap-2 px-8 py-3 rounded-full text-sm font-bold text-white shadow-lg shadow-cyan-200/50 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-200 flex-1"
+                  style={{
+                    background: "linear-gradient(135deg, #06b6d4, #3b82f6)",
+                  }}
+                >
+                  Back to Hub
+                </button>
+              </div>
             </div>
+
+            <ShareModal 
+              isOpen={isShareOpen} 
+              onClose={() => setIsShareOpen(false)} 
+              title="Share This Guide"
+            />
           </div>
         </div>
       </div>

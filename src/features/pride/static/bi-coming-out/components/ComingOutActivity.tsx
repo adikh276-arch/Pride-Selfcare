@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 import confetti from "canvas-confetti";
 import TapToRevealBubble from "./TapToRevealBubble";
 
@@ -228,6 +229,7 @@ export default function ComingOutActivity() {
   const [direction, setDirection] = useState<"left" | "right" | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [finished, setFinished] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const cards = useCards();
   const total = cards.length;
 
@@ -316,20 +318,36 @@ export default function ComingOutActivity() {
           <p className="font-body text-sm text-muted-foreground leading-relaxed">
             You showed up for yourself today. Whatever comes next, remember: you are bisexual, you are real, and you belong.
           </p>
-          <div className="flex gap-3 justify-center">
+          <div className="flex flex-col gap-3 justify-center w-full">
             <button
-              onClick={() => { setFinished(false); setCurrentCard(0); }}
-              className="font-body text-sm text-foreground bg-secondary px-6 py-2.5 rounded-full hover:opacity-70 transition-opacity"
+              onClick={() => setIsShareOpen(true)}
+              className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-2"
             >
-              Start again
+              <Share2 size={16} />
+              <span>Share</span>
             </button>
-            <button
-              onClick={() => navigate('/lgbtq-hub')}
-              className="font-body text-sm text-white bg-bi-purple px-6 py-2.5 rounded-full hover:opacity-70 transition-opacity"
-            >
-              Back to Hub
-            </button>
+
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => { setFinished(false); setCurrentCard(0); }}
+                className="font-body text-sm text-foreground bg-secondary px-6 py-2.5 rounded-full hover:opacity-70 transition-opacity flex-1"
+              >
+                Start again
+              </button>
+              <button
+                onClick={() => navigate('/lgbtq-hub')}
+                className="font-body text-sm text-white bg-bi-purple px-6 py-2.5 rounded-full hover:opacity-70 transition-opacity flex-1"
+              >
+                Back to Hub
+              </button>
+            </div>
           </div>
+
+          <ShareModal 
+            isOpen={isShareOpen} 
+            onClose={() => setIsShareOpen(false)} 
+            title="Share This Journey"
+          />
         </div>
       </div>
     );

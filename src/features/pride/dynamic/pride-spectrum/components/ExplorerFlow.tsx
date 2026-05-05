@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import ProgressBar from "./ProgressBar";
 import OptionButton from "./OptionButton";
 import HistoryScreen from "./HistoryScreen";
+import { Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 import { sql } from "@/lib/db";
 
 interface Answers {
@@ -38,6 +40,7 @@ const ExplorerFlow = () => {
   const [feedbackGiven, setFeedbackGiven] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
   const [direction, setDirection] = useState<"forward" | "back">("forward");
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const userId = sessionStorage.getItem("user_id");
 
@@ -387,6 +390,14 @@ const ExplorerFlow = () => {
                     </div>
                   )}
                   <div className="space-y-4">
+                    <button
+                      onClick={() => setIsShareOpen(true)}
+                      className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-2"
+                    >
+                      <Share2 size={16} />
+                      <span>Share</span>
+                    </button>
+
                     <button onClick={() => { saveToHistory(); goTo(0); setAnswers({}); setFeedbackGiven(false); }} className="btn-primary w-full h-14 text-lg font-bold shadow-xl">
                       Save & Complete
                     </button>
@@ -429,6 +440,12 @@ const ExplorerFlow = () => {
             <ProgressBar current={screen - 1} total={10} />
           </div>
         )}
+
+        <ShareModal 
+          isOpen={isShareOpen} 
+          onClose={() => setIsShareOpen(false)} 
+          title="Share My Spectrum Insights"
+        />
         
         <div
           className={`flex-1 flex flex-col justify-center transition-all duration-500 ease-[0.4,0,0.2,1] ${

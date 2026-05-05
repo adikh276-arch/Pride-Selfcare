@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, ReactNode } from "react";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
 import ActivityCard from "./ActivityCard";
@@ -21,6 +22,7 @@ const CardDeck = () => {
   const [current, setCurrent] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [finished, setFinished] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const next = useCallback(() => {
     if (current < TOTAL - 1) setCurrent((c) => c + 1);
@@ -104,7 +106,7 @@ const CardDeck = () => {
 
           {/* Active card */}
           <div className="relative z-10">
-            {renderCard(current, next, handleFinish, finished, navigate, setCurrent, setFinished)}
+            {renderCard(current, next, handleFinish, finished, navigate, setCurrent, setFinished, () => setIsShareOpen(true))}
           </div>
         </div>
       </div>
@@ -122,6 +124,12 @@ const CardDeck = () => {
           )}
         </div>
       )}
+
+      <ShareModal 
+        isOpen={isShareOpen} 
+        onClose={() => setIsShareOpen(false)} 
+        title="Share This Guide"
+      />
     </div>
   );
 };
@@ -198,7 +206,8 @@ function renderCard(
   finished: boolean,
   navigate: (path: string) => void,
   setCurrent: (idx: number) => void,
-  setFinished: (fin: boolean) => void
+  setFinished: (fin: boolean) => void,
+  onShare: () => void
 ) {
   switch (index) {
     case 0:
@@ -327,20 +336,25 @@ function renderCard(
           <Affirmation text="I do not need perfect acceptance to have a valid identity." />
           <Affirmation text="I am bisexual, I am loved, and I belong." />
           {finished && (
-            <div className="space-y-4 pt-4">
-              <p className="text-center text-sm text-bi-purple font-semibold animate-pulse">
-                🎉 You did it. We're proud of you.
-              </p>
+            <div className="space-y-4 pt-4 text-center">
+              <button
+                onClick={onShare}
+                className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-2"
+              >
+                <Share2 size={16} />
+                <span>Share</span>
+              </button>
+              
               <div className="flex gap-3 justify-center">
                 <button
                   onClick={() => { setFinished(false); setCurrent(0); }}
-                  className="px-6 py-2.5 rounded-full text-sm font-semibold text-foreground bg-secondary transition-opacity hover:opacity-80"
+                  className="px-6 py-2.5 rounded-full text-sm font-semibold text-foreground bg-secondary transition-opacity hover:opacity-80 flex-1"
                 >
-                  Start Over 🔄
+                  Start Over
                 </button>
                 <button
                   onClick={() => navigate('/lgbtq-hub')}
-                  className="px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-80"
+                  className="px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-80 flex-1"
                   style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
                 >
                   Back to Hub

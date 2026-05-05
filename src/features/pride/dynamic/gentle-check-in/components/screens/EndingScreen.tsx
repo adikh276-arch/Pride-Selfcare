@@ -1,5 +1,8 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 
 interface Props {
   onDone: () => void;
@@ -14,6 +17,7 @@ const messages = [
 ];
 
 const EndingScreen = ({ onDone }: Props) => {
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const navigate = useNavigate();
   const message = useMemo(() => messages[Math.floor(Math.random() * messages.length)], []);
 
@@ -24,11 +28,25 @@ const EndingScreen = ({ onDone }: Props) => {
       {message}
     </p>
     <button
+      onClick={() => setIsShareOpen(true)}
+      className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-2"
+    >
+      <Share2 size={16} />
+      <span>Share</span>
+    </button>
+
+    <button
       onClick={() => navigate('/lgbtq-hub')}
       className="btn-primary w-full h-14 text-lg font-bold shadow-lg"
     >
       Back to Hub
     </button>
+
+    <ShareModal 
+      isOpen={isShareOpen} 
+      onClose={() => setIsShareOpen(false)} 
+      title="Share This Moment"
+    />
   </div>
   );
 };

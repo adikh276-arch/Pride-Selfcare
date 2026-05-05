@@ -1,12 +1,16 @@
 import { motion } from "framer-motion";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Share2 } from "lucide-react";
+import { useState } from "react";
+import { ShareModal } from "@/components/pride/ShareModal";
 
 interface CardCompleteProps {
   onRestart: () => void;
   onBackToHub: () => void;
 }
 
-const CardComplete = ({ onRestart, onBackToHub }: CardCompleteProps) => (
+const CardComplete = ({ onRestart, onBackToHub }: CardCompleteProps) => {
+  const [isShareOpen, setIsShareOpen] = useState(false);
+  return (
   <div
     className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden"
     style={{ background: "#edf5ed" }}
@@ -59,6 +63,17 @@ const CardComplete = ({ onRestart, onBackToHub }: CardCompleteProps) => (
         "You are real. You are valid. You are worthy of care."
       </motion.p>
 
+      <motion.button
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.9, duration: 0.5 }}
+        onClick={() => setIsShareOpen(true)}
+        className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-green-200 bg-green-50/50 text-green-600 hover:bg-green-100/50 transition-all text-sm font-bold shadow-sm mb-4"
+      >
+        <Share2 size={16} />
+        <span>Share</span>
+      </motion.button>
+
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
@@ -83,6 +98,12 @@ const CardComplete = ({ onRestart, onBackToHub }: CardCompleteProps) => (
         </button>
       </motion.div>
     </div>
+
+    <ShareModal 
+      isOpen={isShareOpen} 
+      onClose={() => setIsShareOpen(false)} 
+      title="Share This Resource"
+    />
   </div>
 );
 

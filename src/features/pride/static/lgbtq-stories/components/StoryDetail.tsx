@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 
 import { Story } from "../data/stories";
+import { useState } from "react";
+import { Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 
 interface StoryDetailProps {
   story: Story;
@@ -9,6 +12,7 @@ interface StoryDetailProps {
 }
 
 const StoryDetail = ({ story, index, onBack }: StoryDetailProps) => {
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const portraitUrl = story.portrait;
 
   return (
@@ -92,7 +96,15 @@ const StoryDetail = ({ story, index, onBack }: StoryDetailProps) => {
         </p>
       </div>
 
-      <div className="flex justify-center py-12">
+      <div className="flex flex-col items-center gap-4 py-12">
+        <button
+          onClick={() => setIsShareOpen(true)}
+          className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm"
+        >
+          <Share2 size={16} />
+          <span>Share Story</span>
+        </button>
+
         <button 
           onClick={onBack}
           className="px-10 py-5 rounded-3xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold transition-all flex items-center gap-3 group"
@@ -101,6 +113,12 @@ const StoryDetail = ({ story, index, onBack }: StoryDetailProps) => {
           Back to All Stories
         </button>
       </div>
+
+      <ShareModal 
+        isOpen={isShareOpen} 
+        onClose={() => setIsShareOpen(false)} 
+        title="Share This Story"
+      />
     </motion.div>
   );
 };

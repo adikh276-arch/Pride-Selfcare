@@ -1,4 +1,7 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 
 interface PrideSuccessStateProps {
   title?: string;
@@ -15,6 +18,7 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
   onRestart,
   variant = "pride"
 }) => {
+  const [isShareOpen, setIsShareOpen] = useState(false);
   
   const gradientClass = variant === "trans"
     ? "from-[#55cdfc] to-[#f7a8b8]"
@@ -70,6 +74,14 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
           </button>
         )}
         <button
+          onClick={() => setIsShareOpen(true)}
+          className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-2"
+        >
+          <Share2 size={16} />
+          <span>Share</span>
+        </button>
+
+        <button
           onClick={() => window.location.href = '/pride/lgbtq-hub'}
           className={`btn-primary w-full py-5 text-lg`}
           style={{ 
@@ -80,6 +92,12 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
         >
           Back to Hub
         </button>
+
+        <ShareModal 
+          isOpen={isShareOpen} 
+          onClose={() => setIsShareOpen(false)} 
+          title="Share This Activity"
+        />
       </div>
     </motion.div>
   );

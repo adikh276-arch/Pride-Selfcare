@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import type { StarData } from "../../pages/Index";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 
 interface ReflectionScreenProps {
   stars: StarData[];
@@ -10,6 +13,7 @@ interface ReflectionScreenProps {
 }
 
 const ReflectionScreen = ({ stars, onSave, onCreateAnother }: ReflectionScreenProps) => {
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const minX = Math.min(...stars.map((s) => s.x));
@@ -75,11 +79,25 @@ const ReflectionScreen = ({ stars, onSave, onCreateAnother }: ReflectionScreenPr
 
     <div className="w-full space-y-4">
       <button
+        onClick={() => setIsShareOpen(true)}
+        className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/20 transition-all text-sm font-bold shadow-sm mb-2"
+      >
+        <Share2 size={16} />
+        <span>Share</span>
+      </button>
+
+      <button
         onClick={onSave}
         className="btn-primary w-full h-14 text-lg font-bold shadow-2xl shadow-pride-purple/20"
       >
         Save Constellation
       </button>
+
+      <ShareModal 
+        isOpen={isShareOpen} 
+        onClose={() => setIsShareOpen(false)} 
+        title="Share My Identity Map"
+      />
       
       <div className="grid grid-cols-2 gap-4">
         <button

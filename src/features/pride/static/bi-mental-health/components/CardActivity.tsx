@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef } from "react";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
 import TapToReveal from "./TapToReveal";
@@ -229,6 +230,7 @@ const CardActivity = () => {
   const [swiping, setSwiping] = useState(false);
   const [swipeDir, setSwipeDir] = useState<"left" | "right" | null>(null);
   const [finished, setFinished] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const touchStartX = useRef(0);
   const total = cards.length;
 
@@ -295,21 +297,37 @@ const CardActivity = () => {
           <p className="text-sm font-body text-muted-foreground leading-relaxed">
             You showed up for yourself today. That matters more than you know.
           </p>
-          <div className="flex gap-3 justify-center">
+          <div className="flex flex-col gap-3 justify-center w-full">
             <button
-              onClick={() => { setCurrent(0); setFinished(false); }}
-              className="py-3 px-8 rounded-full font-body font-semibold text-sm text-foreground bg-secondary transition-opacity duration-200 hover:opacity-80"
+              onClick={() => setIsShareOpen(true)}
+              className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm mb-2"
             >
-              Start Again
+              <Share2 size={16} />
+              <span>Share</span>
             </button>
-            <button
-              onClick={() => navigate('/lgbtq-hub')}
-              className="py-3 px-8 rounded-full font-body font-semibold text-sm text-primary-foreground transition-opacity duration-200 hover:opacity-80"
-              style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
-            >
-              Back to Hub
-            </button>
+
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => { setCurrent(0); setFinished(false); }}
+                className="py-3 px-8 rounded-full font-body font-semibold text-sm text-foreground bg-secondary transition-opacity duration-200 hover:opacity-80 flex-1"
+              >
+                Start Again
+              </button>
+              <button
+                onClick={() => navigate('/lgbtq-hub')}
+                className="py-3 px-8 rounded-full font-body font-semibold text-sm text-primary-foreground transition-opacity duration-200 hover:opacity-80 flex-1"
+                style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
+              >
+                Back to Hub
+              </button>
+            </div>
           </div>
+
+          <ShareModal 
+            isOpen={isShareOpen} 
+            onClose={() => setIsShareOpen(false)} 
+            title="Share This Resource"
+          />
         </div>
       </div>
     );

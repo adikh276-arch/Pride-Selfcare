@@ -1,6 +1,7 @@
 import { useState, useCallback, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Share2 } from "lucide-react";
+import { ShareModal } from "@/components/pride/ShareModal";
 import confetti from "canvas-confetti";
 import FloatingOrbs from "../components/FloatingOrbs";
 import ProgressBar from "../components/ProgressBar";
@@ -224,6 +225,7 @@ const Index = () => {
   const [revealedCounts, setRevealedCounts] = useState<Record<number, number>>({});
   const [hasEverTapped, setHasEverTapped] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const handleReveal = useCallback((cardIndex: number) => {
     if (!hasEverTapped) setHasEverTapped(true);
@@ -293,20 +295,36 @@ const Index = () => {
           <p className="font-body text-muted-foreground text-sm max-w-xs mx-auto mb-6">
             You are trans. You are allowed to be known. Come back to this whenever you need it.
           </p>
-          <div className="flex gap-3 justify-center">
+          <div className="flex flex-col gap-3 justify-center w-full">
             <button
-              onClick={() => { setFinished(false); setCurrentCard(0); setRevealedCounts({}); setHasEverTapped(false); }}
-              className="py-3 px-8 rounded-full font-body font-medium text-sm bg-secondary text-foreground hover:opacity-80 transition-opacity duration-200"
+              onClick={() => setIsShareOpen(true)}
+              className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-cyan-200 bg-cyan-50/50 text-cyan-600 hover:bg-cyan-100/50 transition-all text-sm font-bold shadow-sm mb-2"
             >
-              Start again
+              <Share2 size={16} />
+              <span>Share</span>
             </button>
-            <button
-              onClick={() => navigate('/lgbtq-hub')}
-              className="py-3 px-8 rounded-full font-body font-medium text-sm bg-foreground text-background hover:opacity-80 transition-opacity duration-200"
-            >
-              Back to Hub
-            </button>
+
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => { setFinished(false); setCurrentCard(0); setRevealedCounts({}); setHasEverTapped(false); }}
+                className="py-3 px-8 rounded-full font-body font-medium text-sm bg-secondary text-foreground hover:opacity-80 transition-opacity duration-200 flex-1"
+              >
+                Start again
+              </button>
+              <button
+                onClick={() => navigate('/lgbtq-hub')}
+                className="py-3 px-8 rounded-full font-body font-medium text-sm bg-foreground text-background hover:opacity-80 transition-opacity duration-200 flex-1"
+              >
+                Back to Hub
+              </button>
+            </div>
           </div>
+
+          <ShareModal 
+            isOpen={isShareOpen} 
+            onClose={() => setIsShareOpen(false)} 
+            title="Share This Journey"
+          />
         </div>
       </div>
     );

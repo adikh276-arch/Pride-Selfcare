@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, Send } from "lucide-react";
+import { ChevronRight, Send, Share2 } from "lucide-react";
 import { sql } from "@/lib/db";
+import { ShareModal } from "@/components/pride/ShareModal";
 import { PrideFloatingOrbs } from "../components/PrideFloatingOrbs";
 import { PrideActivityHeader } from "../components/PrideActivityHeader";
 import { PrideSuccessState } from "../components/PrideSuccessState";
@@ -23,6 +24,7 @@ export default function GratitudeTracker() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -46,7 +48,15 @@ export default function GratitudeTracker() {
     return (
       <div className="activity-root flex items-center justify-center p-6">
         <PrideFloatingOrbs />
-        <div className="activity-container-sm">
+        <div className="activity-container-sm space-y-4">
+          <button
+            onClick={() => setIsShareOpen(true)}
+            className="flex items-center justify-center gap-2 px-6 py-2.5 mx-auto rounded-full border border-purple-200 bg-purple-50/50 text-purple-600 hover:bg-purple-100/50 transition-all text-sm font-bold shadow-sm"
+          >
+            <Share2 size={16} />
+            <span>Share</span>
+          </button>
+
           <PrideSuccessState 
             title="Heart Filled!"
             message="Your gratitude has been recorded. It's the small things that matter most."
@@ -58,6 +68,12 @@ export default function GratitudeTracker() {
               setGratitude2("");
               setSelectedMood("");
             }}
+          />
+
+          <ShareModal 
+            isOpen={isShareOpen} 
+            onClose={() => setIsShareOpen(false)}
+            title="Share Your Gratitude Tracker"
           />
         </div>
       </div>
