@@ -60,6 +60,18 @@ export default function SleepTracker() {
             }}
           />
 
+          <div className="flex justify-center pt-2">
+            <a 
+              href="https://web.mantracare.com/app/sleep" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white/50 backdrop-blur-sm border border-pride-purple/20 text-pride-purple font-black text-sm hover:bg-white/80 transition-all shadow-sm"
+            >
+              <Moon size={18} />
+              <span>More Sleep Insights</span>
+            </a>
+          </div>
+
           <ShareModal 
             isOpen={isShareOpen} 
             onClose={() => setIsShareOpen(false)}
@@ -188,6 +200,17 @@ export default function SleepTracker() {
                 </>
               )}
             </button>
+
+            <div className="flex justify-center pt-2">
+              <a 
+                href="https://web.mantracare.com/app/sleep" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[10px] text-pride-purple font-black uppercase tracking-[0.2em] hover:underline flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity"
+              >
+                View Full Sleep Insights ↗
+              </a>
+            </div>
           </div>
         )}
       </div>
