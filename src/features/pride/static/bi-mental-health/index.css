@@ -1,0 +1,135 @@
+  .bi-mental-health-theme {
+    --background: 300 100% 99%;
+    --foreground: 270 20% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 270 20% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 270 20% 18%;
+
+    --primary: 280 54% 46%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 300 40% 96%;
+    --secondary-foreground: 270 20% 18%;
+
+    --muted: 300 20% 94%;
+    --muted-foreground: 270 10% 50%;
+
+    --accent: 330 100% 42%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 270 20% 90%;
+    --input: 270 20% 90%;
+    --ring: 280 54% 46%;
+
+    --radius: 0.5rem;
+
+    /* Bi flag palette */
+    --bi-pink: 336 100% 41%;
+    --bi-purple: 264 55% 46%;
+    --bi-blue: 212 100% 31%;
+
+    /* Activity tokens */
+    --card-bg: 0 0% 100% / 0.88;
+    --card-radius: 28px;
+    --card-shadow: 0 8px 40px -12px hsl(270 30% 40% / 0.12), 0 2px 12px -4px hsl(270 30% 40% / 0.08);
+    --orb-pink: 336 100% 60%;
+    --orb-purple: 264 60% 55%;
+    --orb-blue: 212 90% 50%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    min-height: 100vh;
+  }
+
+  .bi-mental-health-theme * {
+    border-color: hsl(var(--border));
+  }
+
+  .bi-mental-health-theme .font-display {
+    font-family: 'DM Serif Display', serif;
+  }
+  .bi-mental-health-theme .font-body {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+/* Floating orbs */
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-40px, 30px) scale(1.05); }
+  66% { transform: translate(20px, -30px) scale(1.1); }
+}
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  33% { transform: translate(25px, 25px) scale(0.95); }
+  66% { transform: translate(-35px, -20px) scale(1.1); }
+}
+
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-pink {
+  background: hsl(var(--bi-pink));
+  animation: orb-drift-1 18s ease-in-out infinite;
+}
+.orb-purple {
+  background: hsl(var(--bi-purple));
+  animation: orb-drift-2 22s ease-in-out infinite;
+}
+.orb-blue {
+  background: hsl(var(--bi-blue));
+  animation: orb-drift-3 20s ease-in-out infinite;
+}
+
+/* Breathing orb */
+@keyframes breathe-in {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.4); opacity: 0.85; }
+}
+@keyframes breathe-out {
+  0% { transform: scale(1.4); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 0.5; }
+}
+
+/* Bubble pop */
+@keyframes bubble-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-bubble-pop {
+  animation: bubble-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Pulse hint */
+@keyframes pulse-hint {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-pulse-hint {
+  animation: pulse-hint 1.8s ease-in-out infinite;
+}
