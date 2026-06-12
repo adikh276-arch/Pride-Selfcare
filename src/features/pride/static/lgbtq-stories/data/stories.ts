@@ -32,8 +32,8 @@ export interface Story {
   story: string[];
   highlight: string;
   takeaway: string;
-  portrait: string;
-  avatar: string;
+  portrait: any;
+  avatar: any;
 }
 
 export const stories: Story[] = [

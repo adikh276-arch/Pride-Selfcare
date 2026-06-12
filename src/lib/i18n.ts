@@ -41,9 +41,18 @@ function getLanguageFromUrl(): string {
   return 'en';
 }
 
-// Automatically load all translation files using Vite's glob import
-const hubModules = import.meta.glob('../features/pride/hub/i18n/*.json', { eager: true });
-const trackerModules = import.meta.glob('../features/pride/trackers/i18n/*.json', { eager: true });
+// Automatically load all translation files using Webpack's require.context
+const hubContext = require.context('../features/pride/hub/i18n', false, /\.json$/);
+const hubModules: any = {};
+hubContext.keys().forEach((key: string) => {
+  hubModules[key] = hubContext(key);
+});
+
+const trackerContext = require.context('../features/pride/trackers/i18n', false, /\.json$/);
+const trackerModules: any = {};
+trackerContext.keys().forEach((key: string) => {
+  trackerModules[key] = trackerContext(key);
+});
 
 const resources: any = {};
 

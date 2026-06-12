@@ -15,7 +15,8 @@ interface MythDetail {
 
 export function LGBTQMythDetail() {
   const router = useRouter();
-  const { mythId } = useParams<{ mythId: string }>();
+  const params = useParams<{ mythId: string }>();
+  const mythId = params?.mythId;
   const { t } = useTranslation("hub");
 
   const mythsData: MythDetail[] = [

@@ -1,10 +1,11 @@
 "use client";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
+import Index from "./pages/Index";
 import i18n from "./i18n/index";
 import { useEffect, useState } from "react";
 import { I18nextProvider } from "react-i18next";
@@ -32,10 +33,10 @@ const IdentityJourney = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <Routes>
+          <MemoryRouter>`n<Routes>
             <Route path="/" element={<Index />} />
             <Route path="*" element={<Index />} />
-          </Routes>
+          </Routes>`n</MemoryRouter>
         </TooltipProvider>
       </I18nextProvider>
     </QueryClientProvider>

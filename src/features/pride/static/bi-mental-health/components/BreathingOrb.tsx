@@ -11,7 +11,7 @@ const steps = [
 const BreathingOrb = () => {
   const [step, setStep] = useState(0);
   const [active, setActive] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!active) return;
@@ -19,7 +19,7 @@ const BreathingOrb = () => {
       setStep((s) => (s < steps.length - 1 ? s + 1 : s));
       if (step >= steps.length - 1) setActive(false);
     }, 4500);
-    return () => clearTimeout(timerRef.current);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [active, step]);
 
   const current = steps[step];

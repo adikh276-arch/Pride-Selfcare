@@ -1,4 +1,5 @@
 "use client";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import WelcomeScreen from "../components/constellation/WelcomeScreen";

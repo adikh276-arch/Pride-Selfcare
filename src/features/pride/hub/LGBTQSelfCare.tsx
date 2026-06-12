@@ -90,7 +90,7 @@ export function LGBTQSelfCare() {
               whileTap={{ scale: 0.9 }}
               onClick={() => {
                 window.parent.postMessage({ action: 'exit' }, 'https://web.mantracare.com');
-                router.push(-1);
+                router.back();
               }}
               className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-foreground border border-white/10 shadow-lg mb-8"
             >

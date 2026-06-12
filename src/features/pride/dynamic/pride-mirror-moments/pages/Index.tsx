@@ -1,4 +1,5 @@
 "use client";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence } from "framer-motion";
@@ -28,8 +29,8 @@ const Index = () => {
       const res = await getDynamicMiniHistory('pride_mirror_moments_entries', userId);
       const rows = res.success && res.data ? res.data : [];
       // Data is stored as an array of strings
-      const allNotes = rows.flatMap(r => (r.data as any).notes as string[]);
-      const uniqueNotes = [...new Set(allNotes)];
+      const allNotes = rows.flatMap((r: any) => (r.data as any).notes as string[]);
+      const uniqueNotes = [...new Set(allNotes)] as string[];
       setDbNotes(uniqueNotes);
     } catch (err) {
       console.error("Failed to fetch notes:", err);
@@ -81,7 +82,7 @@ const Index = () => {
       setScreen("intro");
       setNotes([]);
     }
-  }, [screen, navigate]);
+  }, [screen, router]);
 
   return (
     <div className="activity-root">

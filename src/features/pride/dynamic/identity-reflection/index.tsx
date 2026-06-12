@@ -1,11 +1,12 @@
 "use client";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
-import NotFound from "./pages/NotFound.tsx";
+import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
 import LanguageSelector from "./components/LanguageSelector";
 import "./i18n/index";
 import { useEffect, useState } from "react";
@@ -90,7 +91,7 @@ const App = () => {
         <Sonner />
         <LanguageSelector />
         
-          <Routes>
+          <MemoryRouter>`n<Routes>
             <Route 
               path="/" 
               element={
@@ -100,7 +101,7 @@ const App = () => {
               } 
             />
             <Route path="*" element={<NotFound />} />
-          </Routes>
+          </Routes>`n</MemoryRouter>
         
       </TooltipProvider>
     </QueryClientProvider>

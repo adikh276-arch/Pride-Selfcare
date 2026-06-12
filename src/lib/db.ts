@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 
-const databaseUrl = import.meta.env.VITE_NEON_DATABASE_URL;
+const databaseUrl = process.env.VITE_NEON_DATABASE_URL;
 
 console.log('Database URL presence check:', !!databaseUrl);
 

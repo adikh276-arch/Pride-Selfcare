@@ -26,7 +26,7 @@ export interface Story {
   story: string[];
   highlight: string;
   takeaway: string;
-  photo: string;
+  photo: any;
 }
 
 export const stories: Story[] = [

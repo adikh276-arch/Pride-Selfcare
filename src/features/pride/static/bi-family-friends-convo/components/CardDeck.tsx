@@ -118,7 +118,7 @@ const CardDeck = () => {
 
           {/* Active card */}
           <div className="relative z-10">
-            {renderCard(current, next, handleFinish, finished, navigate, setCurrent, setFinished, () => setIsShareOpen(true), t)}
+            {renderCard(current, next, handleFinish, finished, router.push, setCurrent, setFinished, () => setIsShareOpen(true), t)}
           </div>
         </div>
       </div>

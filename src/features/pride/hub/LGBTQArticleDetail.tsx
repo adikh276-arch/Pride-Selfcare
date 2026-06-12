@@ -20,7 +20,8 @@ interface ArticleDetail {
 
 export function LGBTQArticleDetail() {
   const router = useRouter();
-  const { articleId } = useParams<{ articleId: string }>();
+  const params = useParams<{ articleId: string }>();
+  const articleId = params?.articleId;
   const { t, i18n } = useTranslation("hub");
 
   const articlesData: ArticleDetail[] = [

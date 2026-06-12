@@ -1,4 +1,5 @@
 "use client";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useState, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import HeroSection from "./components/HeroSection";

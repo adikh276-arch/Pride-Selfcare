@@ -17,7 +17,7 @@ export function MantraLogoSVG() {
 
 export function Sidebar() {
   const router = useRouter();
-  const location = usePathname();
+  const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
 
   const mainNavItems = [
@@ -25,7 +25,7 @@ export function Sidebar() {
     { icon: Lightbulb, label: "LGBTQ Self-Care", path: "/lgbtq-self-care" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => pathname === path;
 
   return (
     <motion.div
