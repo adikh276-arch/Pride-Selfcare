@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Share2 } from "lucide-react";
@@ -239,6 +241,7 @@ export default function ComingOutActivity() {
     if (currentCard >= total - 1) {
       // Final card - finish
       setFinished(true);
+        triggerActivityWebhook();
       confetti({
         particleCount: 150,
         spread: 80,

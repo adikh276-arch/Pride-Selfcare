@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -33,6 +35,7 @@ const TransMentalHealthActivity = () => {
     if (current >= TOTAL - 1) {
       confetti({ particleCount: 120, spread: 80, origin: { y: 0.7 }, colors: ["#55cdfc", "#f7a8b8", "#ffffff"] });
       setFinished(true);
+            triggerActivityWebhook();
       return;
     }
     setDirection(1);

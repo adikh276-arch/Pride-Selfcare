@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useState, useCallback, useRef, ReactNode, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft, Share2 } from "lucide-react";
@@ -46,6 +48,7 @@ const CardDeck = () => {
 
   const handleFinish = () => {
     setFinished(true);
+                  triggerActivityWebhook();
     confetti({
       particleCount: 150,
       spread: 80,

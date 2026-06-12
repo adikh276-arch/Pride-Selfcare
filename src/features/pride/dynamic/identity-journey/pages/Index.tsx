@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
@@ -92,6 +94,7 @@ const Index = () => {
 
       try {
         await saveDynamicMiniEntry('identity_journey_entries', userId, { week_start: todayWeekStart, week_data: updatedToSave });
+        triggerActivityWebhook();
         setShowQuote(true);
       } catch (err) {
         console.error('Failed to save progress:', err);

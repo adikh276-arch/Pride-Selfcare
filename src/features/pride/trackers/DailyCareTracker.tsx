@@ -1,4 +1,5 @@
 "use client";
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { saveGenericTrackerEntry } from "@/app/actions/trackers";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -56,6 +57,7 @@ export default function DailyCareTracker() {
         duration,
         mood
       });
+      triggerActivityWebhook();
       setStep(4); // Success step
     } catch (err) {
       console.error('Failed to save daily care:', err);

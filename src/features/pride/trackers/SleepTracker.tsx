@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { saveGenericTrackerEntry } from "@/app/actions/trackers";
 import { useState } from "react";
 import { Moon, Sun, Save, Star } from "lucide-react";
@@ -43,6 +45,7 @@ export default function SleepTracker() {
         date: today
       });
       setIsSuccess(true);
+      triggerActivityWebhook();
     } catch (err) {
       console.error('Failed to save sleep:', err);
     } finally {

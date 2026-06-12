@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
@@ -74,6 +76,7 @@ const Index = () => {
     
     try {
       await saveDynamicMiniEntry('identity_reflection_entries', userId, newConstellation);
+      triggerActivityWebhook();
       await fetchConstellations();
       setScreen("welcome");
     } catch (error) {

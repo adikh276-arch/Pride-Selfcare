@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useState, useCallback, useRef } from 'react';
 import { ChevronLeft, Share2 } from 'lucide-react';
 import { ShareModal } from "@/components/pride/ShareModal";
@@ -29,6 +31,7 @@ const BiActivity = () => {
   const goNext = useCallback(() => {
     if (currentIndex >= cards.length - 1) {
       setFinished(true);
+            triggerActivityWebhook();
       fireConfetti();
       return;
     }

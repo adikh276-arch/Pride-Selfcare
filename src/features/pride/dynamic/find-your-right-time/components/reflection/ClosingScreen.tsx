@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { motion } from "framer-motion";
 import { Save, History, Home, Share2 } from "lucide-react";
 import { ShareModal } from "@/components/pride/ShareModal";
@@ -18,6 +20,7 @@ const ClosingScreen = ({ onSave, onViewHistory, onGoHome }: Props) => {
 
   const handleSave = () => {
     onSave();
+    triggerActivityWebhook();
     setSaved(true);
   };
 

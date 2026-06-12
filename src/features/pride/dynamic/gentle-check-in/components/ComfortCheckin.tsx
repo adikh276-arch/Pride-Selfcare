@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { saveDynamicMiniEntry } from "@/app/actions/dynamicMinis";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -79,6 +81,7 @@ const ComfortCheckin = () => {
   const next = () => setStep((s) => s + 1);
   const handleSave = () => {
     saveEntry(data);
+    triggerActivityWebhook();
     next();
   };
   const reset = () => {

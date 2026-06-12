@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { AuthGuard } from "@/components/pride/AuthGuard";
+import { Suspense } from "react";
+import { UrlParamCapture } from "@/components/UrlParamCapture";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +32,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <Suspense fallback={null}>
+          <UrlParamCapture />
+        </Suspense>
         <Providers>
           <AuthGuard>
             {children}

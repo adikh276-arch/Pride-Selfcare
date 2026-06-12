@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { saveMoodEntry } from "@/app/actions/trackers";
 import { useState } from "react";
 import { Send } from "lucide-react";
@@ -35,6 +37,7 @@ export default function MoodTracker() {
     const moodLabel = MOOD_OPTIONS.find(m => m.value === selectedMood)?.label || "";
 
     try {
+      triggerActivityWebhook();
       await saveMoodEntry(userId, selectedMood, moodLabel, note);
       setIsSuccess(true);
     } catch (err) {

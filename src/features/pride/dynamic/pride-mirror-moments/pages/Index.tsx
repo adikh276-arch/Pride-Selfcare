@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -53,6 +55,7 @@ const Index = () => {
       
       const payload = { notes, date: new Date().toISOString() };
       await saveDynamicMiniEntry('pride_mirror_moments_entries', userId, payload);
+      triggerActivityWebhook();
       
       toast.success("Notes saved to cloud!");
       await fetchNotes();

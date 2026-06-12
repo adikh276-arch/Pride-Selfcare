@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import ProgressBar from "./ProgressBar";
@@ -113,6 +115,7 @@ const ExplorerFlow = () => {
     try {
       if (!userId) throw new Error('No user session');
       await saveDynamicMiniEntry('pride_spectrum_entries', userId, entry);
+      triggerActivityWebhook();
     } catch (err) {
       console.error('Failed to save to cloud:', err);
       const existing = JSON.parse(localStorage.getItem("spectrum-history") || "[]");

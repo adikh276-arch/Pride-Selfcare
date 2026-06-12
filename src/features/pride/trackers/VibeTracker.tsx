@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { saveGenericTrackerEntry } from "@/app/actions/trackers";
 import { useState } from "react";
 import { Check, Zap, Flame, Cloud, Wind, Share2 } from "lucide-react";
@@ -55,6 +57,7 @@ export default function VibeTracker() {
         reflections: selectedReflections
       });
       setIsSuccess(true);
+      triggerActivityWebhook();
     } catch (err) {
       console.error('Failed to save vibe:', err);
     } finally {

@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useState, useCallback, useRef } from "react";
 import { ChevronLeft, Share2 } from "lucide-react";
 import { ShareModal } from "@/components/pride/ShareModal";
@@ -244,6 +246,7 @@ const CardActivity = () => {
         colors: ["#d1006c", "#6b35b8", "#0050a0", "#FFD700"],
       });
       setFinished(true);
+          triggerActivityWebhook();
       return;
     }
     setSwiping(true);

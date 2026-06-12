@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
@@ -39,6 +41,7 @@ const DysphoriaActivity = () => {
 
   const handleFinish = () => {
     setFinished(true);
+            triggerActivityWebhook();
     confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 }, colors: ["#55cdfc", "#f7a8b8", "#ffffff"] });
     setTimeout(() => confetti({ particleCount: 80, spread: 120, origin: { y: 0.5, x: 0.3 }, colors: ["#55cdfc", "#f7a8b8", "#ffffff"] }), 400);
     setTimeout(() => confetti({ particleCount: 80, spread: 120, origin: { y: 0.5, x: 0.7 }, colors: ["#55cdfc", "#f7a8b8", "#ffffff"] }), 700);

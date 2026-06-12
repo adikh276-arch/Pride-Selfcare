@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
@@ -256,6 +258,7 @@ export default function TransJoyActivity() {
     if (isLast) {
       bigConfetti();
       setFinished(true);
+            triggerActivityWebhook();
       return;
     }
     setDirection("left");

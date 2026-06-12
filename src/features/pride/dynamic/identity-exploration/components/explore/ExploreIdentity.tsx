@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useTranslation } from "react-i18next";
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -138,6 +140,7 @@ const ExploreIdentity = () => {
       if (!userId) throw new Error('No user session');
 
       await saveDynamicMiniEntry('identity_exploration_entries', userId, answers);
+      triggerActivityWebhook();
       toast.success('Profile saved to your journey!');
     } catch (err) {
       console.error('Failed to save profile:', err);

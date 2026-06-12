@@ -1,4 +1,6 @@
 "use client";
+
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ArrowRight, ArrowLeft, RefreshCcw, Share2 } from "lucide-react";
@@ -167,6 +169,7 @@ const TransitionCards = () => {
 
   const handleFinish = () => {
     setFinished(true);
+            triggerActivityWebhook();
     setTimeout(() => {
       confetti({
         particleCount: 150,
