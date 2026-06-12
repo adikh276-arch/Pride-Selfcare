@@ -25,7 +25,7 @@ export function PrideStaticViewer() {
   const { t, i18n } = useTranslation("guides");
   
   // Ensure we use a path relative to the public root, considering the basename
-  const src = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/static/pride/${slug}/index.html?lang=${i18n.language}&v=${new Date().getTime()}`;
+  const src = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/static/pride/${slug}/index.html?lang=${i18n.language}&v=${new Date().getTime()}`;
   
   const metadata = slug ? slugMetadata[slug] : null;
 

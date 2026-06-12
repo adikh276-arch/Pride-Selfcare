@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Copy, Mail, MessageCircle, Instagram, Link } from 'lucide-react';
+import { X, Copy, Mail, MessageCircle, Link } from 'lucide-react';
 
 interface ShareModalProps {
   isOpen: boolean;
