@@ -24,8 +24,9 @@ export function PrideStaticViewer() {
   const router = useRouter();
   const { t, i18n } = useTranslation("guides");
   
-  // Ensure we use a path relative to the public root, considering the basename
-  const src = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/static/pride/${slug}/index.html?lang=${i18n.language}&v=${new Date().getTime()}`;
+  // Next.js config has basePath: "/pride", so static assets must be prefixed with it.
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/pride";
+  const src = `${basePath}/static/pride/${slug}/index.html?lang=${i18n.language}&v=${new Date().getTime()}`;
   
   const metadata = slug ? slugMetadata[slug] : null;
 
