@@ -145,7 +145,7 @@ const Index = () => {
     } else if (screen === "completion") {
       setScreen("reflection");
     } else if (screen === "intro") {
-      router.push('/lgbtq-hub' + window.location.search);
+      router.push('/' + window.location.search);
     }
   };
 
@@ -169,7 +169,7 @@ const Index = () => {
       case "reflection":
         return <ReflectionScreen entries={entries} onComplete={handleReflectionComplete} onBack={handleBack} />;
       case "completion":
-        return <CompletionScreen entries={entries} onSave={handleSave} onRestart={handleRestart} onViewHistory={handleViewHistory} onBackToHub={() => router.push('/lgbtq-hub' + window.location.search)} />;
+        return <CompletionScreen entries={entries} onSave={handleSave} onRestart={handleRestart} onViewHistory={handleViewHistory} onBackToHub={() => router.push('/' + window.location.search)} />;
       case "history":
         return <HistoryScreen journals={history} onBack={handleBackFromHistory} />;
     }

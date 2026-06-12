@@ -286,7 +286,7 @@ const Index = () => {
           <button
             onClick={() => {
               window.parent.postMessage("exit_activity", "*");
-              window.location.href = "/pride/lgbtq-hub" + window.location.search;
+              window.location.href = "/pride/" + window.location.search;
             }}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
           >
@@ -319,7 +319,7 @@ const Index = () => {
               <button
                 onClick={() => {
                   window.parent.postMessage("exit_activity", "*");
-                  window.location.href = "/pride/lgbtq-hub" + window.location.search;
+                  window.location.href = "/pride/" + window.location.search;
                 }}
                 className="py-3 px-8 rounded-full font-body font-medium text-sm bg-foreground text-background hover:opacity-80 transition-opacity duration-200 flex-1"
               >
@@ -346,7 +346,7 @@ const Index = () => {
         <button
           onClick={() => {
             window.parent.postMessage("exit_activity", "*");
-            window.location.href = "/pride/lgbtq-hub" + window.location.search;
+            window.location.href = "/pride/" + window.location.search;
           }}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
         >

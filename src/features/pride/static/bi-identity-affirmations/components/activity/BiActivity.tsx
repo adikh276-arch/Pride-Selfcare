@@ -77,7 +77,7 @@ const BiActivity = () => {
           <button
             onClick={() => {
               window.parent.postMessage("exit_activity", "*");
-              window.location.href = "/pride/lgbtq-hub" + window.location.search;
+              window.location.href = "/pride/" + window.location.search;
             }}
             className="btn-primary w-full"
           >

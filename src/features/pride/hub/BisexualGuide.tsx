@@ -125,7 +125,7 @@ export function BisexualGuide() {
         <PrideActivityHeader 
           title={t("Bisexual Guide")} 
           subtitle={t("Resources and support for your journey")}
-          onBack={() => router.push('/lgbtq-hub' + window.location.search)}
+          onBack={() => router.push('/' + window.location.search)}
         />
 
         {/* Tips Section */}

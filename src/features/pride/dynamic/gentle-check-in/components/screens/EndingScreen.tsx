@@ -37,7 +37,7 @@ const EndingScreen = ({ onDone }: Props) => {
     </button>
 
     <button
-      onClick={() => router.push('/lgbtq-hub' + window.location.search)}
+      onClick={() => router.push('/' + window.location.search)}
       className="btn-primary w-full h-14 text-lg font-bold shadow-lg"
     >
       Back to Hub

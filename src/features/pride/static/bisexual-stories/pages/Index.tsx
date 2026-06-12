@@ -45,7 +45,7 @@ const Index = () => {
           <PrideActivityHeader 
             title="Bisexual Stories" 
             subtitle="Voices from the bisexual community"
-            onBack={() => router.push('/lgbtq-hub' + window.location.search)}
+            onBack={() => router.push('/' + window.location.search)}
             className="mb-0"
           />
         </div>

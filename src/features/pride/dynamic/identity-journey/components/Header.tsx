@@ -10,7 +10,7 @@ const Header = () => {
 
   const handleBack = () => {
     window.parent.postMessage("exit_activity", "*");
-    window.location.href = "/pride/lgbtq-hub" + window.location.search;
+    window.location.href = "/pride/" + window.location.search;
   };
 
   return (

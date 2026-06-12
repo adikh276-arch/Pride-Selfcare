@@ -116,7 +116,7 @@ const ExploreIdentity = () => {
       setRevealStep(0);
     } else {
       window.parent.postMessage("exit_activity", "*");
-      window.location.href = "/pride/lgbtq-hub" + window.location.search;
+      window.location.href = "/pride/" + window.location.search;
     }
   }, [screen]);
 
@@ -165,7 +165,7 @@ const ExploreIdentity = () => {
   const screens = [
     <S0 key={0} onNext={next} onHistory={() => setShowHistory(true)} onBack={() => {
       window.parent.postMessage("exit_activity", "*");
-      window.location.href = "/pride/lgbtq-hub" + window.location.search;
+      window.location.href = "/pride/" + window.location.search;
     }} />,
     <S1 key={1} onNext={next} />,
     <S2 key={2} {...{ answers, setAnswer, revealStep, onNext: next }} />,
@@ -178,7 +178,7 @@ const ExploreIdentity = () => {
     <S9 key={9} {...{ answers, setAnswer, revealStep, onNext: next }} />,
     <S10 key={10} onHistory={() => setShowHistory(true)} onSave={saveProfile} isSaving={isSaving} onBackToHub={() => {
       window.parent.postMessage("exit_activity", "*");
-      window.location.href = "/pride/lgbtq-hub" + window.location.search;
+      window.location.href = "/pride/" + window.location.search;
     }} onShare={() => setIsShareOpen(true)} />,
   ];
 

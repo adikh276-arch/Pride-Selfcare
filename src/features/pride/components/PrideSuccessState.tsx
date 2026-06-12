@@ -32,7 +32,7 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
 
   const handleExit = () => {
     window.parent.postMessage("exit_activity", "*");
-    window.location.href = '/pride/lgbtq-hub';
+    window.location.href = '/pride/';
   };
 
   return (

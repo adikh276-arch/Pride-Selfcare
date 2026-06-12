@@ -61,7 +61,7 @@ const ExplorerFlow = () => {
   const next = () => goTo(screen + 1);
   const prev = () => {
     if (screen === 0) {
-      router.push('/lgbtq-hub' + window.location.search);
+      router.push('/' + window.location.search);
       return;
     }
     goTo(Math.max(0, screen - 1));
@@ -403,7 +403,7 @@ const ExplorerFlow = () => {
                       <button onClick={() => setShowHistory(true)} className="btn-secondary w-full h-14 font-bold">
                         History
                       </button>
-                      <button onClick={() => router.push('/lgbtq-hub' + window.location.search)} className="btn-secondary w-full h-14 font-bold">
+                      <button onClick={() => router.push('/' + window.location.search)} className="btn-secondary w-full h-14 font-bold">
                         Hub
                       </button>
                     </div>

@@ -68,7 +68,7 @@ const ClosingScreen = ({ onSave, onViewHistory, onGoHome }: Props) => {
         </button>
 
         <button
-          onClick={() => router.push('/lgbtq-hub' + window.location.search)}
+          onClick={() => router.push('/' + window.location.search)}
           className="btn-secondary w-full h-14 flex items-center justify-center gap-2"
         >
           <Home size={18} />

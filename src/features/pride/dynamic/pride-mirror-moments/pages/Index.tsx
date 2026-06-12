@@ -77,7 +77,7 @@ const Index = () => {
 
   const handleBack = useCallback(() => {
     if (screen === "intro") {
-      router.push('/lgbtq-hub' + window.location.search);
+      router.push('/' + window.location.search);
     } else {
       setScreen("intro");
       setNotes([]);
@@ -124,7 +124,7 @@ const Index = () => {
                 onSave={handleSave}
                 onAddMore={handleAddMore}
                 onViewSaved={handleViewSaved}
-                onBackToHub={() => router.push('/lgbtq-hub' + window.location.search)}
+                onBackToHub={() => router.push('/' + window.location.search)}
               />
             )}
             {screen === "saved" && (

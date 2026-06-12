@@ -94,7 +94,7 @@ export function LGBTQArticles() {
         <PrideActivityHeader 
           title={t("LGBTQ+ Articles")} 
           subtitle={t("Insights and stories from the community")}
-          onBack={() => router.push('/lgbtq-hub' + window.location.search)}
+          onBack={() => router.push('/' + window.location.search)}
           className="mb-8"
         />
 
