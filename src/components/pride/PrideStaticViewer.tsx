@@ -19,7 +19,8 @@ const slugMetadata: Record<string, { title: string; subtitle: string }> = {
 };
 
 export function PrideStaticViewer() {
-  const { slug } = useParams<{ slug: string }>();
+  const params = useParams();
+  const slug = params?.slug as string;
   const router = useRouter();
   const { t, i18n } = useTranslation("guides");
   
