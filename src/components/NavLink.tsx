@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 
-interface NavLinkCompatProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+interface NavLinkCompatProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'className'> {
   to: string;
   className?: string | ((props: { isActive: boolean; isPending: boolean }) => string);
   activeClassName?: string;
@@ -14,7 +14,7 @@ interface NavLinkCompatProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorE
 const NavLink = forwardRef<HTMLAnchorElement, NavLinkCompatProps>(
   ({ className, activeClassName, pendingClassName, to, ...props }, ref) => {
     const pathname = usePathname();
-    const isActive = pathname === to || pathname?.startsWith(to + '/');
+    const isActive = Boolean(pathname === to || pathname?.startsWith(to + '/'));
 
     const combinedClassName = typeof className === 'function' 
       ? className({ isActive, isPending: false })
