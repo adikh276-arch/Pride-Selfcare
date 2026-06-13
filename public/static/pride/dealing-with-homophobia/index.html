@@ -471,7 +471,8 @@ function updatePos(){
 
 function advance(){ current++; if(current>=CARDS.length){showFinish();return;} updatePos(); }
 
-function showFinish(){
+function showFinish() {
+  window.parent.postMessage("finish_activity", "*");
   document.getElementById('mainStage').style.display='none';
   document.getElementById('finishStage').classList.add('show');
   burst(80); setTimeout(()=>burst(55),700);

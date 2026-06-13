@@ -1,4 +1,5 @@
 "use client";
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useState, useCallback, ReactNode } from "react";
 import { useRouter } from "next/navigation";
@@ -251,6 +252,7 @@ const Index = () => {
 
   const handleFinish = useCallback(() => {
     setFinished(true);
+    triggerActivityWebhook();
     const end = Date.now() + 2500;
     const frame = () => {
       confetti({

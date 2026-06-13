@@ -483,6 +483,7 @@ function advance() {
 }
 
 function showFinish() {
+  window.parent.postMessage("finish_activity", "*");
   document.getElementById('deckStage').style.display = 'none';
   document.getElementById('finishStage').style.display = 'flex';
   burst();

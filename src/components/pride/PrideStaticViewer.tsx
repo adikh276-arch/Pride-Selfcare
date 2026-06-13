@@ -1,6 +1,8 @@
 "use client";
+import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { triggerActivityWebhook } from "@/lib/webhook";
 import { PrideActivityHeader } from "../../features/pride/components/PrideActivityHeader";
 import { PrideFloatingOrbs } from "../../features/pride/components/PrideFloatingOrbs";
 
@@ -23,6 +25,16 @@ export function PrideStaticViewer() {
   const slug = params?.slug as string;
   const router = useRouter();
   const { t, i18n } = useTranslation("guides");
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data === "finish_activity") {
+        triggerActivityWebhook();
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
   
   // Next.js config has basePath: "/pride", so static assets must be prefixed with it.
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/pride";
