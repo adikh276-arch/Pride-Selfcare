@@ -1,9 +1,11 @@
 "use client";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Share2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { ShareModal } from "@/components/pride/ShareModal";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 interface QuoteScreenProps {
   selectedIndex: number;
@@ -11,6 +13,7 @@ interface QuoteScreenProps {
 }
 
 const QuoteScreen = ({ selectedIndex, onClose }: QuoteScreenProps) => {
+  const router = useRouter();
   const [isShareOpen, setIsShareOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -77,8 +80,7 @@ const QuoteScreen = ({ selectedIndex, onClose }: QuoteScreenProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.9 }}
           onClick={() => {
-            window.parent.postMessage("exit_activity", "*");
-            window.location.href = "/pride/" + window.location.search;
+            handleExitOrDashboard(router);
           }}
           className="px-8 py-3.5 bg-white/50 backdrop-blur-sm border border-primary/10 text-primary font-bold rounded-2xl hover:bg-primary/5 hover:scale-[1.02] active:scale-[0.98] transition-all w-full"
         >

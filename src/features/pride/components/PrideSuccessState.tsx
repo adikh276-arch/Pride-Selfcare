@@ -1,9 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Share2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { ShareModal } from "@/components/pride/ShareModal";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 interface PrideSuccessStateProps {
   title?: string;
@@ -20,6 +22,7 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
   onRestart,
   variant = "pride"
 }) => {
+  const router = useRouter();
   const { t } = useTranslation("hub");
   const [isShareOpen, setIsShareOpen] = useState(false);
   
@@ -31,8 +34,7 @@ export const PrideSuccessState: React.FC<PrideSuccessStateProps> = ({
     : ["✨", "🌈", "💖", "🦄", "🌈"];
 
   const handleExit = () => {
-    window.parent.postMessage("exit_activity", "*");
-    window.location.href = '/pride/';
+    handleExitOrDashboard(router);
   };
 
   return (

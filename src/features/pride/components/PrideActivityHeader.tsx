@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import { ChevronLeft, History } from "lucide-react";
 import { cn } from "../../../lib/utils";
+import { goBack } from "@/lib/navigation";
 
 interface PrideActivityHeaderProps {
   title: string;
@@ -20,13 +22,10 @@ export const PrideActivityHeader: React.FC<PrideActivityHeaderProps> = ({
   showHistory = false,
   className 
 }) => {
+  const router = useRouter();
+
   const handleExit = () => {
-    if (onBack) {
-      onBack();
-    } else {
-      window.parent.postMessage("exit_activity", "*");
-      window.location.href = "/pride/" + window.location.search;
-    }
+    goBack(onBack, router);
   };
 
   const handleHistory = () => {

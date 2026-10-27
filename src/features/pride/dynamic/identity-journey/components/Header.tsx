@@ -3,14 +3,14 @@ import { ChevronLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import LanguageSelector from "./LanguageSelector";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 const Header = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
   const handleBack = () => {
-    window.parent.postMessage("exit_activity", "*");
-    window.location.href = "/pride/" + window.location.search;
+    handleExitOrDashboard(router);
   };
 
   return (

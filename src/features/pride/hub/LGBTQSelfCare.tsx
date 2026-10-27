@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft, CheckSquare, BookOpen, Compass, Lightbulb, Info, FileText, Target, HeartPulse, Smile, Moon, Sparkles, Activity, Heart, Users2, Star, Shield } from "lucide-react";
 import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
+import { handleExit, withLang } from "@/lib/navigation";
 
 // Translation Hints for Extractor:
 // t("Assessments") t("Stories") t("Identity Exploration") t("Tips") t("Myths & Facts") t("Articles")
@@ -68,7 +69,7 @@ export function LGBTQSelfCare() {
       if (link.startsWith('http')) {
         window.location.href = link;
       } else {
-        router.push(link + window.location.search);
+        router.push(withLang(link));
       }
     }
   };
@@ -88,10 +89,7 @@ export function LGBTQSelfCare() {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => {
-                window.parent.postMessage({ action: 'exit' }, 'https://web.mantracare.com');
-                router.back();
-              }}
+              onClick={() => handleExit()}
               className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-foreground border border-white/10 shadow-lg mb-8"
             >
               <ChevronLeft size={24} />
