@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
 import TapToReveal from "./TapToReveal";
 import BreathingOrb from "./BreathingOrb";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 const BAND_COLORS = ["bi-pink", "bi-purple", "bi-blue"];
 
@@ -289,8 +290,7 @@ const CardActivity = () => {
         <div className="absolute top-6 left-6 z-50">
           <button
             onClick={() => {
-              window.parent.postMessage("exit_activity", "*");
-              window.location.href = "/pride/" + window.location.search;
+              handleExitOrDashboard(router);
             }}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
           >
@@ -322,8 +322,7 @@ const CardActivity = () => {
 
               <button
                 onClick={() => {
-                  window.parent.postMessage("exit_activity", "*");
-                  window.location.href = "/pride/" + window.location.search;
+                  handleExitOrDashboard(router);
                 }}
                 className="py-4 px-8 rounded-2xl font-body font-bold text-base text-white transition-all hover:scale-[1.02] active:scale-95"
                 style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
@@ -356,8 +355,7 @@ const CardActivity = () => {
       <div className="absolute top-6 left-6 z-50">
         <button
           onClick={() => {
-            window.parent.postMessage("exit_activity", "*");
-            window.location.href = "/pride/" + window.location.search;
+            handleExitOrDashboard(router);
           }}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-purple-600 transition-all"
         >

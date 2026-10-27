@@ -321,14 +321,7 @@ export default function TransJoyActivity() {
         <PrideActivityHeader 
           title="Trans Joy" 
           subtitle="Celebrating your identity"
-          onBack={() => {
-            if (current > 0) {
-              goPrev();
-            } else {
-              window.parent.postMessage("exit_activity", "*");
-              window.location.href = "/pride/" + window.location.search;
-            }
-          }}
+          onBack={current > 0 ? goPrev : undefined}
         />
 
         {/* Progress bar */}

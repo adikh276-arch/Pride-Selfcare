@@ -13,6 +13,7 @@ import Card4Checklist from "./Card4Checklist";
 import Card5Closing from "./Card5Closing";
 import CardComplete from "./CardComplete";
 import { ChevronLeft } from "lucide-react";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 const TOTAL = 5;
 
@@ -77,8 +78,7 @@ const TransMentalHealthActivity = () => {
       <CardComplete 
         onRestart={() => { setFinished(false); setCurrent(0); }} 
         onBackToHub={() => {
-          window.parent.postMessage("exit_activity", "*");
-          window.location.href = "/pride/" + window.location.search;
+          handleExitOrDashboard(router);
         }} 
       />
     );
@@ -92,8 +92,7 @@ const TransMentalHealthActivity = () => {
       <div className="absolute top-6 left-6 z-50">
         <button
           onClick={() => {
-            window.parent.postMessage("exit_activity", "*");
-            window.location.href = "/pride/" + window.location.search;
+            handleExitOrDashboard(router);
           }}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
         >

@@ -12,6 +12,7 @@ import ProgressBar from '../../components/activity/ProgressBar';
 import ActivityCard from '../../components/activity/ActivityCard';
 
 import { PrideActivityHeader } from "@/features/pride/components/PrideActivityHeader";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 const BiActivity = () => {
   const router = useRouter();
@@ -79,8 +80,7 @@ const BiActivity = () => {
 
           <button
             onClick={() => {
-              window.parent.postMessage("exit_activity", "*");
-              window.location.href = "/pride/" + window.location.search;
+              handleExitOrDashboard(router);
             }}
             className="btn-primary w-full"
           >

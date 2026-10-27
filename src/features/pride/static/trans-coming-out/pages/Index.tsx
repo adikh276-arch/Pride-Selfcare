@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft, Share2 } from "lucide-react";
 import { ShareModal } from "@/components/pride/ShareModal";
 import confetti from "canvas-confetti";
+import { handleExitOrDashboard } from "@/lib/navigation";
 import FloatingOrbs from "../components/FloatingOrbs";
 import ProgressBar from "../components/ProgressBar";
 import ActivityCard from "../components/ActivityCard";
@@ -287,8 +288,7 @@ const Index = () => {
         <div className="absolute top-6 left-6 z-50">
           <button
             onClick={() => {
-              window.parent.postMessage("exit_activity", "*");
-              window.location.href = "/pride/" + window.location.search;
+              handleExitOrDashboard(router);
             }}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
           >
@@ -320,8 +320,7 @@ const Index = () => {
               </button>
               <button
                 onClick={() => {
-                  window.parent.postMessage("exit_activity", "*");
-                  window.location.href = "/pride/" + window.location.search;
+                  handleExitOrDashboard(router);
                 }}
                 className="py-3 px-8 rounded-full font-body font-medium text-sm bg-foreground text-background hover:opacity-80 transition-opacity duration-200 flex-1"
               >
@@ -347,8 +346,7 @@ const Index = () => {
       <div className="w-full max-w-[440px] px-4 pt-6 relative z-50">
         <button
           onClick={() => {
-            window.parent.postMessage("exit_activity", "*");
-            window.location.href = "/pride/" + window.location.search;
+            handleExitOrDashboard(router);
           }}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 backdrop-blur-sm text-gray-500 font-bold text-sm shadow-sm hover:text-cyan-500 transition-all"
         >
