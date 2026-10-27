@@ -122,7 +122,7 @@ const CardDeck = () => {
 
           {/* Active card */}
           <div className="relative z-10">
-            {renderCard(current, next, handleFinish, finished, router.push, setCurrent, setFinished, () => setIsShareOpen(true), t)}
+            {renderCard(current, next, handleFinish, finished, () => handleExitOrDashboard(router), setCurrent, setFinished, () => setIsShareOpen(true), t)}
           </div>
         </div>
       </div>
@@ -220,7 +220,7 @@ function renderCard(
   next: () => void, 
   handleFinish: () => void, 
   finished: boolean,
-  navigate: (path: string) => void,
+  onBackToHub: () => void,
   setCurrent: (idx: number) => void,
   setFinished: (fin: boolean) => void,
   onShare: () => void,
@@ -370,9 +370,7 @@ function renderCard(
                   Start Over
                 </button>
                  <button
-                  onClick={() => {
-                    handleExitOrDashboard(router);
-                  }}
+                  onClick={onBackToHub}
                   className="px-6 py-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-80 flex-1"
                   style={{ background: "linear-gradient(135deg, #d1006c, #6b35b8, #0050a0)" }}
                 >

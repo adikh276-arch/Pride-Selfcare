@@ -125,7 +125,6 @@ export function LesbianGuide() {
         <PrideActivityHeader 
           title={t("Lesbian Guide")} 
           subtitle={t("Resources and support for your journey")}
-          onBack={() => router.push('/' + window.location.search)}
         />
 
         {/* Tips Section */}

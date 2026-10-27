@@ -45,7 +45,13 @@ const Index = () => {
           <PrideActivityHeader 
             title="Bisexual Stories" 
             subtitle="Voices from the bisexual community"
-            onBack={() => router.push('/' + window.location.search)}
+            onBack={
+              view === "detail"
+                ? goToList
+                : view === "list"
+                ? goBackToHero
+                : undefined
+            }
             className="mb-0"
           />
         </div>

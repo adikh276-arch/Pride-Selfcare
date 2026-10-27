@@ -14,6 +14,7 @@ import CompletionScreen from "../components/mirror-notes/CompletionScreen";
 import SavedNotesScreen from "../components/mirror-notes/SavedNotesScreen";
 import { toast } from "sonner";
 import { saveDynamicMiniEntry, getDynamicMiniHistory } from "@/app/actions/dynamicMinis";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 type Screen = "intro" | "mirror" | "reflection" | "completion" | "saved";
 
@@ -80,7 +81,7 @@ const Index = () => {
 
   const handleBack = useCallback(() => {
     if (screen === "intro") {
-      router.push('/' + window.location.search);
+      handleExitOrDashboard(router);
     } else {
       setScreen("intro");
       setNotes([]);
@@ -97,6 +98,7 @@ const Index = () => {
           subtitle="Reflections of Pride"
           showHistory={true}
           onHistory={handleViewSaved}
+          onBack={handleBack}
           className="mb-8"
         />
 
@@ -127,7 +129,7 @@ const Index = () => {
                 onSave={handleSave}
                 onAddMore={handleAddMore}
                 onViewSaved={handleViewSaved}
-                onBackToHub={() => router.push('/' + window.location.search)}
+                onBackToHub={() => handleExitOrDashboard(router)}
               />
             )}
             {screen === "saved" && (

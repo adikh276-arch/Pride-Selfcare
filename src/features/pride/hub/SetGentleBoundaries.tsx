@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { goBack } from "@/lib/navigation";
 
 export function SetGentleBoundaries() {
   const { t } = useTranslation("hub");
@@ -30,7 +31,7 @@ export function SetGentleBoundaries() {
               <motion.button
                 whileHover={{ x: -4 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => router.push('/' + window.location.search)}
+                onClick={() => goBack(undefined, router)}
                 className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm text-[#64748B] hover:text-[#020817] hover:bg-white transition-all shadow-sm hover:shadow-md border border-gray-100"
               >
                 <ChevronLeft size={20} strokeWidth={2.5} />

@@ -13,6 +13,7 @@ import ReflectionScreen from "../components/journal/ReflectionScreen";
 import CompletionScreen from "../components/journal/CompletionScreen";
 import HistoryScreen from "../components/journal/HistoryScreen";
 import { saveDynamicMiniEntry, getDynamicMiniHistory } from "@/app/actions/dynamicMinis";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 const PROMPTS = [
   {
@@ -148,7 +149,7 @@ const Index = () => {
     } else if (screen === "completion") {
       setScreen("reflection");
     } else if (screen === "intro") {
-      router.push('/' + window.location.search);
+      handleExitOrDashboard(router);
     }
   };
 
@@ -172,7 +173,7 @@ const Index = () => {
       case "reflection":
         return <ReflectionScreen entries={entries} onComplete={handleReflectionComplete} onBack={handleBack} />;
       case "completion":
-        return <CompletionScreen entries={entries} onSave={handleSave} onRestart={handleRestart} onViewHistory={handleViewHistory} onBackToHub={() => router.push('/' + window.location.search)} />;
+        return <CompletionScreen entries={entries} onSave={handleSave} onRestart={handleRestart} onViewHistory={handleViewHistory} onBackToHub={() => handleExitOrDashboard(router)} />;
       case "history":
         return <HistoryScreen journals={history} onBack={handleBackFromHistory} />;
     }

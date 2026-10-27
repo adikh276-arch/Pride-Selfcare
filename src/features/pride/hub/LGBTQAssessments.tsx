@@ -55,7 +55,6 @@ export function LGBTQAssessments() {
         <PrideActivityHeader 
           title={t("Self-Discovery Tests")} 
           subtitle={t("Explore your identity through guided assessments")}
-          onBack={() => router.push('/' + window.location.search)}
           className="mb-12"
         />
 

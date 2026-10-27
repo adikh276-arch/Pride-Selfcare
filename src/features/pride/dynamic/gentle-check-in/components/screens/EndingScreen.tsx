@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Share2 } from "lucide-react";
 import { ShareModal } from "@/components/pride/ShareModal";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 interface Props {
   onDone: () => void;
@@ -37,7 +38,7 @@ const EndingScreen = ({ onDone }: Props) => {
     </button>
 
     <button
-      onClick={() => router.push('/' + window.location.search)}
+      onClick={() => handleExitOrDashboard(router)}
       className="btn-primary w-full h-14 text-lg font-bold shadow-lg"
     >
       Back to Hub

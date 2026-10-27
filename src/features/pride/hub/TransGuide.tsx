@@ -125,7 +125,6 @@ export function TransGuide() {
         <PrideActivityHeader 
           title={t("Trans Guide")} 
           subtitle={t("Support and resources for the trans community")}
-          onBack={() => router.push('/' + window.location.search)}
           className="mb-8"
         />
 

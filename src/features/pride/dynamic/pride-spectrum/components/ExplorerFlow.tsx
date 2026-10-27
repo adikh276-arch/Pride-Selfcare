@@ -9,6 +9,7 @@ import HistoryScreen from "./HistoryScreen";
 import { Share2 } from "lucide-react";
 import { ShareModal } from "@/components/pride/ShareModal";
 import { saveDynamicMiniEntry } from "@/app/actions/dynamicMinis";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 interface Answers {
   checkin?: string;
@@ -63,7 +64,7 @@ const ExplorerFlow = () => {
   const next = () => goTo(screen + 1);
   const prev = () => {
     if (screen === 0) {
-      router.push('/' + window.location.search);
+      handleExitOrDashboard(router);
       return;
     }
     goTo(Math.max(0, screen - 1));
@@ -406,7 +407,7 @@ const ExplorerFlow = () => {
                       <button onClick={() => setShowHistory(true)} className="btn-secondary w-full h-14 font-bold">
                         History
                       </button>
-                      <button onClick={() => router.push('/' + window.location.search)} className="btn-secondary w-full h-14 font-bold">
+                      <button onClick={() => handleExitOrDashboard(router)} className="btn-secondary w-full h-14 font-bold">
                         Hub
                       </button>
                     </div>

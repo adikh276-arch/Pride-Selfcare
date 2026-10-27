@@ -6,6 +6,7 @@ import { Save, History, Home, Share2 } from "lucide-react";
 import { ShareModal } from "@/components/pride/ShareModal";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 interface Props {
   onSave: () => void;
@@ -71,7 +72,7 @@ const ClosingScreen = ({ onSave, onViewHistory, onGoHome }: Props) => {
         </button>
 
         <button
-          onClick={() => router.push('/' + window.location.search)}
+          onClick={() => handleExitOrDashboard(router)}
           className="btn-secondary w-full h-14 flex items-center justify-center gap-2"
         >
           <Home size={18} />

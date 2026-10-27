@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Share2 } from "lucide-react";
 import { ShareModal } from "@/components/pride/ShareModal";
+import { handleExitOrDashboard } from "@/lib/navigation";
 
 interface ReflectionScreenProps {
   stars: StarData[];
@@ -109,8 +110,7 @@ const ReflectionScreen = ({ stars, onSave, onCreateAnother }: ReflectionScreenPr
         </button>
         <button
           onClick={() => {
-            window.parent.postMessage("exit_activity", "*");
-            window.location.href = "/pride/" + window.location.search;
+            handleExitOrDashboard(router);
           }}
           className="btn-secondary w-full h-14"
         >
