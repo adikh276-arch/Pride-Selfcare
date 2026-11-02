@@ -6,6 +6,8 @@ import { triggerActivityWebhook } from "@/lib/webhook";
 import { PrideActivityHeader } from "../../features/pride/components/PrideActivityHeader";
 import { PrideFloatingOrbs } from "../../features/pride/components/PrideFloatingOrbs";
 
+import { goBack } from "@/lib/navigation";
+
 const slugMetadata: Record<string, { title: string; subtitle: string }> = {
   "celebrate-wlw": { title: "Celebrate WLW", subtitle: "Honoring Women Loving Women" },
   "coming-out-practice": { title: "Coming Out Practice", subtitle: "Prepare for your journey" },
@@ -30,11 +32,13 @@ export function PrideStaticViewer() {
     const handleMessage = (event: MessageEvent) => {
       if (event.data === "finish_activity") {
         triggerActivityWebhook();
+      } else if (event.data === "exit_activity") {
+        goBack(undefined, router);
       }
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, []);
+  }, [router]);
   
   // Next.js config has basePath: "/pride", so static assets must be prefixed with it.
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/pride";
@@ -53,6 +57,7 @@ export function PrideStaticViewer() {
             title={metadata ? t(metadata.title) : t("Pride Resources")} 
             subtitle={metadata ? t(metadata.subtitle) : t("Explore and grow")}
             className="mb-0"
+            onBack={() => goBack(undefined, router)}
           />
         </div>
       </div>

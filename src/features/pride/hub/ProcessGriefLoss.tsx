@@ -4,10 +4,14 @@ import { motion } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { goBack } from "@/lib/navigation";
+import { useState } from "react";
+import { triggerActivityWebhook } from "@/lib/webhook";
+import { CheckCircle2 } from "lucide-react";
 
 export function ProcessGriefLoss() {
   const { t } = useTranslation("hub");
   const router = useRouter();
+  const [completed, setCompleted] = useState(false);
 
   const steps = [
     t("Name what you've actually lost — don't minimize it"),
@@ -15,6 +19,11 @@ export function ProcessGriefLoss() {
     t("Talk to someone who won't ask you to explain why it hurts"),
     t("Consider a therapist who specialises in LGBTQ+ experiences"),
   ];
+
+  const handleComplete = () => {
+    setCompleted(true);
+    triggerActivityWebhook();
+  };
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-[#F9F6FE] via-[#FBF8FF] to-[#F5F3FF]">
@@ -93,6 +102,25 @@ export function ProcessGriefLoss() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Complete Activity Button */}
+            <div className="mt-10 flex flex-col items-center">
+              {completed ? (
+                <div className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-emerald-100 text-emerald-800 font-bold text-lg shadow-sm animate-in fade-in zoom-in duration-300">
+                  <CheckCircle2 className="text-emerald-600" size={24} />
+                  <span>{t("Activity Completed!")}</span>
+                </div>
+              ) : (
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleComplete}
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-[#EF4444] to-[#DC2626] text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"
+                >
+                  {t("Mark as Completed")}
+                </motion.button>
+              )}
             </div>
           </motion.div>
 

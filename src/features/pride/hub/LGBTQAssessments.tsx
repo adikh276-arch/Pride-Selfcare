@@ -25,9 +25,28 @@ export function LGBTQAssessments() {
   ];
 
   const handleAssessmentClick = (link: string) => {
+    if (!link || link === "#") return;
+
     if (link.startsWith('http')) {
-      window.location.href = link;
-    } else if (link !== "#") {
+      try {
+        if (typeof window !== 'undefined' && (window as any).ReactNativeWebView) {
+          (window as any).ReactNativeWebView.postMessage(JSON.stringify({
+            type: "open_external",
+            url: link
+          }));
+          return;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      // If embedded in iframe, try opening external URL in top window or new window
+      if (typeof window !== 'undefined' && window.top && window.top !== window) {
+        window.open(link, '_blank', 'noopener,noreferrer');
+      } else {
+        window.open(link, '_blank', 'noopener,noreferrer') || (window.location.href = link);
+      }
+    } else {
       router.push(link + window.location.search);
     }
   };
@@ -88,13 +107,11 @@ export function LGBTQAssessments() {
                   </p>
                 </div>
 
-                <div className="flex-shrink-0 hidden sm:flex items-center gap-2 text-pride-purple font-black text-xs uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
-                  <span>{t("Take Test")}</span>
-                  <ArrowRight size={18} />
-                </div>
-                
-                <div className="sm:hidden text-pride-purple">
-                  <ArrowRight size={24} />
+                <div className="flex-shrink-0 flex items-center gap-2 text-pride-purple font-black text-xs uppercase tracking-[0.2em] transition-all duration-300 group-hover:translate-x-1">
+                  <span className="hidden sm:inline opacity-70 group-hover:opacity-100">{t("Take Test")}</span>
+                  <div className="w-10 h-10 rounded-xl bg-purple-50 group-hover:bg-purple-100 flex items-center justify-center transition-colors">
+                    <ArrowRight size={20} />
+                  </div>
                 </div>
               </motion.button>
             );

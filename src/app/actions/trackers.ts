@@ -17,24 +17,38 @@ export async function saveMoodEntry(userId: string, value: number, label: string
 export async function getTrackerHistory(tableName: string, userId: string) {
   // Use a switch or specific queries to avoid SQL injection on table name
   try {
-    let rows: any[] = [];
-    if (tableName === 'mood_entries') {
-      rows = await sql`SELECT * FROM mood_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
-    } else if (tableName === 'sleep_entries') {
-      rows = await sql`SELECT * FROM sleep_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
-    } else if (tableName === 'vibe_entries') {
-      rows = await sql`SELECT * FROM vibe_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
-    } else if (tableName === 'gratitude_entries') {
-      rows = await sql`SELECT * FROM gratitude_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
-    } else if (tableName === 'daily_care_entries') {
-      rows = await sql`SELECT * FROM daily_care_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
+    if (!process.env.VITE_NEON_DATABASE_URL) {
+      return { success: true, data: [] };
     }
+
+    // Set a 1.5s timeout so unconfigured/slow Neon serverless connections don't hang page loads
+    const fetchWithTimeout = async () => {
+      let rows: any[] = [];
+      if (tableName === 'mood_entries') {
+        rows = await sql`SELECT * FROM mood_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
+      } else if (tableName === 'sleep_entries') {
+        rows = await sql`SELECT * FROM sleep_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
+      } else if (tableName === 'vibe_entries') {
+        rows = await sql`SELECT * FROM vibe_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
+      } else if (tableName === 'gratitude_entries') {
+        rows = await sql`SELECT * FROM gratitude_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
+      } else if (tableName === 'daily_care_entries') {
+        rows = await sql`SELECT * FROM daily_care_entries WHERE user_id = ${userId} ORDER BY created_at DESC LIMIT 30`;
+      }
+      return rows;
+    };
+
+    const timeoutPromise = new Promise<any[]>((_, reject) =>
+      setTimeout(() => reject(new Error("Database query timed out")), 1500)
+    );
+
+    const rows = await Promise.race([fetchWithTimeout(), timeoutPromise]);
     
     // Ensure all returned rows are perfectly serializable
     return { success: true, data: JSON.parse(JSON.stringify(rows)) };
   } catch (err) {
-    console.error("Failed to fetch tracker history:", err);
-    return { success: false, error: "Database error" };
+    console.warn("Tracker history query failed or timed out:", err);
+    return { success: true, data: [] };
   }
 }
 

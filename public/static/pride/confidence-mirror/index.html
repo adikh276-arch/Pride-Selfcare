@@ -30,9 +30,37 @@ body {
   gap:1rem;
 }
 
+/* ── Top Bar with Back Button ── */
+.top-bar {
+  width:100%; max-width:400px;
+  display:flex; align-items:center; justify-content:flex-start;
+  gap:12px;
+  z-index:20;
+}
+.back-btn {
+  width:40px; height:40px; border-radius:50%;
+  border:1px solid rgba(0,0,0,0.08);
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  transition:all 0.2s ease;
+  color:#3d1530;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  flex-shrink:0;
+}
+.back-btn:hover {
+  background:white;
+  transform:scale(1.05);
+}
+.back-btn:active {
+  transform:scale(0.95);
+}
+
 /* ── Progress ── */
 .progress-wrap {
-  width:100%; max-width:400px;
+  width:100%;
   display:flex; align-items:center; gap:10px;
 }
 .progress-track {
@@ -324,11 +352,18 @@ body {
 
 <!-- Main stage -->
 <div class="stage" id="mainStage">
-  <div class="progress-wrap">
-    <div class="progress-track">
-      <div class="progress-fill" id="progFill" style="width:12.5%"></div>
+  <div class="top-bar">
+    <button class="back-btn" onclick="handleExitActivity()" aria-label="Go back">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+    </button>
+    <div class="progress-wrap">
+      <div class="progress-track">
+        <div class="progress-fill" id="progFill" style="width:12.5%"></div>
+      </div>
+      <span class="progress-label" id="progLabel" style="color:#9c6070">1 / 8</span>
     </div>
-    <span class="progress-label" id="progLabel" style="color:#9c6070">1 / 8</span>
   </div>
   <div class="card-stack" id="cardStack"></div>
   <div class="swipe-hint">Swipe or tap button to continue</div>
@@ -795,6 +830,24 @@ function burst(count = 60) {
     `;
     box.appendChild(c);
     c.addEventListener('animationend', () => c.remove());
+  }
+}
+
+function handleExitActivity() {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage("exit_activity", "*");
+    }
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({ type: "exit" }));
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "/pride/lgbtq-self-care";
   }
 }
 

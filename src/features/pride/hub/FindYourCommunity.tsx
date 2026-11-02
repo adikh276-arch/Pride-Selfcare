@@ -5,9 +5,14 @@ import { ChevronLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { goBack } from "@/lib/navigation";
 
+import { useState } from "react";
+import { triggerActivityWebhook } from "@/lib/webhook";
+import { CheckCircle2 } from "lucide-react";
+
 export function FindYourCommunity() {
   const { t } = useTranslation("hub");
   const router = useRouter();
+  const [completed, setCompleted] = useState(false);
 
   const steps = [
     t("Look for local LGBTQ+ centres or support groups"),
@@ -15,6 +20,11 @@ export function FindYourCommunity() {
     t("Attend one Pride or queer social event, even briefly"),
     t("Reach out to one person who might understand you"),
   ];
+
+  const handleComplete = () => {
+    setCompleted(true);
+    triggerActivityWebhook();
+  };
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-[#F9F6FE] via-[#FBF8FF] to-[#F5F3FF]">
@@ -71,7 +81,7 @@ export function FindYourCommunity() {
               {t("What You Can Do")}
             </h2>
 
-            <div className="space-y-5">
+            <div className="space-y-5 mb-8">
               {steps.map((step, index) => (
                 <motion.div
                   key={index}
@@ -93,6 +103,25 @@ export function FindYourCommunity() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Complete Activity Button */}
+            <div className="mt-10 flex flex-col items-center">
+              {completed ? (
+                <div className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-emerald-100 text-emerald-800 font-bold text-lg shadow-sm animate-in fade-in zoom-in duration-300">
+                  <CheckCircle2 className="text-emerald-600" size={24} />
+                  <span>{t("Activity Completed!")}</span>
+                </div>
+              ) : (
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleComplete}
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-[#9333EA] to-[#7E22CE] text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"
+                >
+                  {t("Mark as Completed")}
+                </motion.button>
+              )}
             </div>
           </motion.div>
 
