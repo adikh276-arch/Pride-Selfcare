@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft, CheckSquare, BookOpen, Compass, Lightbulb, Info, FileText, Target, HeartPulse, Smile, Moon, Sparkles, Activity, Heart, Users2, Star, Shield } from "lucide-react";
 import { PrideFloatingOrbs } from "@/features/pride/components/PrideFloatingOrbs";
-import { handleExit, withLang } from "@/lib/navigation";
+import { handleExit, handleExitOrDashboard, withLang } from "@/lib/navigation";
 
 // Translation Hints for Extractor:
 // t("Assessments") t("Stories") t("Identity Exploration") t("Tips") t("Myths & Facts") t("Articles")
@@ -89,7 +89,13 @@ export function LGBTQSelfCare() {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => handleExit()}
+              onClick={() => {
+                if (typeof window !== "undefined" && window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) {
+                  router.back();
+                } else {
+                  handleExitOrDashboard(router);
+                }
+              }}
               className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-foreground border border-white/10 shadow-lg mb-8"
             >
               <ChevronLeft size={24} />

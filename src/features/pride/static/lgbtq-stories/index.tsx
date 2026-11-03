@@ -8,10 +8,14 @@ import StoryDetail from "./components/StoryDetail";
 import { stories as storiesData } from "./data/stories";
 import { PrideActivityHeader } from "../../components/PrideActivityHeader";
 import { PrideFloatingOrbs } from "../../components/PrideFloatingOrbs";
+import { goBack } from "@/lib/navigation";
+import { triggerActivityWebhook } from "@/lib/webhook";
+import { useRouter } from "next/navigation";
 
 type View = "hero" | "list" | "detail";
 
 const Index = () => {
+  const router = useRouter();
   const { t, i18n } = useTranslation("minis");
   const [view, setView] = useState<View>("hero");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -37,10 +41,23 @@ const Index = () => {
 
   const goToList = useCallback(() => transition("list"), [transition]);
   const goToDetail = useCallback(
-    (i: number) => transition("detail", () => setSelectedIndex(i)),
+    (i: number) => {
+      triggerActivityWebhook();
+      transition("detail", () => setSelectedIndex(i));
+    },
     [transition]
   );
   const goBackToHero = useCallback(() => transition("hero"), [transition]);
+
+  const handleHeaderBack = useCallback(() => {
+    if (view === "detail") {
+      goToList();
+    } else if (view === "list") {
+      goBackToHero();
+    } else {
+      goBack(undefined, router);
+    }
+  }, [view, goToList, goBackToHero, router]);
 
   return (
     <div className="min-h-screen bg-[#FDFCFE] relative overflow-hidden">
@@ -51,6 +68,7 @@ const Index = () => {
           <PrideActivityHeader 
             title={t("LGBTQ+ Stories")} 
             subtitle={t("Real journeys of finding yourself")}
+            onBack={handleHeaderBack}
             className="mb-0"
           />
         </div>
